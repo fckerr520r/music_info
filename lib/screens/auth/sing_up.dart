@@ -241,22 +241,23 @@ class _SingUpState extends State<SingUp> {
               SizedBox(
                 height: 20,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 270),
-                child: SizedBox(
-                  height: 30,
-                  width: 70,
-                  child: InkWell(
-                    child: Align(
-                      child: Text('Sing up'.tr,
-                          style: StyleText.TextStyles.clicableRedText),
-                      alignment: Alignment(0.0, 0.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    height: 30,
+                    child: InkWell(
+                      child: Align(
+                        child: Text('Sing up'.tr,
+                            style: StyleText.TextStyles.clicableRedText),
+                        alignment: Alignment(0.0, 0.0),
+                      ),
+                      onTap: () async {
+                        _register();
+                      },
                     ),
-                    onTap: () async {
-                      _register();
-                    },
                   ),
-                ),
+                ],
               )
             ],
           ),
