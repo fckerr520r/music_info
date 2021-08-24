@@ -15,7 +15,7 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  final user = FirebaseAuth.instance.currentUser!;
+  final user = FirebaseAuth.instance.currentUser;
   final String assetUserPhoto = 'assets/images/UserPhoto.jpg';
   List<Map<String, Object>> locales = ChangeLangClass().locales;
 
@@ -90,14 +90,14 @@ class _SettingsState extends State<Settings> {
               CircleAvatar(
                 radius: 100,
                 backgroundColor: Colors.grey,
-                backgroundImage: user.photoURL != null
-                    ? NetworkImage(user.photoURL!)
+                backgroundImage: user!.photoURL != null
+                    ? NetworkImage(user!.photoURL.toString())
                     : AssetImage(assetUserPhoto) as ImageProvider,
               ),
               SizedBox(height: 5),
-              user.displayName != null
+              user!.displayName != null
                   ? Text(
-                      user.displayName!,
+                      user!.displayName.toString(),
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
@@ -107,7 +107,7 @@ class _SettingsState extends State<Settings> {
                   : SizedBox.shrink(),
               SizedBox(height: 5),
               Text(
-                user.email!,
+                user!.email.toString(),
                 style: new TextStyle(
                   fontSize: 15.0,
                   color: Colors.white70,
@@ -162,6 +162,7 @@ class _SettingsState extends State<Settings> {
                             primary: Style.Colors.backgroundColorLight,
                           ),
                           onPressed: () {
+                            Navigator.of(context).pop();
                             final provider = Provider.of<GoogleSignInProvider>(
                                 context,
                                 listen: false);

@@ -12,17 +12,17 @@ class DrawerMain extends StatefulWidget {
   _DrawerMainState createState() => _DrawerMainState();
 }
 
-final user = FirebaseAuth.instance.currentUser!;
+final user = FirebaseAuth.instance.currentUser;
 final String assetUserPhoto = 'assets/images/UserPhoto.jpg';
 
 class _DrawerMainState extends State<DrawerMain> {
-  dynamic user = FirebaseAuth.instance.currentUser!;
+  dynamic user = FirebaseAuth.instance.currentUser;
   final String assetUserPhoto = 'assets/images/UserPhoto.jpg';
 
   @override
   void initState() {
     super.initState();
-    user = FirebaseAuth.instance.currentUser!;
+    user = FirebaseAuth.instance.currentUser;
   }
 
   @override
@@ -34,7 +34,7 @@ class _DrawerMainState extends State<DrawerMain> {
           padding: EdgeInsets.zero,
           children: [
             UserAccountsDrawerHeader(
-              accountName: user.displayName != null
+              accountName: user.displayName! != null
                   ? Text(
                       user.displayName!,
                       style: TextStyle(
@@ -52,7 +52,7 @@ class _DrawerMainState extends State<DrawerMain> {
               ),
               currentAccountPicture: CircleAvatar(
                 radius: 40,
-                backgroundImage: user.photoURL != null
+                backgroundImage: user.photoURL! != null
                     ? NetworkImage(user.photoURL!)
                     : AssetImage(assetUserPhoto) as ImageProvider,
               ),
@@ -132,6 +132,7 @@ class _DrawerMainState extends State<DrawerMain> {
                 final provider =
                     Provider.of<GoogleSignInProvider>(context, listen: false);
                 provider.logout();
+                
               },
             )
           ],

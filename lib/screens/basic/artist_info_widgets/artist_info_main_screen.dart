@@ -34,7 +34,7 @@ class _ArtistInfoState extends State<ArtistInfo> {
     SocialData(
         icon: EvaIcons.twitter,
         login: artist.twitterName,
-        url: 'https://www.facebook.com/${artist.twitterName}'),
+        url: 'https://twitter.com/${artist.twitterName}'),
   ];
 
   late final ArtistClass artist;

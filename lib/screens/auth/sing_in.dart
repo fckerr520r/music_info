@@ -71,7 +71,7 @@ class _SingInState extends State<SingIn> {
                     val!.isNotEmpty ? null : 'Email should be valid'.tr,
                 controller: _emailController,
                 decoration: new InputDecoration(
-                  labelText: 'Email Address'.tr,
+                  labelText: 'Email',
                   labelStyle: TextStyle(fontSize: 16.0, color: Colors.grey),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
@@ -149,13 +149,14 @@ class _SingInState extends State<SingIn> {
                     child: InkWell(
                       child: Align(
                         child: Text(
-                          'Forget password?'.tr,
+                          // 'Forget password?'.tr,
+                          '',
                           style: TextStyle(
                               fontSize: 13.5,
                               fontWeight: FontWeight.bold,
                               decoration: TextDecoration.underline,
                               textBaseline: TextBaseline.ideographic,
-                              color: Colors.white70),
+                              color: Colors.grey),
                         ),
                         alignment: Alignment(0.0, 0.0),
                       ),
