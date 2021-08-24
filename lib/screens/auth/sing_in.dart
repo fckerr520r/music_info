@@ -30,7 +30,7 @@ class _SingInState extends State<SingIn> {
           .user;
       setState(() {
         if (user != null) {
-          Fluttertoast.showToast(msg: "User auth");
+          Fluttertoast.showToast(msg: 'Successful login');
           Navigator.of(context).pop();
         }
       });

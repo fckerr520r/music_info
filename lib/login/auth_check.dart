@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:music_lyrics/screens/auth/auth_welcome.dart';
 import 'package:music_lyrics/screens/basic/main_screen.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class HomePage extends StatelessWidget {
               return MainScreen();
             } else if (snapshot.hasError) {
               return Center(
-                child: Text('Something went wrong.'),
+                child: Text('Something went wrong'.tr),
               );
             } else {
               return WelcomeWidget();

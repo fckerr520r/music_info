@@ -16,6 +16,7 @@ class AppTranslations extends Translations {
           'User created': 'User created',
           'Password (6-20 characters)': 'Password (6-20 characters)',
           'Confirm password': 'Confirm password',
+          'Successful login': 'Successful login',
 
           'Settings': 'Settings',
           'Language': 'Language',
@@ -26,7 +27,7 @@ class AppTranslations extends Translations {
           "Search": "Search",
 
           'Trending now': 'Top 10 in the world',
-          'Something went wrong 🙁': 'Something went wrong 🙁',
+          'Something went wrong': 'Something went wrong 🙁',
           'Popular artist (country)': 'Popular artists of Belarus',
           'Popular songs (country)': 'Top 10 Belarus',
           'Popular songs': 'Popular songs',
@@ -50,6 +51,7 @@ class AppTranslations extends Translations {
           'User created': 'Потльзователь создан',
           'Password (6-20 characters)': 'Пароль (6-20 символов)',
           'Confirm password': 'Подтвердите пароль',
+          'Successful login' :'Пользователь аутентифицирован',
 
           'Settings': 'Настройки',
           'Language': 'Язык',
@@ -60,7 +62,7 @@ class AppTranslations extends Translations {
           'Search': 'Поиск',
 
           'Trending now': 'Топ-10 в мире',
-          'Something went wrong 🙁': 'Что-то пошло не так🙁',
+          'Something went wrong': 'Что-то пошло не так 🙁',
           'Popular artist (country)': 'Популярные исполнители Беларуси',
           'Popular songs (country)': 'Топ-10 Беларуси',
           'Popular songs': 'Популярные песни',

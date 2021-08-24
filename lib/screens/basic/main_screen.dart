@@ -93,7 +93,7 @@ class _MainScreenState extends State<MainScreen> {
                       Column(
                         children: <Widget>[
                           Text(
-                            "Something went wrong 🙁".tr,
+                            'Something went wrong'.tr,
                             style: TextStyle(color: Colors.white, fontSize: 20),
                           )
                         ],
