@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">music_lyrics</string>
+    <string name="facebook_app_id">1418638455173634</string>
+    <string name="fb_login_protocol_scheme">fb1418638455173634</string>
+</resources>
