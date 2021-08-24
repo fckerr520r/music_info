@@ -6,11 +6,11 @@ Music Info - it is a mobile application that provides information about tracks a
 
 Watch the [full video](https://youtu.be/1U8ityo9Kc8).
 
-![auth screen][https://i.postimg.cc/3NvJ0Typ/image.png]
-![main screen][https://i.postimg.cc/TYbpprmS/image.png]
+![auth screen](https://i.postimg.cc/3NvJ0Typ/image.png)
+![main screen](https://i.postimg.cc/TYbpprmS/image.png)
 
-![artist][https://i.postimg.cc/HxRTmkY5/image.png]
-![song][https://i.postimg.cc/FKkPqrBw/image.png]
+![artist](https://i.postimg.cc/HxRTmkY5/image.png)
+![song](https://i.postimg.cc/FKkPqrBw/image.png)
 
 ## Getting Started
 
