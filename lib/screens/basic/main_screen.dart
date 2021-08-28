@@ -40,20 +40,25 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Future<void> getJsonData() async {
-    _listTopArtists = await GeniusRepository().getListArtist();
-    _listTopSongs = await GeniusRepository().getListSong();
-    _listTopCounrtySong = await GeniusRepository().getTopCounrtySong();
+    await Future.wait([
+      GeniusRepository()
+          .getListArtist()
+          .then((result) => _listTopArtists = result),
+      GeniusRepository().getListSong().then((result) => _listTopSongs = result),
+      GeniusRepository()
+          .getTopCounrtySong()
+          .then((result) => _listTopCounrtySong = result),
+    ]);
+    // _listTopArtists = await GeniusRepository().getListArtist();
+    // _listTopSongs = await GeniusRepository().getListSong();
+    // _listTopCounrtySong = await GeniusRepository().getTopCounrtySong();
     if (mounted) {
-      setState(() {
-        _isLoading = false;
-      });
+      setState(
+        () {
+          _isLoading = false;
+        },
+      );
     }
-  }
-
-  void state() {
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   @override
@@ -192,7 +197,8 @@ class _MainScreenState extends State<MainScreen> {
                       Positioned(
                         child: Padding(
                           padding: EdgeInsets.only(right: 8, left: 8),
-                          child: SizedBox(width: 204,
+                          child: SizedBox(
+                            width: 204,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -351,15 +357,13 @@ class _MainScreenState extends State<MainScreen> {
                           decoration: BoxDecoration(
                             boxShadow: [
                               BoxShadow(
-                                color: Style.HexColor(
-                                    _listTopCounrtySong[index]
-                                        .songArtPrimaryColor),
+                                color: Style.HexColor(_listTopCounrtySong[index]
+                                    .songArtPrimaryColor),
                               )
                             ],
                             image: DecorationImage(
                                 image: NetworkImage(
-                                    _listTopCounrtySong[index]
-                                        .headerImageUrl),
+                                    _listTopCounrtySong[index].headerImageUrl),
                                 fit: BoxFit.cover),
                           ),
                         ),

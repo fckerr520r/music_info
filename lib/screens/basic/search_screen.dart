@@ -39,7 +39,7 @@ class _MainSearchState extends State<MainSearch> {
         color: Style.Colors.backgroundColor,
         height: double.infinity,
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.symmetric(horizontal: 13.0, vertical: 10),
           child: Column(
             children: [
               Container(

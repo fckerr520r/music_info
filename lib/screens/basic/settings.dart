@@ -19,7 +19,7 @@ class _SettingsState extends State<Settings> {
   final String assetUserPhoto = 'assets/images/UserPhoto.jpg';
   List<Map<String, Object>> locales = ChangeLangClass().locales;
 
-  updateLocal(Locale locale, BuildContext context) {
+  updateLocal(String locale, BuildContext context) {
     ChangeLangClass().updateLocal(locale, context);
   }
 

@@ -8,15 +8,13 @@ import 'package:music_lyrics/api/genius_api/jsons/song.dart' hide Response;
 import 'package:music_lyrics/api/genius_api/jsons/track_album.dart'
     hide Response;
 import 'package:music_lyrics/api/tokens.dart';
+import 'package:music_lyrics/favorite/favorite_data.dart';
 
 class GeniusRepository {
   final client = HttpClient();
   final Dio _dio = Dio();
-
-  final String clientId = Tokens.geniusClientId;
-  final String clientSecret = Tokens.geniusClientSecret;
+  
   final String clientAccessToken = Tokens.geniusAccessToken;
-
 
   static String mainUrl = "https://api.genius.com";
 
@@ -201,5 +199,17 @@ class GeniusRepository {
       topCounrtySongList.add(song);
     }
     return topCounrtySongList;
+  }
+
+  Future<List<Song>> getFavoriteSongs() async {
+    List<int> songIds = await FavoriteSongClass().loadFavoriteSongsId();
+    List<Song> favoriteSongList = [];
+    if (songIds.isNotEmpty) {
+      for (var i = 0; i < songIds.length; i++) {
+        final Song song = await getSong(songIds[i]);
+        favoriteSongList.add(song);
+      }
+    }
+    return favoriteSongList;
   }
 }

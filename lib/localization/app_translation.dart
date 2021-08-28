@@ -26,6 +26,12 @@ class AppTranslations extends Translations {
           'Home': 'Home',
           "Search": "Search",
 
+          'Song deleted': 'Song deleted',
+          'Song added': 'Song added',
+
+          'Favorite': 'Favorite',
+          'The list is empty': 'The list is empty',
+
           'Trending now': 'Top 10 in the world',
           'Something went wrong': 'Something went wrong 🙁',
           'Popular artist (country)': 'Popular artists of Belarus',
@@ -60,6 +66,12 @@ class AppTranslations extends Translations {
 
           'Home': 'Главная',
           'Search': 'Поиск',
+
+          'Song deleted': 'Песня удалена из избранного',
+          'Song added': 'Песня добавлена в избранное',
+
+          'Favorite': 'Избранное',
+          'The list is empty': 'Список пуст',
 
           'Trending now': 'Топ-10 в мире',
           'Something went wrong': 'Что-то пошло не так 🙁',

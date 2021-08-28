@@ -92,6 +92,22 @@ class _DrawerMainState extends State<DrawerMain> {
                 Navigator.of(context).pushReplacementNamed('/search');
               },
             ),
+            ListTile(
+              leading: Icon(
+                Icons.bookmark,
+                color: Colors.white,
+              ),
+              title: Text(
+                'Favorite'.tr,
+                style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+              onTap: () {
+                Navigator.of(context).pushReplacementNamed('/favorite');
+              },
+            ),
             Divider(
               color: Style.Colors.backgroundColorLight,
               thickness: 1,
@@ -132,7 +148,7 @@ class _DrawerMainState extends State<DrawerMain> {
                 final provider =
                     Provider.of<GoogleSignInProvider>(context, listen: false);
                 provider.logout();
-                
+                Navigator.of(context).pop();
               },
             )
           ],

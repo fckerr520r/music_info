@@ -1,9 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:music_lyrics/api/genius_api/genius_repository.dart';
 import 'package:music_lyrics/api/genius_api/jsons/song.dart';
 import 'package:music_lyrics/design/theme_colors.dart' as Style;
+import 'package:music_lyrics/favorite/favorite_data.dart';
 import 'package:music_lyrics/screens/basic/artist_info_widgets/artist_info_main_screen.dart';
 import 'package:music_lyrics/special_widget/loading_widget.dart';
 import 'package:intl/intl.dart';
@@ -38,6 +40,7 @@ class _SongInfoState extends State<SongInfo> {
 
   late final Song song;
   bool _isLoading = true;
+  bool checkFavorite = false;
 
   @override
   void initState() {
@@ -45,8 +48,36 @@ class _SongInfoState extends State<SongInfo> {
     getData();
   }
 
+  _addFavorite() async {
+    await FavoriteSongClass().addFavoriteSongs(songId);
+    setState(() {
+      checkFavorite = true;
+      Fluttertoast.showToast(
+        msg: 'Song added'.tr,
+        backgroundColor: Style.Colors.letterColorGreyLight,
+        textColor: Colors.white,
+      );
+    });
+  }
+
+  _deleteFavorite() async {
+    await FavoriteSongClass().deleteFavoriteSongs(songId);
+    setState(() {
+      checkFavorite = false;
+      Fluttertoast.showToast(
+        msg: 'Song deleted'.tr,
+        backgroundColor: Style.Colors.letterColorGreyLight,
+        textColor: Colors.white,
+      );
+    });
+  }
+
   Future<void> getData() async {
     song = await GeniusRepository().getSong(songId);
+
+    if (await FavoriteSongClass().checkFavoriteSongs(song.id)) {
+      checkFavorite = true;
+    }
 
     for (var i = 0; i < song.media.length; i++) {
       if (song.media[i].provider == 'youtube') {
@@ -122,6 +153,31 @@ class _SongInfoState extends State<SongInfo> {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Style.Colors.backgroundColorLight,
+            title: _isLoading
+                ? Text('')
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          song.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      InkWell(
+                        child: checkFavorite
+                            ? Icon(
+                                Icons.bookmark_added,
+                                color: Style.Colors.letterColorRed,
+                              )
+                            : Icon(
+                                Icons.bookmark_add,
+                              ),
+                        onTap: checkFavorite ? _deleteFavorite : _addFavorite,
+                      ),
+                    ],
+                  ),
           ),
           body: _isLoading
               ? LoadingWidget()
@@ -145,7 +201,7 @@ class _SongInfoState extends State<SongInfo> {
                                   ],
                                   image: DecorationImage(
                                     image: NetworkImage(song.songArtImageUrl),
-                                    fit: BoxFit.fitWidth,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                                 foregroundDecoration: BoxDecoration(
