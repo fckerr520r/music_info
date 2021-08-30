@@ -39,7 +39,6 @@ class ChangeLangClass {
   Future<String> changeLocal() async {
     final storage = await _storage;
     final lang = storage.getString('language');
-    print(lang);
     return lang.toString();
   }
 }
