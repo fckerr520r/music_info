@@ -17,38 +17,33 @@ class WelcomeWidget extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
-        height: double.infinity,
-        color: Style.Colors.backgroundColor,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Stack(
           children: [
-            Padding(
-              padding:
-                  EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
-            ),
-            Container(
-              width: 4000,
-              height: 200,
+            Center(
               child: Image.asset(assetMain, fit: BoxFit.cover),
             ),
-            Column(
-              children: [
-                // _FacebookSingInWidget(),
-                SizedBox(height: 15),
-                _GoogleSingInWidget(),
-                SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _SingInWidget(),
-                      _SingUpWidget(),
-                    ],
+            Positioned(
+              bottom: 0,
+              right: 0,
+              left: 0,
+              child: Column(
+                children: [
+                  // _FacebookSingInWidget(),
+                  // SizedBox(height: 15),
+                  _GoogleSingInWidget(),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _SingInWidget(),
+                        _SingUpWidget(),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

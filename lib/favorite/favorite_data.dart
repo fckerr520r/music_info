@@ -2,12 +2,23 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class FavoriteSongClass {
   final _storage = SharedPreferences.getInstance();
+  static const idsKey = 'ids';
+  List<int> favoriteSongId = [];
+
+  // Future<List<String>> getFavoriteSongList() async{
+  //   final storage = await _storage;
+  //   List<int> favoriteSongId = [];
+  //   final favoriteSongIdString = storage.getStringList(idsKey)!.toList();
+  //   return favoriteSongIdString;
+  // }
+
 
   Future<List<int>> loadFavoriteSongsId() async {
     final storage = await _storage;
+
     List<int> favoriteSongId = [];
     try {
-      final favoriteSongIdString = storage.getStringList('ids')!.toList();
+      final favoriteSongIdString = storage.getStringList(idsKey)!.toList();
       favoriteSongId = favoriteSongIdString.map(int.parse).toList();
     } catch (e) {}
 
@@ -18,20 +29,19 @@ class FavoriteSongClass {
     final storage = await _storage;
     List<String> favoriteSongIdString = [];
     try {
-      favoriteSongIdString = storage.getStringList('ids')!.toList();
+      favoriteSongIdString = storage.getStringList(idsKey)!.toList();
     } catch (e) {}
     favoriteSongIdString.add(id.toString());
-    await storage.setStringList('ids', favoriteSongIdString);
+    await storage.setStringList(idsKey, favoriteSongIdString);
   }
 
   Future deleteFavoriteSongs(int id) async {
     final storage = await _storage;
-    List<String> favoriteSongIdString = [];
-    try {
-      favoriteSongIdString = storage.getStringList('ids')!.toList();
-      favoriteSongIdString.remove(id.toString());
-      await storage.setStringList('ids', favoriteSongIdString);
-    } catch (e) {}
+    List<String>? favoriteSongIdString = [];
+
+    favoriteSongIdString = storage.getStringList(idsKey)!.toList();
+    favoriteSongIdString.remove(id.toString());
+    await storage.setStringList(idsKey, favoriteSongIdString);
   }
 
   Future<bool> checkFavoriteSongs(int id) async {
@@ -39,7 +49,7 @@ class FavoriteSongClass {
     bool check = false;
     List<String> favoriteSongIdString = [];
     try {
-      favoriteSongIdString = storage.getStringList('ids')!.toList();
+      favoriteSongIdString = storage.getStringList(idsKey)!.toList();
       check = favoriteSongIdString.contains(id.toString());
     } catch (e) {}
     return check;

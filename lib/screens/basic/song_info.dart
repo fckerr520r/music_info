@@ -152,7 +152,6 @@ class _SongInfoState extends State<SongInfo> {
       builder: (context, player) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: Style.Colors.backgroundColorLight,
             title: _isLoading
                 ? Text('')
                 : Row(
@@ -181,340 +180,331 @@ class _SongInfoState extends State<SongInfo> {
           ),
           body: _isLoading
               ? LoadingWidget()
-              : Container(
-                  color: Style.Colors.backgroundColor,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: 400,
-                          child: Stack(
-                            children: <Widget>[
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Style.HexColor(
-                                          song.songArtPrimaryColor),
-                                    ),
-                                  ],
-                                  image: DecorationImage(
-                                    image: NetworkImage(song.songArtImageUrl),
-                                    fit: BoxFit.cover,
+              : SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 400,
+                        child: Stack(
+                          children: <Widget>[
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Style.Colors.backgroundColorLight,
                                   ),
+                                ],
+                                image: DecorationImage(
+                                  image: NetworkImage(song.songArtImageUrl),
+                                  fit: BoxFit.cover,
                                 ),
-                                foregroundDecoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                    colors: [
-                                      Style.Colors.backgroundColor
-                                          .withOpacity(0.0),
-                                      Style.Colors.backgroundColor
-                                          .withOpacity(0.5),
-                                      Style.Colors.backgroundColor
-                                          .withOpacity(1),
+                              ),
+                              foregroundDecoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    Style.Colors.backgroundColor
+                                        .withOpacity(0.0),
+                                    Style.Colors.backgroundColor
+                                        .withOpacity(0.5),
+                                    Style.Colors.backgroundColor.withOpacity(1),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: 330,
+                              left: 15,
+                              right: 15,
+                              child: AutoSizeText(
+                                song.title,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                maxFontSize: 30,
+                                minFontSize: 27,
+                                textAlign: TextAlign.start,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 13),
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: SizedBox(
+                                height: 125,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ArtistInfo(
+                                          artistId: song.primaryArtist.id,
+                                          artistImageUrl:
+                                              song.primaryArtist.imageUrl,
+                                          artistName: song.primaryArtist.name,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Stack(
+                                    children: <Widget>[
+                                      Positioned(
+                                        left: 0,
+                                        top: 5,
+                                        child: Container(
+                                          child: CircleAvatar(
+                                            radius: 60,
+                                            backgroundColor:
+                                                Style.Colors.backgroundColor,
+                                            child: CircleAvatar(
+                                              radius: 57,
+                                              backgroundColor: Style
+                                                  .Colors.backgroundColorLight,
+                                              backgroundImage: NetworkImage(
+                                                  song.primaryArtist.imageUrl),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        top: 50,
+                                        left: 133,
+                                        right: 13,
+                                        child: AutoSizeText(
+                                          song.primaryArtist.name,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          maxFontSize: 20,
+                                          minFontSize: 17,
+                                          textAlign: TextAlign.start,
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
                               ),
-                              Positioned(
-                                top: 330,
-                                left: 15,
-                                right: 15,
-                                child: AutoSizeText(
-                                  song.title,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  maxFontSize: 30,
-                                  minFontSize: 27,
-                                  textAlign: TextAlign.start,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 13),
-                          child: Column(
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 10),
-                                child: SizedBox(
-                                  height: 125,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => ArtistInfo(
-                                              artistId: song.primaryArtist.id),
-                                        ),
-                                      );
-                                    },
-                                    child: Stack(
-                                      children: <Widget>[
-                                        Positioned(
-                                          left: 0,
-                                          top: 5,
-                                          child: Container(
-                                            child: CircleAvatar(
-                                              radius: 60,
-                                              backgroundColor:
-                                                  Style.Colors.backgroundColor,
-                                              child: CircleAvatar(
-                                                radius: 57,
-                                                backgroundColor: Style.Colors
-                                                    .backgroundColorLight,
-                                                backgroundImage: NetworkImage(
-                                                    song.primaryArtist
-                                                        .imageUrl),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          top: 50,
-                                          left: 133,
-                                          right: 13,
-                                          child: AutoSizeText(
-                                            song.primaryArtist.name,
+                            ),
+                            _featuredArtists != ''
+                                ? Container(
+                                    padding: const EdgeInsets.only(bottom: 5),
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 1),
+                                          child: Text(
+                                            'Featuring'.tr,
                                             style: TextStyle(
                                               color: Colors.white,
+                                              fontSize: 17,
                                               fontWeight: FontWeight.bold,
                                             ),
-                                            maxFontSize: 20,
-                                            minFontSize: 17,
-                                            textAlign: TextAlign.start,
-                                            maxLines: 3,
-                                            overflow: TextOverflow.ellipsis,
                                           ),
+                                        ),
+                                        Text(
+                                          _featuredArtists.toString(),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                          ),
+                                          textAlign: TextAlign.start,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ],
                                     ),
-                                  ),
+                                  )
+                                : SizedBox.shrink(),
+                            song.album != null
+                                ? Container(
+                                    padding: const EdgeInsets.only(bottom: 5),
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 1),
+                                          child: Text(
+                                            'Album'.tr,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          song.album!.name,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                          ),
+                                          textAlign: TextAlign.start,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : SizedBox.shrink(),
+                            _writeredArtists != ''
+                                ? Container(
+                                    padding: const EdgeInsets.only(bottom: 5),
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 1),
+                                          child: Text(
+                                            'Writer Artists'.tr,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          _writeredArtists.toString(),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                          ),
+                                          textAlign: TextAlign.start,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : SizedBox.shrink(),
+                            _producerArtists != ''
+                                ? Container(
+                                    padding: const EdgeInsets.only(bottom: 15),
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 1),
+                                          child: Text(
+                                            'Producer Artists'.tr,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          _producerArtists.toString(),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                          ),
+                                          textAlign: TextAlign.start,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : SizedBox.shrink(),
+                            Column(
+                              children: <Widget>[
+                                code == 'dQw4w9WgXcQ' && code == 'null'
+                                    ? SizedBox.shrink()
+                                    : Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Expanded(
+                                            child: Divider(
+                                              color: Colors.white,
+                                              thickness: 0.7,
+                                              endIndent: 5,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Official video'.tr,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Divider(
+                                              color: Colors.white,
+                                              thickness: 0.7,
+                                              indent: 5,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  child: player,
                                 ),
-                              ),
-                              _featuredArtists != ''
-                                  ? Container(
-                                      padding: const EdgeInsets.only(bottom: 5),
-                                      width: MediaQuery.of(context).size.width,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                song.releaseDate != null
+                                    ? Column(
                                         children: [
+                                          Divider(
+                                              color: Colors.white,
+                                              thickness: 0.7,
+                                              indent: 0,
+                                              endIndent: 0),
                                           Padding(
                                             padding: const EdgeInsets.only(
-                                                bottom: 1),
+                                                top: 3, bottom: 5),
                                             child: Text(
-                                              'Featuring'.tr,
+                                              'Release date'.tr +
+                                                  DateFormat.yMMMMd().format(
+                                                      song.releaseDate!),
                                               style: TextStyle(
                                                 color: Colors.white,
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            _featuredArtists.toString(),
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 14,
-                                            ),
-                                            textAlign: TextAlign.start,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  : SizedBox.shrink(),
-                              song.album != null
-                                  ? Container(
-                                      padding: const EdgeInsets.only(bottom: 5),
-                                      width: MediaQuery.of(context).size.width,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 1),
-                                            child: Text(
-                                              'Album'.tr,
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            song.album!.name,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 14,
-                                            ),
-                                            textAlign: TextAlign.start,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  : SizedBox.shrink(),
-                              _writeredArtists != ''
-                                  ? Container(
-                                      padding: const EdgeInsets.only(bottom: 5),
-                                      width: MediaQuery.of(context).size.width,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 1),
-                                            child: Text(
-                                              'Writer Artists'.tr,
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            _writeredArtists.toString(),
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 14,
-                                            ),
-                                            textAlign: TextAlign.start,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  : SizedBox.shrink(),
-                              _producerArtists != ''
-                                  ? Container(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 15),
-                                      width: MediaQuery.of(context).size.width,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 1),
-                                            child: Text(
-                                              'Producer Artists'.tr,
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            _producerArtists.toString(),
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 14,
-                                            ),
-                                            textAlign: TextAlign.start,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  : SizedBox.shrink(),
-                              // YoutubePlayerBuilder(
-                              //   player: YoutubePlayer(
-                              //     controller: _ytubeController,
-                              //   ),
-                              //   builder: (context, player) {
-                              //     return
-                              Column(
-                                children: <Widget>[
-                                  code == 'dQw4w9WgXcQ' && code == 'null'
-                                      ? SizedBox.shrink()
-                                      : Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            Expanded(
-                                              child: Divider(
-                                                color: Colors.white,
-                                                thickness: 0.7,
-                                                endIndent: 5,
-                                              ),
-                                            ),
-                                            Text(
-                                              'Official video'.tr,
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 13,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.w600,
                                               ),
+                                              textAlign: TextAlign.start,
+                                              maxLines: 3,
+                                              overflow: TextOverflow.ellipsis,
                                             ),
-                                            Expanded(
-                                              child: Divider(
-                                                color: Colors.white,
-                                                thickness: 0.7,
-                                                indent: 5,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10),
-                                    child: player,
-                                  ),
-                                  song.releaseDate != null
-                                      ? Column(
-                                          children: [
-                                            Divider(
-                                                color: Colors.white,
-                                                thickness: 0.7,
-                                                indent: 0,
-                                                endIndent: 0),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 3, bottom: 5),
-                                              child: Text(
-                                                'Release date'.tr +
-                                                    DateFormat.yMMMMd().format(
-                                                        song.releaseDate!),
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                                textAlign: TextAlign.start,
-                                                maxLines: 3,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      : SizedBox.shrink(),
-                                ],
-                              ),
-                            ],
-                          ),
+                                          ),
+                                        ],
+                                      )
+                                    : SizedBox.shrink(),
+                              ],
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
         );

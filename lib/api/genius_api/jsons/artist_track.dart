@@ -69,8 +69,8 @@ class SongA {
         required this.title,
         required this.titleWithFeatured,
         required this.url,
-        required this.songArtPrimaryColor,
-        required this.songArtTextColor,
+        // required this.songArtPrimaryColor,
+        // required this.songArtTextColor,
         required this.primaryArtist,
     });
 
@@ -85,8 +85,8 @@ class SongA {
     String title;
     String titleWithFeatured;
     String url;
-    String songArtPrimaryColor;
-    String songArtTextColor;
+    // String songArtPrimaryColor;
+    // String songArtTextColor;
     PrimaryArtist primaryArtist;
 
     factory SongA.fromJson(Map<String, dynamic> json) => SongA(
@@ -101,8 +101,8 @@ class SongA {
         title: json["title"],
         titleWithFeatured: json["title_with_featured"],
         url: json["url"],
-        songArtPrimaryColor: json["song_art_primary_color"],
-        songArtTextColor: json["song_art_text_color"],
+        // songArtPrimaryColor: json["song_art_primary_color"],
+        // songArtTextColor: json["song_art_text_color"],
         primaryArtist: PrimaryArtist.fromJson(json["primary_artist"]),
     );
 
@@ -118,8 +118,8 @@ class SongA {
         "title": title,
         "title_with_featured": titleWithFeatured,
         "url": url,
-        "song_art_primary_color": songArtPrimaryColor,
-        "song_art_text_color": songArtTextColor,
+        // "song_art_primary_color": songArtPrimaryColor,
+        // "song_art_text_color": songArtTextColor,
         "primary_artist": primaryArtist.toJson(),
     };
 }

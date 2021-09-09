@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:music_lyrics/screens/auth/auth_welcome.dart';
-import 'package:music_lyrics/screens/basic/main_screen.dart';
 import 'package:get/get.dart';
+import 'package:music_lyrics/special_widget/bottom_nav_bar.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

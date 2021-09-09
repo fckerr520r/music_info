@@ -76,12 +76,9 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Style.Colors.backgroundColorLight,
-      ),
-      body: Container(
+      appBar: AppBar(),
+      body: SizedBox(
         width: double.infinity,
-        color: Style.Colors.backgroundColor,
         child: Padding(
           padding: const EdgeInsets.only(top: 15),
           child: Column(

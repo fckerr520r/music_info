@@ -136,7 +136,7 @@ class GeniusRepository {
     var params = {
       'access_token': clientAccessToken,
       'sort': 'popularity',
-      'per_page': 10,
+      'per_page': 15,
     };
     try {
       String thisArtistSongsUrl = '$artistUrl/$idArtist/songs';
@@ -186,9 +186,9 @@ class GeniusRepository {
       7027615,
       3446542,
       6919586,
-      // 7078004,
-      // 6860574,
-      // 213161,
+      7078004,
+      6860574,
+      213161,
       // 6837693,
       // 6711330,
       // 6998824,

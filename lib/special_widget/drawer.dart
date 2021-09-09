@@ -12,9 +12,6 @@ class DrawerMain extends StatefulWidget {
   _DrawerMainState createState() => _DrawerMainState();
 }
 
-final user = FirebaseAuth.instance.currentUser;
-final String assetUserPhoto = 'assets/images/UserPhoto.jpg';
-
 class _DrawerMainState extends State<DrawerMain> {
   dynamic user = FirebaseAuth.instance.currentUser;
   final String assetUserPhoto = 'assets/images/UserPhoto.jpg';

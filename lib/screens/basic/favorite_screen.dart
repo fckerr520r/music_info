@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:music_lyrics/api/genius_api/genius_repository.dart';
 import 'package:music_lyrics/api/genius_api/jsons/song.dart';
-import 'package:music_lyrics/screens/basic/song_info.dart';
+import 'package:music_lyrics/single_widgets/song_small_pic.dart';
 import 'package:music_lyrics/special_widget/drawer.dart';
 import 'package:music_lyrics/design/theme_colors.dart' as Style;
 import 'package:music_lyrics/special_widget/loading_widget.dart';
@@ -60,81 +60,13 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
                         keyboardDismissBehavior:
                             ScrollViewKeyboardDismissBehavior.onDrag,
                         itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () {
-                              currentSong = _favoriteList[index];
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      SongInfo(songId: currentSong.id),
-                                ),
-                              );
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    width: double.maxFinite,
-                                    height: 70,
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          child: Image.network(
-                                            _favoriteList[index].headerImageUrl,
-                                            width: 100,
-                                            height: 80,
-                                            fit: BoxFit.cover,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Style.HexColor(
-                                                    _favoriteList[index]
-                                                        .songArtPrimaryColor),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(width: 15),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(height: 13),
-                                              Text(
-                                                _favoriteList[index].title,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 15,
-                                                ),
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              SizedBox(height: 9),
-                                              Text(
-                                                  _favoriteList[index]
-                                                      .primaryArtist
-                                                      .name
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                    color: Colors.grey,
-                                                    fontSize: 14,
-                                                  ),
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                          return SongSmallPicture(
+                            songId: _favoriteList[index].id,
+                            artistName: _favoriteList[index].primaryArtist.name,
+                            backgroundColor: Style.Colors.backgroundColorLight,
+                            //     _favoriteList[index].songArtPrimaryColor,
+                            picUrl: _favoriteList[index].headerImageUrl,
+                            nameSong: _favoriteList[index].title,
                           );
                         },
                       ),

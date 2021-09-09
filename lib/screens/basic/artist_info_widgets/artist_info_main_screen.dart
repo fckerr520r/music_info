@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:music_lyrics/api/genius_api/jsons/artist.dart';
@@ -5,21 +6,31 @@ import 'package:music_lyrics/api/genius_api/jsons/artist_track.dart';
 import 'package:music_lyrics/design/theme_colors.dart' as Style;
 import 'package:music_lyrics/api/genius_api/genius_repository.dart';
 import 'package:music_lyrics/screens/basic/artist_info_widgets/artist_info_data.dart';
-import 'package:music_lyrics/screens/basic/song_info.dart';
+import 'package:music_lyrics/single_widgets/song_small_pic.dart';
 import 'package:music_lyrics/special_widget/loading_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
 
 class ArtistInfo extends StatefulWidget {
-  ArtistInfo({Key? key, required this.artistId}) : super(key: key);
+  ArtistInfo({
+    Key? key,
+    required this.artistName,
+    required this.artistId,
+    required this.artistImageUrl,
+  }) : super(key: key);
   final int artistId;
+  final String artistImageUrl;
+  final String artistName;
   @override
-  _ArtistInfoState createState() => _ArtistInfoState(artistId);
+  _ArtistInfoState createState() =>
+      _ArtistInfoState(artistId, artistImageUrl, artistName);
 }
 
 class _ArtistInfoState extends State<ArtistInfo> {
-  late final int artistId;
-  _ArtistInfoState(this.artistId);
+  final int artistId;
+  final String artistImageUrl;
+  final String artistName;
+  _ArtistInfoState(this.artistId, this.artistImageUrl, this.artistName);
   late final List<SongA> listArtistSongs;
 
   late List<SocialData> socials = [
@@ -46,7 +57,6 @@ class _ArtistInfoState extends State<ArtistInfo> {
     getAtristInfo();
   }
 
-
   Future<void> getAtristInfo() async {
     artist = await GeniusRepository().getArtist(artistId);
     listArtistSongs = await GeniusRepository().getArtistTrack(artistId);
@@ -60,141 +70,133 @@ class _ArtistInfoState extends State<ArtistInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Style.Colors.backgroundColorLight,
-      ),
-      body: _isLoading
-          ? LoadingWidget()
-          : Container(
-              color: Style.Colors.backgroundColor,
-              child: Column(
-                children: [
-                  Images(artist: artist),
-                  ListTileTheme(
-                    tileColor: Style.Colors.backgroundColor,
-                    child: Expanded(
-                      child: ArtistInfoWidget(
-                        listArtistSongs: listArtistSongs,
-                        artist: artist,
-                        socials: socials,
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            backgroundColor: Style.Colors.backgroundColorLight,
+            pinned: true,
+            snap: false,
+            floating: false,
+            expandedHeight: 350,
+            flexibleSpace: FlexibleSpaceBar(
+              title: SizedBox(
+                height: 350,
+                width: MediaQuery.of(context).size.width,
+                child: Stack(
+                  alignment: AlignmentDirectional.center,
+                  children: [
+                    Positioned(
+                      bottom: 40,
+                      child: CircleAvatar(
+                        radius: 53,
+                        backgroundColor: Style.Colors.backgroundColor,
+                        child: Hero(
+                          tag: 'artist_avatar$artistId',
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(artistImageUrl),
+                            radius: 50,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    Positioned(
+                      bottom: 0,
+                      right: 13,
+                      left: 13,
+                      child: AutoSizeText(
+                        artistName,
+                        textAlign: TextAlign.center,
+                        maxFontSize: 20,
+                        minFontSize: 15,
+                        maxLines: 2,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
+              centerTitle: true,
+              background: _isLoading
+                  ? SizedBox.square()
+                  : Container(
+                      height: 330,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(artist.headerImageUrl),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      foregroundDecoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Style.Colors.backgroundColor.withOpacity(0.0),
+                            Style.Colors.backgroundColor.withOpacity(0.2),
+                            Style.Colors.backgroundColor.withOpacity(0.4),
+                            Style.Colors.backgroundColor.withOpacity(0.8),
+                            Style.Colors.backgroundColor.withOpacity(1),
+                          ],
+                        ),
+                      ),
+                    ),
             ),
+          ),
+          _isLoading
+              ? SliverList(
+                  delegate: SliverChildListDelegate([
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height - 400,
+                    child: LoadingWidget(),
+                  ),
+                ]))
+              : SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      if (index == 0) {
+                        return AtristInfo(
+                          artist: artist,
+                          socials: socials,
+                        );
+                      }
+                      SongA currentSong = listArtistSongs[index - 1];
+                      return SongSmallPicture(
+                        songId: currentSong.id,
+                        artistName: currentSong.primaryArtist.name,
+                        backgroundColor: Style.Colors.backgroundColorLight,
+                        // searchList[index].result.songArtPrimaryColor,
+                        picUrl: currentSong.songArtImageUrl,
+                        nameSong: currentSong.title,
+                      );
+                    },
+                    childCount: 1 + listArtistSongs.length,
+                  ),
+                ),
+        ],
+      ),
     );
   }
 }
 
-class ArtistInfoWidget extends StatelessWidget {
-  const ArtistInfoWidget(
-      {Key? key,
-      required this.listArtistSongs,
-      required this.artist,
-      required this.socials})
-      : super(key: key);
-  final List<SongA> listArtistSongs;
+class AtristInfo extends StatelessWidget {
+  const AtristInfo({
+    Key? key,
+    required this.artist,
+    required this.socials,
+  }) : super(key: key);
   final ArtistClass artist;
   final List<SocialData> socials;
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 1 + listArtistSongs.length,
-      itemBuilder: (BuildContext context, int index) {
-        if (index == 0) {
-          return _atristInfo();
-        }
-        SongA currentSong = listArtistSongs[index - 1];
-        return InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SongInfo(songId: currentSong.id),
-              ),
-            );
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 13),
-            child: Stack(
-              children: [
-                Container(
-                  width: double.maxFinite,
-                  height: 70,
-                  child: Row(
-                    children: [
-                      Container(
-                        child: Image.network(
-                          currentSong.songArtImageUrl,
-                          width: 100,
-                          height: 80,
-                          fit: BoxFit.cover,
-                        ),
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Style.HexColor(
-                                  currentSong.songArtPrimaryColor),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 15),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 13),
-                            Text(
-                              currentSong.title,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            SizedBox(height: 9),
-                            Text(currentSong.primaryArtist.name.toString(),
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 14,
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _atristInfo() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 13),
       child: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.only(top: 5),
-            width: double.infinity,
-            child: Text(
-              artist.name,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
+          SizedBox(height: 5),
           artist.alternateNames.length == 0
               ? SizedBox(height: 5)
               : Container(
@@ -270,9 +272,9 @@ class _SocialRow extends StatelessWidget {
   }) : super(key: key);
 
   final SocialData data;
-  
-  void redirecion(String url)  {
-      launch(url);
+
+  void redirecion(String url) {
+    launch(url);
   }
 
   @override
@@ -282,7 +284,7 @@ class _SocialRow extends StatelessWidget {
         padding: const EdgeInsets.only(top: 10, right: 15),
         child: GestureDetector(
           onTap: () {
-           redirecion(data.url);
+            redirecion(data.url);
           },
           child: Column(
             children: [
@@ -299,49 +301,5 @@ class _SocialRow extends StatelessWidget {
     } else {
       return SizedBox.shrink();
     }
-  }
-}
-
-class Images extends StatelessWidget {
-  const Images({
-    Key? key,
-    required this.artist,
-  }) : super(key: key);
-
-  final ArtistClass artist;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 240,
-      child: Stack(
-        children: <Widget>[
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 200,
-            decoration: BoxDecoration(
-              color: Style.Colors.backgroundColorLight,
-              image: DecorationImage(
-                image: NetworkImage(artist.headerImageUrl),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Positioned(
-            top: 80,
-            left: 16,
-            child: CircleAvatar(
-              radius: 80,
-              backgroundColor: Style.Colors.backgroundColor,
-              child: CircleAvatar(
-                radius: 77,
-                backgroundColor: Style.Colors.backgroundColorLight,
-                backgroundImage: NetworkImage(artist.imageUrl),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
