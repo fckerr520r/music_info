@@ -5,14 +5,6 @@ class FavoriteSongClass {
   static const idsKey = 'ids';
   List<int> favoriteSongId = [];
 
-  // Future<List<String>> getFavoriteSongList() async{
-  //   final storage = await _storage;
-  //   List<int> favoriteSongId = [];
-  //   final favoriteSongIdString = storage.getStringList(idsKey)!.toList();
-  //   return favoriteSongIdString;
-  // }
-
-
   Future<List<int>> loadFavoriteSongsId() async {
     final storage = await _storage;
 

@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:music_lyrics/localization/app_translation.dart';
 import 'package:music_lyrics/localization/change_lang.dart';
-import 'package:music_lyrics/login/auth_check.dart';
-import 'package:music_lyrics/screens/auth/auth_welcome.dart';
-import 'package:music_lyrics/screens/auth/sing_in.dart';
-import 'package:music_lyrics/screens/auth/sing_up.dart';
-import 'package:music_lyrics/screens/basic/favorite_screen.dart';
-import 'package:music_lyrics/screens/basic/search_screen.dart';
-import 'package:music_lyrics/screens/basic/settings.dart';
-import 'package:music_lyrics/special_widget/bottom_nav_bar.dart';
-import 'package:provider/provider.dart';
-import 'package:music_lyrics/design/theme_colors.dart' as Style;
+import 'package:music_lyrics/logic/cubit/home/home_cubit.dart';
+import 'package:music_lyrics/logic/cubit/log_check/log_check_cubit.dart';
+import 'package:music_lyrics/logic/cubit/search/search_cubit.dart';
+import 'package:music_lyrics/presentation/screens/auth_check.dart';
+import 'package:music_lyrics/presentation/screens/auth_welcome.dart';
+import 'package:music_lyrics/presentation/screens/sing_in.dart';
+import 'package:music_lyrics/presentation/screens/sing_up.dart';
+import 'package:music_lyrics/presentation/screens/favorite_screen.dart';
+import 'package:music_lyrics/presentation/screens/search_screen.dart';
+import 'package:music_lyrics/presentation/screens/settings.dart';
+import 'package:music_lyrics/presentation/widgets/bottom_nav_bar.dart';
+import 'package:music_lyrics/presentation/design/theme_colors.dart' as Style;
 import 'package:firebase_core/firebase_core.dart';
-import 'package:music_lyrics/firebase_service/google_sing_in.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,8 +30,18 @@ class MyApp extends StatelessWidget {
   MyApp(this.lang);
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => GoogleSignInProvider(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<UserCheckCubit>(
+          create: (context) => UserCheckCubit(),
+        ),
+        BlocProvider<HomeCubit>(
+          create: (context) => HomeCubit(),
+        ),
+        BlocProvider<SearchCubit>(
+          create: (context) => SearchCubit(),
+        ),
+      ],
       child: GetMaterialApp(
         translations: AppTranslations(),
         fallbackLocale: Locale('en'),
