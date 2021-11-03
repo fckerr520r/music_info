@@ -75,25 +75,26 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             ),
             SizedBox(height: 10),
-            BlocBuilder<SearchCubit, SearchState>(builder: (context, state) {
-              if (state is SearchInitial) {
-                return SizedBox.shrink();
-              }
-              if (state is SearchCompleted) {
-                return Expanded(
-                  child: SearchListWidget(
+            Expanded(
+              child: BlocBuilder<SearchCubit, SearchState>(
+                  builder: (context, state) {
+                if (state is SearchInitial) {
+                  return SizedBox.shrink();
+                }
+                if (state is SearchCompleted) {
+                  return SearchListWidget(
                     searchList: state.searchList,
-                  ),
-                );
-              }
-              if (state is SearchNoFind) {
-                return NoFind();
-              }
-              if (state is SearchLoading) {
-                return LoadingWidget();
-              } else
-                return LoadingWidget();
-            }),
+                  );
+                }
+                if (state is SearchNoFind) {
+                  return Center(child: Text('No data'));
+                }
+                if (state is SearchLoading) {
+                  return LoadingWidget();
+                } else
+                  return LoadingWidget();
+              }),
+            ),
           ],
         ),
       ),
@@ -110,36 +111,19 @@ class SearchListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ListView.builder(
-        itemCount: searchList.length,
-        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        itemBuilder: (BuildContext context, int index) {
-          return SongSmallPicture(
-            songId: searchList[index].result.id,
-            artistName: searchList[index].result.primaryArtist.name,
-            backgroundColor: Style.Colors.backgroundColorLight,
-            // searchList[index].result.songArtPrimaryColor,
-            picUrl: searchList[index].result.headerImageUrl,
-            nameSong: searchList[index].result.title,
-          );
-        },
-      ),
-    );
-  }
-}
-
-class NoFind extends StatelessWidget {
-  const NoFind({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.7,
-      child: Center(
-        child: Text('No data'),
-      ),
+    return ListView.builder(
+      itemCount: searchList.length,
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+      itemBuilder: (BuildContext context, int index) {
+        return SongSmallPicture(
+          songId: searchList[index].result.id,
+          artistName: searchList[index].result.primaryArtist.name,
+          backgroundColor: Style.Colors.backgroundColorLight,
+          // searchList[index].result.songArtPrimaryColor,
+          picUrl: searchList[index].result.headerImageUrl,
+          nameSong: searchList[index].result.title,
+        );
+      },
     );
   }
 }

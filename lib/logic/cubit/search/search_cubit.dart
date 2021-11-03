@@ -6,13 +6,14 @@ import 'package:music_lyrics/service/repositories/genius_repository.dart';
 part 'search_state.dart';
 
 class SearchCubit extends Cubit<SearchState> {
-  SearchCubit() : super(SearchInitial());
+  SearchCubit({required this.repository}) : super(SearchInitial());
+  final GeniusRepository repository;
   late List<Hit> que;
 
-  Future fetch(query) async {
+  Future fetch(String query) async {
     try {
       emit(SearchLoading());
-      que = await GeniusRepository().getSearch(query);
+      que = await repository.getSearch(query);
       if (que.isEmpty) {
         emit(SearchNoFind());
         return;

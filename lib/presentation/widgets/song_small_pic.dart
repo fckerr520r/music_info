@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music_lyrics/constants/specific_pic.dart';
 import 'package:music_lyrics/presentation/screens/song_info.dart';
 
 class SongSmallPicture extends StatelessWidget {
@@ -42,6 +43,14 @@ class SongSmallPicture extends StatelessWidget {
                       width: 100,
                       height: 80,
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.network(
+                          SpecificPic.errorSongPicture,
+                          width: 100,
+                          height: 80,
+                          fit: BoxFit.cover,
+                        );
+                      },
                     ),
                     decoration: BoxDecoration(
                       boxShadow: [

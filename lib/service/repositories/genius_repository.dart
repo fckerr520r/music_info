@@ -1,27 +1,33 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:music_lyrics/service/models/artist.dart' hide Response;
-import 'package:music_lyrics/service/models/artist_track.dart'
-    hide Response;
+import 'package:music_lyrics/presentation/Icons/social_icons.dart';
+import 'package:music_lyrics/service/models/artist.dart';
+import 'package:music_lyrics/service/models/artist_social_data.dart';
+import 'package:music_lyrics/service/models/artist_track.dart' hide Response;
 import 'package:music_lyrics/service/models/search.dart' hide Response;
-import 'package:music_lyrics/service/models/song.dart' hide Response;
-import 'package:music_lyrics/service/models/track_album.dart'
-    hide Response;
+import 'package:music_lyrics/service/models/song.dart';
+import 'package:music_lyrics/service/models/track_album.dart' hide Response;
 import 'package:music_lyrics/constants/tokens.dart';
-import 'package:music_lyrics/favorite/favorite_data.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GeniusRepository {
   final client = HttpClient();
-  final Dio _dio = Dio();
-  
+  final Dio _dio;
+  GeniusRepository({required Dio dio}) : _dio = dio;
   final String clientAccessToken = Tokens.geniusAccessToken;
+
+  final _storage = SharedPreferences.getInstance();
 
   static String mainUrl = "https://api.genius.com";
 
-  var songsUrl = "$mainUrl/songs";
-  var artistUrl = "$mainUrl/artists";
-  var searchUrl = "$mainUrl/search";
-  var albumUrl = "$mainUrl/albums";
+  final songsUrl = "$mainUrl/songs";
+  final artistUrl = "$mainUrl/artists";
+  final searchUrl = "$mainUrl/search";
+  final albumUrl = "$mainUrl/albums";
+
+  final artistCacheKey = 'artist_cache';
+  final topCountrySongsCacheKey = 'top_country_songs_cache';
+  final topSongsCacheKey = 'top_songs_cache';
 
   Future<ArtistClass> getArtist(int idArtist) async {
     var params = {
@@ -44,6 +50,25 @@ class GeniusRepository {
     }
   }
 
+  Future<List<SocialData>> getArtistSocials(int artistId) async {
+    final ArtistClass artist = await getArtist(artistId);
+    List<SocialData> socials = [
+      SocialData(
+          icon: SocialIcons.facebook,
+          login: artist.facebookName,
+          url: 'https://www.facebook.com/${artist.facebookName}'),
+      SocialData(
+          icon: SocialIcons.instagram,
+          login: artist.instagramName,
+          url: 'https://www.instagram.com/${artist.instagramName}/'),
+      SocialData(
+          icon: SocialIcons.twitter,
+          login: artist.twitterName,
+          url: 'https://twitter.com/${artist.twitterName}'),
+    ];
+    return socials;
+  }
+
   Future<List<ArtistClass>> getListArtist() async {
     List<int> artIds = [
       1705319,
@@ -52,17 +77,25 @@ class GeniusRepository {
       816522,
       566548,
       154390,
-      // 143013,
-      // 100956,
       2358,
       1675137,
       1717172,
       1050560
     ];
     List<ArtistClass> artistList = [];
-    for (var i = 0; i < artIds.length; i++) {
-      final ArtistClass artist = await getArtist(artIds[i]);
-      artistList.add(artist);
+    String jsonArtists;
+    final storage = await _storage;
+
+    if (storage.containsKey(artistCacheKey)) {
+      jsonArtists = storage.getString(artistCacheKey)!;
+      artistList = artistListFromJson(jsonArtists);
+    } else {
+      for (var i = 0; i < artIds.length; i++) {
+        final ArtistClass artist = await getArtist(artIds[i]);
+        artistList.add(artist);
+      }
+      jsonArtists = artistListToJson(artistList);
+      storage.setString(artistCacheKey, jsonArtists);
     }
     return artistList;
   }
@@ -99,15 +132,21 @@ class GeniusRepository {
       6594284,
       7065552,
       6830644,
-      // 6687662,
-      // 7096046,
-      // 6815419,
-      // 6702232
     ];
     List<Song> topSongList = [];
-    for (var i = 0; i < songIds.length; i++) {
-      final Song song = await getSong(songIds[i]);
-      topSongList.add(song);
+    String jsonTopSongs;
+    final storage = await _storage;
+
+    if (storage.containsKey(topSongsCacheKey)) {
+      jsonTopSongs = storage.getString(topSongsCacheKey)!;
+      topSongList = songsListFromJson(jsonTopSongs);
+    } else {
+      for (var i = 0; i < songIds.length; i++) {
+        final Song song = await getSong(songIds[i]);
+        topSongList.add(song);
+      }
+      jsonTopSongs = songsListToJson(topSongList);
+      storage.setString(topSongsCacheKey, jsonTopSongs);
     }
     return topSongList;
   }
@@ -189,27 +228,22 @@ class GeniusRepository {
       7078004,
       6860574,
       213161,
-      // 6837693,
-      // 6711330,
-      // 6998824,
     ];
     List<Song> topCounrtySongList = [];
-    for (var i = 0; i < songIds.length; i++) {
-      final Song song = await getSong(songIds[i]);
-      topCounrtySongList.add(song);
-    }
-    return topCounrtySongList;
-  }
+    String jsonTopCountrySongs;
+    final storage = await _storage;
 
-  Future<List<Song>> getFavoriteSongs() async {
-    List<int> songIds = await FavoriteSongClass().loadFavoriteSongsId();
-    List<Song> favoriteSongList = [];
-    if (songIds.isNotEmpty) {
+    if (storage.containsKey(topCountrySongsCacheKey)) {
+      jsonTopCountrySongs = storage.getString(topCountrySongsCacheKey)!;
+      topCounrtySongList = songsListFromJson(jsonTopCountrySongs);
+    } else {
       for (var i = 0; i < songIds.length; i++) {
-        final Song song = await getSong(songIds[i]);
-        favoriteSongList.add(song);
+        topCounrtySongList.add(await getSong(songIds[i]));
       }
+      jsonTopCountrySongs = songsListToJson(topCounrtySongList);
+      storage.setString(topCountrySongsCacheKey, jsonTopCountrySongs);
     }
-    return favoriteSongList;
+
+    return topCounrtySongList;
   }
 }

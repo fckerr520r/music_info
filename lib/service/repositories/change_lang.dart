@@ -18,13 +18,12 @@ class ChangeLangClass {
     },
   ];
 
-  updateLocal(String locale, BuildContext context) async {
+  updateLocal(String locale) async {
     if (locale.isNotEmpty) {
       saveLang(locale);
     }
     final lang = await changeLocal();
     if (lang != 'null') {
-      Navigator.of(context).pop();
       final newLocale = Locale(lang);
       Get.updateLocale(newLocale);
     }

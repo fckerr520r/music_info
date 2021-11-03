@@ -163,6 +163,7 @@ class _SingInState extends State<SingIn> {
                       BlocProvider.of<UserCheckCubit>(context, listen: false)
                           .emailAuth(_emailController.text.trim(),
                               _passwordController.text.trim());
+                      Navigator.of(context).pop();
                     },
                   ),
                 ),

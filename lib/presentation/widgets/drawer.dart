@@ -1,26 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:music_lyrics/constants/specific_pic.dart';
 import 'package:music_lyrics/logic/cubit/log_check/log_check_cubit.dart';
+import 'package:music_lyrics/logic/cubit/receive_user/receive_user_cubit.dart';
 import 'package:music_lyrics/presentation/design/theme_colors.dart' as Style;
 import 'package:get/get.dart';
 
-class DrawerMain extends StatefulWidget {
+class DrawerMain extends StatelessWidget {
   DrawerMain({Key? key}) : super(key: key);
-
-  @override
-  _DrawerMainState createState() => _DrawerMainState();
-}
-
-class _DrawerMainState extends State<DrawerMain> {
-  dynamic user = FirebaseAuth.instance.currentUser;
-  final String assetUserPhoto = 'assets/images/UserPhoto.jpg';
-
-  @override
-  void initState() {
-    super.initState();
-    user = FirebaseAuth.instance.currentUser;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,32 +17,49 @@ class _DrawerMainState extends State<DrawerMain> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            UserAccountsDrawerHeader(
-              accountName: user.displayName != null
-                  ? Text(
-                      user.displayName,
+            BlocBuilder<ReceiveUserCubit, ReceiveUserState>(
+              builder: (context, state) {
+                if (state is ReceiveUserComplete)
+                  return UserAccountsDrawerHeader(
+                    accountName: state.user!.displayName != null
+                        ? Text(
+                            state.user!.displayName!,
+                            style: TextStyle(
+                              fontSize: 15.0,
+                              color: Colors.white,
+                            ),
+                          )
+                        : Text(''),
+                    accountEmail: Text(
+                      state.user!.email!,
                       style: TextStyle(
                         fontSize: 15.0,
                         color: Colors.white,
                       ),
-                    )
-                  : Text(''),
-              accountEmail: Text(
-                user.email!,
-                style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.white,
-                ),
-              ),
-              currentAccountPicture: CircleAvatar(
-                radius: 40,
-                backgroundImage: user.photoURL != null
-                    ? NetworkImage(user.photoURL!)
-                    : AssetImage(assetUserPhoto) as ImageProvider,
-              ),
-              decoration: BoxDecoration(
-                color: Style.Colors.backgroundColorLight,
-              ),
+                    ),
+                    currentAccountPicture: CircleAvatar(
+                      radius: 40,
+                      backgroundImage: state.user!.photoURL != null
+                          ? NetworkImage(state.user!.photoURL!)
+                          : AssetImage(SpecificPic.defaltUserPhoto)
+                              as ImageProvider,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Style.Colors.backgroundColorLight,
+                    ),
+                  );
+                else
+                  return UserAccountsDrawerHeader(
+                    accountEmail: Text(
+                      'Error',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                    accountName: null,
+                  );
+              },
             ),
             ListTile(
               leading: Icon(
@@ -142,7 +146,8 @@ class _DrawerMainState extends State<DrawerMain> {
                     color: Style.Colors.letterColorRed),
               ),
               onTap: () {
-                BlocProvider.of<UserCheckCubit>(context, listen: false).logout();
+                BlocProvider.of<UserCheckCubit>(context, listen: false)
+                    .logout();
               },
             )
           ],

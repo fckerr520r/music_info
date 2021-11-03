@@ -8,13 +8,12 @@ import 'package:meta/meta.dart';
 part 'log_check_state.dart';
 
 class UserCheckCubit extends Cubit<UserCheckState> {
-  final googleSignIn = GoogleSignIn();
-  GoogleSignInAccount? _user;
-  GoogleSignInAccount get user => _user!;
-  late final StreamSubscription<User?> authLisener;
-
-  UserCheckCubit() : super(UserCheckInitial()) {
-    authLisener = FirebaseAuth.instance.authStateChanges().listen(
+  UserCheckCubit({
+    required this.googleAuthProvider,
+    required this.googleSignIn,
+    required this.firebaseAuth,
+  }) : super(UserCheckInitial()) {
+    authLisener = firebaseAuth.authStateChanges().listen(
       (user) {
         if (user != null) {
           emit(UserCheckYep());
@@ -24,6 +23,13 @@ class UserCheckCubit extends Cubit<UserCheckState> {
       },
     );
   }
+
+  final FirebaseAuth firebaseAuth;
+  final GoogleSignIn googleSignIn;
+  final GoogleAuthProvider googleAuthProvider;
+  GoogleSignInAccount? _user; // TODO
+  GoogleSignInAccount get user => _user!;
+  late final StreamSubscription<User?> authLisener;
 
   Future googleLogin() async {
     try {
@@ -36,8 +42,7 @@ class UserCheckCubit extends Cubit<UserCheckState> {
         idToken: googleAuth.idToken,
       );
 
-      await FirebaseAuth.instance.signInWithCredential(credential);
-      UserCheckCubit();
+      await firebaseAuth.signInWithCredential(credential);
     } catch (error) {}
   }
 
@@ -45,22 +50,20 @@ class UserCheckCubit extends Cubit<UserCheckState> {
     try {
       await googleSignIn.disconnect();
     } catch (e) {}
-    FirebaseAuth.instance.signOut();
+    firebaseAuth.signOut();
   }
 
   Future emailAuth(String email, String password) async {
     try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-          UserCheckCubit();
+      await firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
     } catch (error) {}
   }
 
   Future emailRegister(String email, String password) async {
     try {
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
-      UserCheckCubit();
+      await firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
     } catch (error) {}
   }
 

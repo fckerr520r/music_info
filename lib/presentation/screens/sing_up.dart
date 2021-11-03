@@ -240,6 +240,7 @@ class _SingUpState extends State<SingUp> {
                                   listen: false)
                               .emailRegister(_emailController.text.trim(),
                                   _passwordController.text.trim());
+                          Navigator.of(context).pop();
                         } else {
                           Fluttertoast.showToast(
                               msg: "Passwords don't match".tr);

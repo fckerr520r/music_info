@@ -1,12 +1,13 @@
-// To parse this JSON data, do
-//
-//     final trackChart = trackChartFromJson(jsonString);
-
 import 'dart:convert';
 
 TrackChart trackChartFromJson(String str) => TrackChart.fromJson(json.decode(str));
 
 String trackChartToJson(TrackChart data) => json.encode(data.toJson());
+
+List<Song> songsListFromJson(String str) => List<Song>.from(json.decode(str).map((x) => Song.fromJson(x)));
+
+String songsListToJson(List<Song> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 
 class TrackChart {
     TrackChart({
@@ -15,11 +16,11 @@ class TrackChart {
     });
 
     Meta meta;
-    Response response;
+    ResponseSong response;
 
     factory TrackChart.fromJson(Map<String, dynamic> json) => TrackChart(
         meta: Meta.fromJson(json["meta"]),
-        response: Response.fromJson(json["response"]),
+        response: ResponseSong.fromJson(json["response"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -44,14 +45,14 @@ class Meta {
     };
 }
 
-class Response {
-    Response({
+class ResponseSong {
+    ResponseSong({
         required this.song,
     });
 
     Song song;
 
-    factory Response.fromJson(Map<String, dynamic> json) => Response(
+    factory ResponseSong.fromJson(Map<String, dynamic> json) => ResponseSong(
         song: Song.fromJson(json["song"]),
     );
 
@@ -62,39 +63,33 @@ class Response {
 
 class Song {
     Song({
-        required this.apiPath,
-        required this.appleMusicId,
-        required this.appleMusicPlayerUrl,
-        required this.featuredVideo,
-        required this.fullTitle,
-        required this.headerImageThumbnailUrl,
-        required this.headerImageUrl,
+        this.apiPath = "",
+        this.appleMusicId = "",
+        this.appleMusicPlayerUrl = "",
+        this.featuredVideo  = false,
+        this.fullTitle = "",
+        this.headerImageThumbnailUrl = "",
+        this.headerImageUrl = "",
         required this.id,
-        required this.lyricsOwnerId,
-        required this.lyricsPlaceholderReason,
-        required this.lyricsState,
-        required this.path,
-        required this.recordingLocation,
-        required this.releaseDate,
-        // required this.releaseDateForDisplay,
-        required this.songArtImageThumbnailUrl,
-        required this.songArtImageUrl,
-        required this.title,
-        required this.titleWithFeatured,
-        required this.url,
+        this.lyricsOwnerId = 0,
+        this.lyricsState = "",
+        this.path = "",
+        this.releaseDate,
+        this.songArtImageThumbnailUrl = "",
+        this.songArtImageUrl = "",
+        this.title  = "",
+        this.titleWithFeatured  = "",
+        this.url = "",
         // required this.songArtPrimaryColor,
         // required this.songArtSecondaryColor,
         // required this.songArtTextColor,
-        required this.album,
-        required this.lyricsMarkedCompleteBy,
-        required this.media,
-        required this.primaryArtist,
-        required this.verifiedLyricsBy,
-
-
-        required this.featuredArtists,
-        required this.producerArtists,
-        required this.writerArtists,
+        this.album,
+        this.media = const [],
+        this.primaryArtist,
+        this.verifiedLyricsBy = const [],
+        this.featuredArtists = const [],
+        this.producerArtists = const [],
+        this.writerArtists = const [],
     });
 
     String apiPath;
@@ -106,13 +101,10 @@ class Song {
     String headerImageUrl;
     int id;
     int lyricsOwnerId;
-    dynamic lyricsPlaceholderReason;
     String lyricsState;
     String path;
-    dynamic recordingLocation;
     DateTime ?releaseDate;
-    // String releaseDateForDisplay;
-    String songArtImageThumbnailUrl;
+    String ?songArtImageThumbnailUrl;
     String songArtImageUrl;
     String title;
     String titleWithFeatured;
@@ -121,12 +113,9 @@ class Song {
     // String songArtSecondaryColor;
     // String songArtTextColor;
     SongAlbum ?album;
-    dynamic lyricsMarkedCompleteBy;
     List<Media> media;
-    Artist primaryArtist;
+    Artist ?primaryArtist;
     List<dynamic> verifiedLyricsBy;
-
-
     List<Artist> ?featuredArtists;
     List<Artist> ?producerArtists;
     List<Artist> ?writerArtists;
@@ -141,12 +130,9 @@ class Song {
         headerImageUrl: json["header_image_url"],
         id: json["id"],
         lyricsOwnerId: json["lyrics_owner_id"],
-        lyricsPlaceholderReason: json["lyrics_placeholder_reason"],
         lyricsState: json["lyrics_state"],
         path: json["path"],
-        recordingLocation: json["recording_location"],
         releaseDate: (json["release_date"]) == null ? null : DateTime.parse(json["release_date"]),
-        // releaseDateForDisplay: json["release_date_for_display"],
         songArtImageThumbnailUrl: json["song_art_image_thumbnail_url"],
         songArtImageUrl: json["song_art_image_url"],
         title: json["title"],
@@ -155,12 +141,10 @@ class Song {
         // songArtPrimaryColor: json["song_art_primary_color"].replaceAll(RegExp(r'#'), ''), 
         // songArtSecondaryColor: json["song_art_secondary_color"],
         // songArtTextColor: json["song_art_text_color"],
-        album: (json["album"]) == null ? null : SongAlbum.fromJson(json["album"]),
-        lyricsMarkedCompleteBy: json["lyrics_marked_complete_by"],
+        album: json["album"] == null ? null : SongAlbum.fromJson(json["album"]),
         media: List<Media>.from(json["media"].map((x) => Media.fromJson(x))),
-        primaryArtist: Artist.fromJson(json["primary_artist"]),
+        primaryArtist: json["primary_artist"] == null ? null : Artist.fromJson(json["primary_artist"]),
         verifiedLyricsBy: List<dynamic>.from(json["verified_lyrics_by"].map((x) => x)),
-
         featuredArtists: (json["featured_artists"]) == null ? null : List<Artist>.from(json["featured_artists"].map((x) => Artist.fromJson(x))),
         producerArtists: (json["producer_artists"]) == null ? null : List<Artist>.from(json["producer_artists"].map((x) => Artist.fromJson(x))),
         writerArtists: (json["writer_artists"]) == null ? null : List<Artist>.from(json["writer_artists"].map((x) => Artist.fromJson(x))),
@@ -176,13 +160,10 @@ class Song {
         "header_image_url": headerImageUrl,
         "id": id,
         "lyrics_owner_id": lyricsOwnerId,
-        "lyrics_placeholder_reason": lyricsPlaceholderReason,
         "lyrics_state": lyricsState,
         "path": path,
-        "recording_location": recordingLocation,
-        "release_date": "${releaseDate!.year.toString().padLeft(4, '0')}-${releaseDate!.month.toString().padLeft(2, '0')}-${releaseDate!.day.toString().padLeft(2, '0')}",
-        // "release_date_for_display": releaseDateForDisplay,
-        "song_art_image_thumbnail_url": songArtImageThumbnailUrl,
+        "release_date": releaseDate == null ? null : "${releaseDate!.year.toString().padLeft(4, '0')}-${releaseDate!.month.toString().padLeft(2, '0')}-${releaseDate!.day.toString().padLeft(2, '0')}",
+        "song_art_image_thumbnail_url": songArtImageThumbnailUrl == null ? null : songArtImageThumbnailUrl,
         "song_art_image_url": songArtImageUrl,
         "title": title,
         "title_with_featured": titleWithFeatured,
@@ -190,12 +171,10 @@ class Song {
         // "song_art_primary_color": songArtPrimaryColor,
         // "song_art_secondary_color": songArtSecondaryColor,
         // "song_art_text_color": songArtTextColor,
-        "album": album!.toJson(),
-        "lyrics_marked_complete_by": lyricsMarkedCompleteBy,
+        "album": album == null ? null : album!.toJson(),
         "media": List<dynamic>.from(media.map((x) => x.toJson())),
-        "primary_artist": primaryArtist.toJson(),
+        "primary_artist": primaryArtist == null ? null : primaryArtist!.toJson(),
         "verified_lyrics_by": List<dynamic>.from(verifiedLyricsBy.map((x) => x)),
-
         "featured_artists": List<dynamic>.from(featuredArtists!.map((x) => x)),
         "producer_artists": List<dynamic>.from(producerArtists!.map((x) => x.toJson())),
         "writer_artists": List<dynamic>.from(writerArtists!.map((x) => x.toJson())),

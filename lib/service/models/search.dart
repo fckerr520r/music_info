@@ -80,26 +80,27 @@ class Hit {
     };
 }
 
+
 class Result {
     Result({
-        required this.annotationCount,
-        required this.apiPath,
-        required this.fullTitle,
-        required this.headerImageThumbnailUrl,
-        required this.headerImageUrl,
+        this.annotationCount = 0,
+        this.apiPath = '',
+        this.fullTitle = '',
+        this.headerImageThumbnailUrl = '',
+        this.headerImageUrl = '',
         required this.id,
-        required this.lyricsOwnerId,
-        required this.lyricsState,
-        required this.path,
-        required this.songArtImageThumbnailUrl,
-        required this.songArtImageUrl,
-        required this.title,
-        required this.titleWithFeatured,
-        required this.url,
+        this.lyricsOwnerId = 0,
+        this.lyricsState = '',
+        this.path = '',
+        this.songArtImageThumbnailUrl = '',
+        this.songArtImageUrl = '',
+        this.title = '',
+        this.titleWithFeatured = '',
+        this.url = '',
         // required this.songArtPrimaryColor,
         // required this.songArtSecondaryColor,
         // required this.songArtTextColor,
-        required this.primaryArtist,
+        this.primaryArtist = const PrimaryArtist(),
     });
 
     int annotationCount;
@@ -165,33 +166,27 @@ class Result {
 }
 
 class PrimaryArtist {
-    PrimaryArtist({
-        required this.apiPath,
-        required this.headerImageUrl,
-        required this.id,
-        required this.imageUrl,
-        required this.isMemeVerified,
-        required this.isVerified,
-        required this.name,
-        required this.url,
+    const PrimaryArtist({
+        this.apiPath  = '',
+        this.headerImageUrl = '',
+        this.id = 0,
+        this.imageUrl = '',
+        this.name = '',
+        this.url = '',
     });
 
-    String apiPath;
-    String headerImageUrl;
-    int id;
-    String imageUrl;
-    bool isMemeVerified;
-    bool isVerified;
-    String name;
-    String url;
+    final String apiPath;
+    final String headerImageUrl;
+    final int id;
+    final String imageUrl;
+    final String name;
+    final String url;
 
     factory PrimaryArtist.fromJson(Map<String, dynamic> json) => PrimaryArtist(
         apiPath: json["api_path"],
         headerImageUrl: json["header_image_url"],
         id: json["id"],
         imageUrl: json["image_url"],
-        isMemeVerified: json["is_meme_verified"],
-        isVerified: json["is_verified"],
         name: json["name"],
         url: json["url"],
     );
@@ -201,8 +196,6 @@ class PrimaryArtist {
         "header_image_url": headerImageUrl,
         "id": id,
         "image_url": imageUrl,
-        "is_meme_verified": isMemeVerified,
-        "is_verified": isVerified,
         "name": name,
         "url": url,
     };

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music_lyrics/presentation/screens/favorite_screen.dart';
 import 'package:music_lyrics/presentation/screens/home_screen.dart';
 import 'package:music_lyrics/presentation/screens/search_screen.dart';
 import 'package:music_lyrics/presentation/widgets/drawer.dart';
@@ -16,9 +17,7 @@ class _MainScreenState extends State<MainScreen> {
 
   static List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    Text(
-      'Index 1: Business',
-    ),
+    FavoriteScreen(),
     SearchScreen(),
   ];
 

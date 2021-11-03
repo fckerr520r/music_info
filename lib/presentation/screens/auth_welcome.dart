@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:music_lyrics/constants/specific_pic.dart';
 // import 'package:music_lyrics/firebase_service/facebook_sing_in.dart';
 import 'package:music_lyrics/logic/cubit/log_check/log_check_cubit.dart';
 import 'package:music_lyrics/presentation/design/theme_colors.dart' as Style;
@@ -11,8 +12,6 @@ import 'package:get/get.dart';
 class WelcomeWidget extends StatelessWidget {
   WelcomeWidget({Key? key}) : super(key: key);
 
-  final String assetMain = 'assets/images/main.jpg';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +20,7 @@ class WelcomeWidget extends StatelessWidget {
         child: Stack(
           children: [
             Center(
-              child: Image.asset(assetMain, fit: BoxFit.cover),
+              child: Image.asset(SpecificPic.assetMainLogo, fit: BoxFit.cover),
             ),
             Positioned(
               bottom: 0,

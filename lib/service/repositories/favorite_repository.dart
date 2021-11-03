@@ -1,3 +1,7 @@
+import 'package:dio/dio.dart';
+import 'package:get_it/get_it.dart';
+import 'package:music_lyrics/service/models/song.dart';
+import 'package:music_lyrics/service/repositories/genius_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FavoriteSongClass {
@@ -17,14 +21,21 @@ class FavoriteSongClass {
     return favoriteSongId;
   }
 
-  Future addFavoriteSongs(int id) async {
+  Future<bool> addFavoriteSongs(int id) async {
     final storage = await _storage;
     List<String> favoriteSongIdString = [];
     try {
       favoriteSongIdString = storage.getStringList(idsKey)!.toList();
     } catch (e) {}
-    favoriteSongIdString.add(id.toString());
-    await storage.setStringList(idsKey, favoriteSongIdString);
+    
+    try {
+      favoriteSongIdString.add(id.toString());
+      await storage.setStringList(idsKey, favoriteSongIdString);
+    } catch (e) {
+      return false;
+    }
+
+    return true;
   }
 
   Future deleteFavoriteSongs(int id) async {
@@ -45,5 +56,18 @@ class FavoriteSongClass {
       check = favoriteSongIdString.contains(id.toString());
     } catch (e) {}
     return check;
+  }
+
+  Future<List<Song>> receiveFavoriteSongs() async {
+    final List<int> songIds = await loadFavoriteSongsId();
+    List<Song> favoriteSongList = [];
+    if (songIds.isNotEmpty) {
+      for (var i = 0; i < songIds.length; i++) {
+        final Song song =
+            await GeniusRepository(dio: GetIt.I.get<Dio>()).getSong(songIds[i]);
+        favoriteSongList.add(song);
+      }
+    }
+    return favoriteSongList;
   }
 }

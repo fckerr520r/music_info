@@ -1,60 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_lyrics/logic/cubit/home/home_cubit.dart';
+import 'package:music_lyrics/presentation/widgets/error_screen.dart';
 import 'package:music_lyrics/service/models/artist.dart';
 import 'package:music_lyrics/service/models/song.dart';
 import 'package:music_lyrics/presentation/design/theme_colors.dart' as Style;
-import 'package:music_lyrics/presentation/screens/artist_info_main_screen.dart';
+import 'package:music_lyrics/presentation/screens/artist_info.dart';
 import 'package:music_lyrics/presentation/widgets/loading_widget.dart';
 import 'package:get/get.dart';
 import 'package:music_lyrics/presentation/widgets/song_big_pic.dart';
 import 'package:music_lyrics/presentation/widgets/song_medium_pic.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
 
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
   Widget build(BuildContext context) {
-    {
-      return Container(
-        child: BlocBuilder<HomeCubit, HomeState>(
-          builder: (context, state) {
-            if (state is HomeLoading) {
-              return LoadingWidget();
-            }
-            if (state is HomeCompleted) {
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(height: 10),
-                    TrendSongs(
-                      listTopSongs: state.listTopSongs,
-                    ),
-                    SizedBox(height: 10),
-                    PopularSongInCountry(
-                      listTopSongs: state.listTopSongs,
-                    ),
-                    SizedBox(height: 10),
-                    PopularArtistInCountry(
-                      listTopArtists: state.listTopArtists,
-                    ),
-                  ],
-                ),
-              );
-            }
-            if (state is HomeError) {
-              return ErrorScreen();
-            } else
-              return LoadingWidget();
-          },
-        ),
-      );
-    }
+    return Container(
+      child: BlocBuilder<HomeCubit, HomeState>(
+        builder: (context, state) {
+          if (state is HomeLoading) {
+            return LoadingWidget();
+          }
+          if (state is HomeCompleted) {
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: 10),
+                  state.listTopSongs != null
+                      ? TrendSongs(
+                          listTopSongs: state.listTopSongs!,
+                        )
+                      : Container(
+                          height: 250,
+                          child: LoadingWidget(),
+                        ),
+                  SizedBox(height: 10),
+                  state.listTopCounrtySong != null
+                      ? PopularSongInCountry(
+                          listTopSongs: state.listTopCounrtySong!,
+                        )
+                      : Container(
+                          height: 250,
+                          child: LoadingWidget(),
+                        ),
+                  SizedBox(height: 10),
+                  state.listTopArtists != null
+                      ? PopularArtistInCountry(
+                          listTopArtists: state.listTopArtists!,
+                        )
+                      : Container(
+                          height: 250,
+                          child: LoadingWidget(),
+                        ),
+                ],
+              ),
+            );
+          }
+          if (state is HomeError) {
+            return ErrorScreen();
+          } else
+            return LoadingWidget();
+        },
+      ),
+    );
   }
 }
 
@@ -172,7 +180,7 @@ class TrendSongs extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return SongBigPicture(
                 songId: listTopSongs[index].id,
-                artistName: listTopSongs[index].primaryArtist.name,
+                artistName: listTopSongs[index].primaryArtist!.name,
                 backgroundColor: Style.Colors.backgroundColorLight,
                 // listTopSongs[index].songArtPrimaryColor,
                 picUrl: listTopSongs[index].headerImageUrl,
@@ -217,7 +225,7 @@ class PopularSongInCountry extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return SongMediumPicture(
                 songId: listTopSongs[index].id,
-                artistName: listTopSongs[index].primaryArtist.name,
+                artistName: listTopSongs[index].primaryArtist!.name,
                 backgroundColor: Style.Colors.backgroundColorLight,
                 // listTopSongs[index].songArtPrimaryColor,
                 picUrl: listTopSongs[index].headerImageUrl,
@@ -227,31 +235,6 @@ class PopularSongInCountry extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class ErrorScreen extends StatelessWidget {
-  const ErrorScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              Text(
-                'Something went wrong'.tr,
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              )
-            ],
-          )
-        ],
-      ),
     );
   }
 }

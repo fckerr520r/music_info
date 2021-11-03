@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:music_lyrics/localization/app_translation.dart';
-import 'package:music_lyrics/localization/change_lang.dart';
+import 'package:get_it/get_it.dart';
+import 'package:music_lyrics/constants/app_translation.dart';
+import 'package:music_lyrics/factory.dart';
+import 'package:music_lyrics/service/repositories/change_lang.dart';
 import 'package:music_lyrics/logic/cubit/home/home_cubit.dart';
 import 'package:music_lyrics/logic/cubit/log_check/log_check_cubit.dart';
+import 'package:music_lyrics/logic/cubit/receive_user/receive_user_cubit.dart';
 import 'package:music_lyrics/logic/cubit/search/search_cubit.dart';
 import 'package:music_lyrics/presentation/screens/auth_check.dart';
 import 'package:music_lyrics/presentation/screens/auth_welcome.dart';
@@ -18,10 +21,13 @@ import 'package:music_lyrics/presentation/widgets/bottom_nav_bar.dart';
 import 'package:music_lyrics/presentation/design/theme_colors.dart' as Style;
 import 'package:firebase_core/firebase_core.dart';
 
+import 'package:music_lyrics/logic/cubit/favorite/favorite_cubit.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   String lang = await ChangeLangClass().changeLocal();
+  Factory().initialize();
   runApp(MyApp(lang));
 }
 
@@ -33,13 +39,19 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<UserCheckCubit>(
-          create: (context) => UserCheckCubit(),
+          create: (context) => GetIt.I.get<UserCheckCubit>(),
         ),
         BlocProvider<HomeCubit>(
-          create: (context) => HomeCubit(),
+          create: (context) => GetIt.I.get<HomeCubit>(),
         ),
         BlocProvider<SearchCubit>(
-          create: (context) => SearchCubit(),
+          create: (context) => GetIt.I.get<SearchCubit>(),
+        ),
+        BlocProvider<FavoriteCubit>(
+          create: (context) => GetIt.I.get<FavoriteCubit>(),
+        ),
+        BlocProvider<ReceiveUserCubit>(
+          create: (context) => ReceiveUserCubit(),
         ),
       ],
       child: GetMaterialApp(
