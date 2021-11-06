@@ -10,7 +10,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     receiveFavoriteSong();
   }
 
-  final FavoriteSongClass favoriteRepository;
+  final FavoriteSongRepository favoriteRepository;
   receiveFavoriteSong() async {
     emit(FavoriteLoading());
     try {

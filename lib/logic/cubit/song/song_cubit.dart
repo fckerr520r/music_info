@@ -9,6 +9,7 @@ class SongCubit extends Cubit<SongState> {
   SongCubit({required this.repository}) : super(SongInitial());
 
   final GeniusRepository repository;
+
   Future<void> getSongInfo(int songId) async {
     emit(SongLoading());
     final Song song;

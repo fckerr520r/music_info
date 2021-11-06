@@ -8,7 +8,7 @@ class FavoriteChangeCubit extends Cubit<FavoriteChangeState> {
   FavoriteChangeCubit({required this.favoriteRepository})
       : super(FavoriteChangeInitial());
 
-  final FavoriteSongClass favoriteRepository;
+  final FavoriteSongRepository favoriteRepository;
 
   addFavorite(int songId) async {
     if (await favoriteRepository.addFavoriteSongs(songId) == true) {

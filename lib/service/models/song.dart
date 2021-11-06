@@ -90,6 +90,7 @@ class Song {
         this.featuredArtists = const [],
         this.producerArtists = const [],
         this.writerArtists = const [],
+        this.lyric = '',
     });
 
     String apiPath;
@@ -119,6 +120,7 @@ class Song {
     List<Artist> ?featuredArtists;
     List<Artist> ?producerArtists;
     List<Artist> ?writerArtists;
+    String lyric;
 
     factory Song.fromJson(Map<String, dynamic> json) => Song(
         apiPath: json["api_path"], 

@@ -43,13 +43,13 @@ class Factory {
 
     GetIt.I.registerFactory<FavoriteCubit>(
       () => FavoriteCubit(
-        favoriteRepository: FavoriteSongClass(),
+        favoriteRepository: FavoriteSongRepository(),
       ),
     );
 
     GetIt.I.registerFactory<FavoriteChangeCubit>(
       () => FavoriteChangeCubit(
-        favoriteRepository: FavoriteSongClass(),
+        favoriteRepository: FavoriteSongRepository(),
       ),
     );
 

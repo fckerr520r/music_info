@@ -9,6 +9,7 @@ import 'package:music_lyrics/presentation/widgets/song_info/main_picture.dart';
 import 'package:music_lyrics/presentation/widgets/song_info/song_divider_data.dart';
 import 'package:music_lyrics/presentation/widgets/song_info/song_lines_info.dart';
 import 'package:music_lyrics/presentation/widgets/song_info/song_owner_info.dart';
+import 'package:music_lyrics/presentation/widgets/song_info/text_lyric.dart';
 import 'package:music_lyrics/presentation/widgets/song_info/video_block.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:get/get.dart';
@@ -81,48 +82,67 @@ class _SongInfoState extends State<SongInfo> {
                             title: state.song.title,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 13),
-                          child: Column(
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 10),
-                                child: SizedBox(
-                                  height: 125,
-                                  child: SongOwnerInfo(song: state.song),
-                                ),
+                        Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom: 10, left: 13, right: 13),
+                              child: SizedBox(
+                                height: 125,
+                                child: SongOwnerInfo(song: state.song),
                               ),
-                              SongLinesInfo(
-                                line: 'Featuring'.tr,
-                                mainInfo: state.featuredArtists.toString(),
+                            ),
+                            state.song.lyric == '' ? SizedBox.shrink() : Container(
+                              color:
+                                  Theme.of(context).appBarTheme.backgroundColor,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 13),
+                              child: TextLyric(
+                                lyric: state.song.lyric,
                               ),
-                              state.song.album != null
-                                  ? SongLinesInfo(
-                                      line: 'Album'.tr,
-                                      mainInfo:
-                                          state.song.album!.name.toString(),
-                                    )
-                                  : SizedBox.shrink(),
-                              SongLinesInfo(
-                                line: 'Writer Artists'.tr,
-                                mainInfo: state.writeredArtists.toString(),
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              color:
+                                  Theme.of(context).appBarTheme.backgroundColor,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 13, vertical: 8),
+                              child: Column(
+                                children: [
+                                  SongLinesInfo(
+                                    line: 'Featuring'.tr,
+                                    mainInfo: state.featuredArtists.toString(),
+                                  ),
+                                  state.song.album != null
+                                      ? SongLinesInfo(
+                                          line: 'Album'.tr,
+                                          mainInfo:
+                                              state.song.album!.name.toString(),
+                                        )
+                                      : SizedBox.shrink(),
+                                  SongLinesInfo(
+                                    line: 'Writer Artists'.tr,
+                                    mainInfo: state.writeredArtists.toString(),
+                                  ),
+                                  SongLinesInfo(
+                                    line: 'Producer Artists'.tr,
+                                    mainInfo: state.producerArtists.toString(),
+                                  ),
+                                ],
                               ),
-                              SongLinesInfo(
-                                line: 'Producer Artists'.tr,
-                                mainInfo: state.producerArtists.toString(),
-                              ),
-                              state.videoUrl == ''
-                                  ? SizedBox.shrink()
-                                  : VideoBlock(
-                                      player: player,
-                                    ),
-                              state.song.releaseDate != null
-                                  ? SongDividerData(
-                                      releaseDate: state.song.releaseDate!,
-                                    )
-                                  : SizedBox.shrink(),
-                            ],
-                          ),
+                            ),
+                            SizedBox(height: 10),
+                            state.videoUrl == ''
+                                ? SizedBox.shrink()
+                                : VideoBlock(
+                                    player: player,
+                                  ),
+                            state.song.releaseDate != null
+                                ? SongDividerData(
+                                    releaseDate: state.song.releaseDate!,
+                                  )
+                                : SizedBox.shrink(),
+                          ],
                         ),
                       ],
                     ),

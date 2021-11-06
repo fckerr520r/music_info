@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:get_it/get_it.dart';
 import 'package:music_lyrics/presentation/Icons/social_icons.dart';
 import 'package:music_lyrics/service/models/artist.dart';
 import 'package:music_lyrics/service/models/artist_social_data.dart';
@@ -8,6 +9,7 @@ import 'package:music_lyrics/service/models/search.dart' hide Response;
 import 'package:music_lyrics/service/models/song.dart';
 import 'package:music_lyrics/service/models/track_album.dart' hide Response;
 import 'package:music_lyrics/constants/tokens.dart';
+import 'package:music_lyrics/service/repositories/musixmatch_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GeniusRepository {
@@ -110,6 +112,7 @@ class GeniusRepository {
       if (response.statusCode == 200) {
         TrackChart result = TrackChart.fromJson(response.data);
         final singleSong = result.response.song;
+        singleSong.lyric = await MusixmatchRepository(dio: GetIt.I.get<Dio>()).getTrackLyrics(singleSong.title, singleSong.primaryArtist!.name);
         return singleSong;
       } else {
         throw Exception('smth was wrong');

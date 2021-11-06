@@ -4,7 +4,7 @@ import 'package:music_lyrics/service/models/song.dart';
 import 'package:music_lyrics/service/repositories/genius_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class FavoriteSongClass {
+class FavoriteSongRepository {
   final _storage = SharedPreferences.getInstance();
   static const idsKey = 'ids';
   List<int> favoriteSongId = [];
