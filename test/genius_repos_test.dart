@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:music_lyrics/service/models/artist.dart';
-import 'package:music_lyrics/service/models/song.dart' as ModelSong;
+import 'package:music_lyrics/service/models/song.dart' as model_song;
 import 'package:music_lyrics/service/repositories/genius_repository.dart';
 
 class DioMock extends Mock implements Dio {}
@@ -30,7 +30,7 @@ void main() {
         ),
       );
       
-      ArtistClass artistCheck = await geniusRepository.getArtist(6);
+      final artistCheck = await geniusRepository.getArtist(6);
       expect(artistCheck.followersCount, 50);
     },
   );
@@ -38,10 +38,10 @@ void main() {
   test(
     'song',
     () async {
-      final meta = ModelSong.Meta(status: 200);
-      final song = ModelSong.Song(id: 6, songArtImageUrl: 'this url');
-      final response = ModelSong.ResponseSong(song: song);
-      final songAnswer = ModelSong.TrackChart(meta: meta, response: response);
+      final meta = model_song.Meta(status: 200);
+      final song = model_song.Song(id: 6, songArtImageUrl: 'this url');
+      final response = model_song.ResponseSong(song: song);
+      final songAnswer = model_song.TrackChart(meta: meta, response: response);
 
       when(() => dioMock.get(
             any(),
@@ -62,10 +62,10 @@ void main() {
   test(
     'song list',
     () async {
-      final meta = ModelSong.Meta(status: 200);
-      final song = ModelSong.Song(id: 6, songArtImageUrl: 'this url');
-      final response = ModelSong.ResponseSong(song: song);
-      final songAnswer = ModelSong.TrackChart(meta: meta, response: response);
+      final meta = model_song.Meta(status: 200);
+      final song = model_song.Song(id: 6, songArtImageUrl: 'this url');
+      final response = model_song.ResponseSong(song: song);
+      final songAnswer = model_song.TrackChart(meta: meta, response: response);
 
       when(() => dioMock.get(
             any(),
@@ -77,7 +77,7 @@ void main() {
           data: songAnswer.toJson(),
         ),
       );
-      var songCheck = await geniusRepository.getSong(6);
+      final songCheck = await geniusRepository.getSong(6);
       expect(songCheck.songArtImageUrl, 'this url');
     },
   );

@@ -13,7 +13,7 @@ class SongDividerData extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Divider(
+        const Divider(
           color: Colors.white,
           thickness: 0.7,
         ),
@@ -21,7 +21,7 @@ class SongDividerData extends StatelessWidget {
           padding: const EdgeInsets.only(top: 3, bottom: 5),
           child: Text(
             'Release date'.tr + DateFormat.yMMMMd().format(releaseDate),
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.w600,

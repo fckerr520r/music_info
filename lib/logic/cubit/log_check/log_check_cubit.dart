@@ -50,7 +50,7 @@ class UserCheckCubit extends Cubit<UserCheckState> {
     try {
       await googleSignIn.disconnect();
     } catch (e) {}
-    firebaseAuth.signOut();
+    await firebaseAuth.signOut();
   }
 
   Future emailAuth(String email, String password) async {

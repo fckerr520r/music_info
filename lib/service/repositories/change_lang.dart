@@ -18,9 +18,9 @@ class ChangeLangClass {
     },
   ];
 
-  updateLocal(String locale) async {
+  Future updateLocal(String locale) async {
     if (locale.isNotEmpty) {
-      saveLang(locale);
+      await saveLang(locale);
     }
     final lang = await changeLocal();
     if (lang != 'null') {

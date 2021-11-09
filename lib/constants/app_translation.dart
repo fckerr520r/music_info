@@ -4,7 +4,7 @@ class AppTranslations extends Translations {
 
   @override
   Map<String, Map<String, String>> get keys => {
-        "en": {
+        'en': {
           'Continue with Google': 'Continue with Google',
           'Sing up': 'Sing up',
           'Sing in': 'Sing in',
@@ -24,7 +24,7 @@ class AppTranslations extends Translations {
           'Select a language': 'Select a language',
 
           'Home': 'Home',
-          "Search": "Search",
+          'Search': 'Search',
 
           'Song deleted': 'Song deleted',
           'Song added': 'Song added',
@@ -45,7 +45,7 @@ class AppTranslations extends Translations {
           'Official video': 'Official video',
           'Release date': 'Release date: ',
         },
-        "ru": {
+        'ru': {
           'Continue with Google': 'Войти через Google',
           'Email should be valid': 'Неправильно указана почта',
           'Sing up': 'Регистрация',

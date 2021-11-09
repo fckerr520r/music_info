@@ -10,25 +10,27 @@ class FavoriteChangeCubit extends Cubit<FavoriteChangeState> {
 
   final FavoriteSongRepository favoriteRepository;
 
-  addFavorite(int songId) async {
+  Future addFavorite(int songId) async {
     if (await favoriteRepository.addFavoriteSongs(songId) == true) {
       emit(FavoriteChangeAdd());
-      emit(FavoriteChangeComplete(true));
+      emit(FavoriteChangeComplete(isFavorite: true));
+    } else {
+      emit(FavoriteChangeError());
+      emit(FavoriteChangeComplete(isFavorite: false));
     }
-    emit(FavoriteChangeError());
-    emit(FavoriteChangeComplete(false));
   }
 
-  removeFavorite(int songId) async {
+  Future removeFavorite(int songId) async {
     await favoriteRepository.deleteFavoriteSongs(songId);
     emit(FavoriteChangeRemove());
-    emit(FavoriteChangeComplete(false));
+    emit(FavoriteChangeComplete(isFavorite: false));
   }
 
-  checkFavorite(int songId) async {
+  Future checkFavorite(int songId) async {
     if (await favoriteRepository.checkFavoriteSongs(songId) == true) {
-      emit(FavoriteChangeComplete(true));
-    } else
-      emit(FavoriteChangeComplete(false));
+      emit(FavoriteChangeComplete(isFavorite: true));
+    } else {
+      emit(FavoriteChangeComplete(isFavorite: false));
+    }
   }
 }

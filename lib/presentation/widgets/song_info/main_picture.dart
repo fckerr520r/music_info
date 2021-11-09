@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:music_lyrics/constants/specific_pic.dart';
-import 'package:music_lyrics/presentation/design/theme_colors.dart' as Style;
+import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
 
 class MainPic extends StatelessWidget {
   const MainPic({
@@ -20,9 +20,9 @@ class MainPic extends StatelessWidget {
         Container(
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
-                color: Style.Colors.backgroundColorLight,
+                color: style.Colors.backgroundColorLight,
               ),
             ],
             image: DecorationImage(
@@ -43,9 +43,9 @@ class MainPic extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Style.Colors.backgroundColor.withOpacity(0.0),
-                Style.Colors.backgroundColor.withOpacity(0.5),
-                Style.Colors.backgroundColor.withOpacity(1),
+                style.Colors.backgroundColor.withOpacity(0),
+                style.Colors.backgroundColor.withOpacity(0.5),
+                style.Colors.backgroundColor.withOpacity(1),
               ],
             ),
           ),
@@ -56,7 +56,7 @@ class MainPic extends StatelessWidget {
           right: 15,
           child: AutoSizeText(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),

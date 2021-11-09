@@ -19,7 +19,7 @@ class SongLinesInfo extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 1),
               child: Text(
                 line,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 17,
                   fontWeight: FontWeight.bold,
@@ -28,7 +28,7 @@ class SongLinesInfo extends StatelessWidget {
             ),
             Text(
               mainInfo,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 14,
               ),
@@ -39,7 +39,8 @@ class SongLinesInfo extends StatelessWidget {
           ],
         ),
       );
-    } else
-      return SizedBox.shrink();
+    } else {
+      return const SizedBox.shrink();
+    }
   }
 }

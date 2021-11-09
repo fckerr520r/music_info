@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TextLyric extends StatelessWidget {
-  TextLyric({Key? key, required this.lyric}) : super(key: key);
+  const TextLyric({Key? key, required this.lyric}) : super(key: key);
 
   final String lyric;
 
@@ -10,11 +10,11 @@ class TextLyric extends StatelessWidget {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        padding: const EdgeInsets.symmetric(vertical: 8),
         child: RichText(
           text: TextSpan(
             children: <TextSpan>[
-              TextSpan(
+              const TextSpan(
                 text: 'Lyrics: \n \n',
                 style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
               ),

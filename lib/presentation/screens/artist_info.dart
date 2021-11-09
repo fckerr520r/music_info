@@ -1,19 +1,18 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:music_lyrics/logic/cubit/artist/artist_cubit.dart';
-import 'package:music_lyrics/service/models/artist.dart';
-import 'package:music_lyrics/service/models/artist_track.dart';
-import 'package:music_lyrics/presentation/design/theme_colors.dart' as Style;
-import 'package:music_lyrics/service/models/artist_social_data.dart';
-import 'package:music_lyrics/presentation/widgets/song_small_pic.dart';
+import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
 import 'package:music_lyrics/presentation/widgets/loading_widget.dart';
+import 'package:music_lyrics/presentation/widgets/song_small_pic.dart';
+import 'package:music_lyrics/service/models/artist.dart';
+import 'package:music_lyrics/service/models/artist_social_data.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:get/get.dart';
 
 class ArtistInfo extends StatelessWidget {
-  ArtistInfo({
+  const ArtistInfo({
     Key? key,
     required this.artistName,
     required this.artistId,
@@ -31,16 +30,18 @@ class ArtistInfo extends StatelessWidget {
       child: Scaffold(
         body: BlocBuilder<ArtistCubit, ArtistState>(
           builder: (context, state) {
-            if (state is ArtistLoading)
-              return Scaffold(appBar: AppBar(), body: LoadingWidget());
-            if (state is ArtistComplete)
+            if (state is ArtistLoading) {
+              return Scaffold(
+                appBar: AppBar(),
+                body: const LoadingWidget(),
+              );
+            }
+            if (state is ArtistComplete) {
               return CustomScrollView(
                 slivers: <Widget>[
                   SliverAppBar(
-                    backgroundColor: Style.Colors.backgroundColorLight,
+                    backgroundColor: style.Colors.backgroundColorLight,
                     pinned: true,
-                    snap: false,
-                    floating: false,
                     expandedHeight: 349,
                     flexibleSpace: FlexibleSpaceBar(
                       title: SizedBox(
@@ -53,7 +54,7 @@ class ArtistInfo extends StatelessWidget {
                               bottom: 40,
                               child: CircleAvatar(
                                 radius: 53,
-                                backgroundColor: Style.Colors.backgroundColor,
+                                backgroundColor: style.Colors.backgroundColor,
                                 child: Hero(
                                   tag: 'artist_avatar',
                                   child: CircleAvatar(
@@ -74,7 +75,7 @@ class ArtistInfo extends StatelessWidget {
                                 maxFontSize: 20,
                                 minFontSize: 15,
                                 maxLines: 2,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -97,26 +98,17 @@ class ArtistInfo extends StatelessWidget {
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              Style.Colors.backgroundColor.withOpacity(0.0),
-                              Style.Colors.backgroundColor.withOpacity(0.2),
-                              Style.Colors.backgroundColor.withOpacity(0.4),
-                              Style.Colors.backgroundColor.withOpacity(0.8),
-                              Style.Colors.backgroundColor.withOpacity(1),
+                              style.Colors.backgroundColor.withOpacity(0),
+                              style.Colors.backgroundColor.withOpacity(0.2),
+                              style.Colors.backgroundColor.withOpacity(0.4),
+                              style.Colors.backgroundColor.withOpacity(0.8),
+                              style.Colors.backgroundColor.withOpacity(1),
                             ],
                           ),
                         ),
                       ),
                     ),
                   ),
-                  // _isLoading
-                  //     ? SliverList(
-                  //         delegate: SliverChildListDelegate([
-                  //         SizedBox(
-                  //           height: MediaQuery.of(context).size.height - 400,
-                  //           child: LoadingWidget(),
-                  //         ),
-                  //       ]))
-                  //     :
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
@@ -126,13 +118,13 @@ class ArtistInfo extends StatelessWidget {
                             socials: state.socials,
                           );
                         }
-                        SongA currentSong = state.listArtistSongs[index - 1];
+                        final currentSong = state.listArtistSongs[index - 1];
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 13),
                           child: SongSmallPicture(
                             songId: currentSong.id,
                             artistName: currentSong.primaryArtist.name,
-                            backgroundColor: Style.Colors.backgroundColorLight,
+                            backgroundColor: style.Colors.backgroundColorLight,
                             // searchList[index].result.songArtPrimaryColor,
                             picUrl: currentSong.songArtImageUrl,
                             nameSong: currentSong.title,
@@ -144,16 +136,18 @@ class ArtistInfo extends StatelessWidget {
                   ),
                 ],
               );
-            if (state is ArtistError)
+            }
+            if (state is ArtistError) {
               return Scaffold(
                 appBar: AppBar(),
-                body: Text('smth was wrong'),
+                body: const Text('smth was wrong'), // TODO tr??
               );
-            else
+            } else {
               return Scaffold(
                 appBar: AppBar(),
-                body: LoadingWidget(),
+                body: const LoadingWidget(),
               );
+            }
           },
         ),
       ),
@@ -176,30 +170,27 @@ class AtristInfo extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 13),
       child: Column(
         children: [
-          SizedBox(height: 5),
-          artist.alternateNames.length == 0
-              ? SizedBox(height: 5)
-              : Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Text(
-                    'AKA: ' +
-                        artist.alternateNames
-                            .toString()
-                            .replaceAll('[', '')
-                            .replaceAll(']', ''),
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+          const SizedBox(height: 5),
+          if (artist.alternateNames.isEmpty)
+            const SizedBox(height: 5)
+          else
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: Text(
+                'AKA: ${artist.alternateNames.toString().replaceAll('[', '').replaceAll(']', '')}',
+                style: const TextStyle(
+                  color: Colors.white70,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
                 ),
+              ),
+            ),
           SocialsWidget(socials: socials),
-          Padding(
-            padding: const EdgeInsets.only(top: 5),
+          const Padding(
+            padding: EdgeInsets.only(top: 5),
             child: Divider(
-              color: Style.Colors.letterColorGreyLight,
+              color: style.Colors.letterColorGreyLight,
             ),
           ),
           Padding(
@@ -210,8 +201,8 @@ class AtristInfo extends StatelessWidget {
                   width: double.infinity,
                   child: Text(
                     'Popular songs'.tr.toUpperCase(),
-                    style: TextStyle(
-                      color: Style.Colors.letterMainColor,
+                    style: const TextStyle(
+                      color: style.Colors.letterMainColor,
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
@@ -235,10 +226,9 @@ class SocialsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: socials.map((data) => _SocialRow(data: data)).toList(),
       ),
     );
@@ -271,15 +261,15 @@ class _SocialRow extends StatelessWidget {
               Icon(
                 data.icon,
                 size: 35,
-                color: Style.Colors.letterMainColor,
+                color: style.Colors.letterMainColor,
               ),
-              SizedBox(height: 3),
+              const SizedBox(height: 3),
             ],
           ),
         ),
       );
     } else {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
   }
 }

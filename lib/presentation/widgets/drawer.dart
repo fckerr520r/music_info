@@ -1,39 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:music_lyrics/constants/specific_pic.dart';
 import 'package:music_lyrics/logic/cubit/log_check/log_check_cubit.dart';
 import 'package:music_lyrics/logic/cubit/receive_user/receive_user_cubit.dart';
-import 'package:music_lyrics/presentation/design/theme_colors.dart' as Style;
-import 'package:get/get.dart';
+import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
 
 class DrawerMain extends StatelessWidget {
-  DrawerMain({Key? key}) : super(key: key);
+  const DrawerMain({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Material(
-        color: Style.Colors.backgroundColor,
+        color: style.Colors.backgroundColor,
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             BlocBuilder<ReceiveUserCubit, ReceiveUserState>(
               builder: (context, state) {
-                if (state is ReceiveUserComplete)
+                if (state is ReceiveUserComplete) {
                   return UserAccountsDrawerHeader(
                     accountName: state.user!.displayName != null
                         ? Text(
                             state.user!.displayName!,
-                            style: TextStyle(
-                              fontSize: 15.0,
+                            style: const TextStyle(
+                              fontSize: 15,
                               color: Colors.white,
                             ),
                           )
-                        : Text(''),
+                        : const Text(''),
                     accountEmail: Text(
                       state.user!.email!,
-                      style: TextStyle(
-                        fontSize: 15.0,
+                      style: const TextStyle(
+                        fontSize: 15,
                         color: Colors.white,
                       ),
                     ),
@@ -41,35 +41,36 @@ class DrawerMain extends StatelessWidget {
                       radius: 40,
                       backgroundImage: state.user!.photoURL != null
                           ? NetworkImage(state.user!.photoURL!)
-                          : AssetImage(SpecificPic.defaltUserPhoto)
+                          : const AssetImage(SpecificPic.defaltUserPhoto)
                               as ImageProvider,
                     ),
-                    decoration: BoxDecoration(
-                      color: Style.Colors.backgroundColorLight,
+                    decoration: const BoxDecoration(
+                      color: style.Colors.backgroundColorLight,
                     ),
                   );
-                else
-                  return UserAccountsDrawerHeader(
+                } else {
+                  return const UserAccountsDrawerHeader(
                     accountEmail: Text(
                       'Error',
                       style: TextStyle(
-                        fontSize: 20.0,
+                        fontSize: 20,
                         color: Colors.white,
                       ),
                     ),
                     accountName: null,
                   );
+                }
               },
             ),
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.home,
                 color: Colors.white,
               ),
               title: Text(
                 'Home'.tr,
-                style: TextStyle(
-                    fontSize: 16.0,
+                style: const TextStyle(
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),
@@ -78,14 +79,14 @@ class DrawerMain extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.search,
                 color: Colors.white,
               ),
               title: Text(
-                "Search".tr,
-                style: TextStyle(
-                    fontSize: 16.0,
+                'Search'.tr,
+                style: const TextStyle(
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),
@@ -94,14 +95,14 @@ class DrawerMain extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.bookmark,
                 color: Colors.white,
               ),
               title: Text(
                 'Favorite'.tr,
-                style: TextStyle(
-                    fontSize: 16.0,
+                style: const TextStyle(
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),
@@ -109,19 +110,19 @@ class DrawerMain extends StatelessWidget {
                 Navigator.of(context).pushReplacementNamed('/favorite');
               },
             ),
-            Divider(
-              color: Style.Colors.backgroundColorLight,
+            const Divider(
+              color: style.Colors.backgroundColorLight,
               thickness: 1,
             ),
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.settings,
                 color: Colors.white,
               ),
               title: Text(
-                "Settings".tr,
-                style: TextStyle(
-                    fontSize: 16.0,
+                'Settings'.tr,
+                style: const TextStyle(
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),
@@ -129,21 +130,21 @@ class DrawerMain extends StatelessWidget {
                 Navigator.of(context).pushNamed('/settings');
               },
             ),
-            Divider(
-              color: Style.Colors.backgroundColorLight,
+            const Divider(
+              color: style.Colors.backgroundColorLight,
               thickness: 1,
             ),
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.logout,
-                color: Style.Colors.letterColorRed,
+                color: style.Colors.letterColorRed,
               ),
               title: Text(
-                "Log out".tr,
-                style: TextStyle(
-                    fontSize: 16.0,
+                'Log out'.tr,
+                style: const TextStyle(
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Style.Colors.letterColorRed),
+                    color: style.Colors.letterColorRed),
               ),
               onTap: () {
                 BlocProvider.of<UserCheckCubit>(context, listen: false)

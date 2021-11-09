@@ -10,13 +10,12 @@ class ErrorScreen extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Column(
             children: <Widget>[
               Text(
                 'Something went wrong'.tr,
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                style: const TextStyle(color: Colors.white, fontSize: 20),
               )
             ],
           )

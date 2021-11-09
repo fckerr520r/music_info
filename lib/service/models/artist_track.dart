@@ -14,13 +14,13 @@ class ArtistTracks {
     Response response;
 
     factory ArtistTracks.fromJson(Map<String, dynamic> json) => ArtistTracks(
-        meta: Meta.fromJson(json["meta"]),
-        response: Response.fromJson(json["response"]),
+        meta: Meta.fromJson(json['meta']),
+        response: Response.fromJson(json['response']),
     );
 
     Map<String, dynamic> toJson() => {
-        "meta": meta.toJson(),
-        "response": response.toJson(),
+        'meta': meta.toJson(),
+        'response': response.toJson(),
     };
 }
 
@@ -32,11 +32,11 @@ class Meta {
     int status;
 
     factory Meta.fromJson(Map<String, dynamic> json) => Meta(
-        status: json["status"],
+        status: json['status'],
     );
 
     Map<String, dynamic> toJson() => {
-        "status": status,
+        'status': status,
     };
 }
 
@@ -48,11 +48,11 @@ class Response {
     List<SongA> songs;
 
     factory Response.fromJson(Map<String, dynamic> json) => Response(
-        songs: List<SongA>.from(json["songs"].map((x) => SongA.fromJson(x))),
+        songs: List<SongA>.from(json['songs'].map((x) => SongA.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
-        "songs": List<dynamic>.from(songs.map((x) => x.toJson())),
+        'songs': List<dynamic>.from(songs.map((x) => x.toJson())),
     };
 }
 
@@ -90,37 +90,37 @@ class SongA {
     PrimaryArtist primaryArtist;
 
     factory SongA.fromJson(Map<String, dynamic> json) => SongA(
-        apiPath: json["api_path"],
-        fullTitle: json["full_title"],
-        id: json["id"],
-        lyricsOwnerId: json["lyrics_owner_id"],
-        lyricsState: json["lyrics_state"],
-        path: json["path"],
-        songArtImageThumbnailUrl: json["song_art_image_thumbnail_url"],
-        songArtImageUrl: json["song_art_image_url"],
-        title: json["title"],
-        titleWithFeatured: json["title_with_featured"],
-        url: json["url"],
-        // songArtPrimaryColor: json["song_art_primary_color"],
-        // songArtTextColor: json["song_art_text_color"],
-        primaryArtist: PrimaryArtist.fromJson(json["primary_artist"]),
+        apiPath: json['api_path'],
+        fullTitle: json['full_title'],
+        id: json['id'],
+        lyricsOwnerId: json['lyrics_owner_id'],
+        lyricsState: json['lyrics_state'],
+        path: json['path'],
+        songArtImageThumbnailUrl: json['song_art_image_thumbnail_url'],
+        songArtImageUrl: json['song_art_image_url'],
+        title: json['title'],
+        titleWithFeatured: json['title_with_featured'],
+        url: json['url'],
+        // songArtPrimaryColor: json['song_art_primary_color'],
+        // songArtTextColor: json['song_art_text_color'],
+        primaryArtist: PrimaryArtist.fromJson(json['primary_artist']),
     );
 
     Map<String, dynamic> toJson() => {
-        "api_path": apiPath,
-        "full_title": fullTitle,
-        "id": id,
-        "lyrics_owner_id": lyricsOwnerId,
-        "lyrics_state": lyricsState,
-        "path": path,
-        "song_art_image_thumbnail_url": songArtImageThumbnailUrl,
-        "song_art_image_url": songArtImageUrl,
-        "title": title,
-        "title_with_featured": titleWithFeatured,
-        "url": url,
-        // "song_art_primary_color": songArtPrimaryColor,
-        // "song_art_text_color": songArtTextColor,
-        "primary_artist": primaryArtist.toJson(),
+        'api_path': apiPath,
+        'full_title': fullTitle,
+        'id': id,
+        'lyrics_owner_id': lyricsOwnerId,
+        'lyrics_state': lyricsState,
+        'path': path,
+        'song_art_image_thumbnail_url': songArtImageThumbnailUrl,
+        'song_art_image_url': songArtImageUrl,
+        'title': title,
+        'title_with_featured': titleWithFeatured,
+        'url': url,
+        // 'song_art_primary_color': songArtPrimaryColor,
+        // 'song_art_text_color': songArtTextColor,
+        'primary_artist': primaryArtist.toJson(),
     };
 }
 
@@ -144,22 +144,22 @@ class PrimaryArtist {
     String url;
 
     factory PrimaryArtist.fromJson(Map<String, dynamic> json) => PrimaryArtist(
-        apiPath: json["api_path"],
-        id: json["id"],
-        imageUrl: json["image_url"],
-        isMemeVerified: json["is_meme_verified"],
-        isVerified: json["is_verified"],
-        name: json["name"],
-        url: json["url"],
+        apiPath: json['api_path'],
+        id: json['id'],
+        imageUrl: json['image_url'],
+        isMemeVerified: json['is_meme_verified'],
+        isVerified: json['is_verified'],
+        name: json['name'],
+        url: json['url'],
     );
 
     Map<String, dynamic> toJson() => {
-        "api_path": apiPath,
-        "id": id,
-        "image_url": imageUrl,
-        "is_meme_verified": isMemeVerified,
-        "is_verified": isVerified,
-        "name": name,
-        "url": url,
+        'api_path': apiPath,
+        'id': id,
+        'image_url': imageUrl,
+        'is_meme_verified': isMemeVerified,
+        'is_verified': isVerified,
+        'name': name,
+        'url': url,
     };
 }

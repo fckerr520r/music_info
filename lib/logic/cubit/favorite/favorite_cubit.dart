@@ -11,7 +11,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   }
 
   final FavoriteSongRepository favoriteRepository;
-  receiveFavoriteSong() async {
+  Future receiveFavoriteSong() async {
     emit(FavoriteLoading());
     try {
       emit(FavoriteCompleted(await favoriteRepository.receiveFavoriteSongs()));

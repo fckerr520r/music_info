@@ -8,7 +8,7 @@ class FavoriteChangeInitial extends FavoriteChangeState {}
 class FavoriteChangeComplete extends FavoriteChangeState {
   final bool isFavorite;
 
-  FavoriteChangeComplete(this.isFavorite);
+  FavoriteChangeComplete({required this.isFavorite});
 }
 
 class FavoriteChangeRemove extends FavoriteChangeState {}

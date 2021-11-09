@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:music_lyrics/logic/cubit/artist/artist_cubit.dart';
 import 'package:music_lyrics/logic/cubit/change_lang/change_lang_cubit.dart';
+import 'package:music_lyrics/logic/cubit/favorite/favorite_cubit.dart';
 import 'package:music_lyrics/logic/cubit/favorite_change/favorite_change_cubit.dart';
 import 'package:music_lyrics/logic/cubit/home/home_cubit.dart';
 import 'package:music_lyrics/logic/cubit/log_check/log_check_cubit.dart';
@@ -12,8 +13,6 @@ import 'package:music_lyrics/logic/cubit/song/song_cubit.dart';
 import 'package:music_lyrics/service/repositories/change_lang.dart';
 import 'package:music_lyrics/service/repositories/favorite_repository.dart';
 import 'package:music_lyrics/service/repositories/genius_repository.dart';
-
-import 'logic/cubit/favorite/favorite_cubit.dart';
 
 class Factory {
   void initialize() {

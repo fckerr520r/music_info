@@ -11,11 +11,11 @@ class ChangeLangCubit extends Cubit<ChangeLangState> {
   
   final ChangeLangClass langRepository; 
 
-  updateLang(String locale) {
+  void updateLang(String locale) {
     langRepository.updateLocal(locale);
   }
 
-  loadLocales() {
+  void loadLocales() {
     emit(ChangeLangLoaded(locales: langRepository.locales));
   }
 }

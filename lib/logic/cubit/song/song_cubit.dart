@@ -20,46 +20,50 @@ class SongCubit extends Cubit<SongState> {
     try {
       song = await repository.getSong(songId);
 
-      if (song.media.length != 0) {
-        String _videoUrl = '';
-        for (int i = 0; i < song.media.length; i++) {
+      if (song.media.isNotEmpty) {
+        var _videoUrl = '';
+        for (var i = 0; i < song.media.length; i++) {
           if (song.media[i].provider == 'youtube') {
             _videoUrl = song.media[i].url;
             if (_videoUrl.contains('https') == false) {
-              _videoUrl = _videoUrl.replaceFirst(RegExp(r".{4}"), 'https');
+              _videoUrl = _videoUrl.replaceFirst(RegExp(r'.{4}'), 'https');
             }
           }
         }
         videoUrl = _videoUrl;
-      } else
+      } else {
         videoUrl = '';
+      }
 
-      if (song.featuredArtists!.length != 0) {
-        List<String> _featureArtists = [];
-        for (int x = 0; x < song.featuredArtists!.length; x++) {
+      if (song.featuredArtists!.isNotEmpty) {
+        final _featureArtists = <String>[];
+        for (var x = 0; x < song.featuredArtists!.length; x++) {
           _featureArtists.add(song.featuredArtists![x].name);
         }
         featuredArtists = _featureArtists.join(', ');
-      } else
+      } else {
         featuredArtists = '';
+      }
 
-      if (song.writerArtists!.length != 0) {
-        List<String> _writerArtists = [];
+      if (song.writerArtists!.isNotEmpty) {
+        final _writerArtists = <String>[];
         for (var x = 0; x < song.writerArtists!.length; x++) {
           _writerArtists.add(song.writerArtists![x].name);
         }
         writeredArtists = _writerArtists.join(', ');
-      } else
+      } else {
         writeredArtists = '';
+      }
 
-      if (song.producerArtists!.length != 0) {
-        List<String> _prodArtists = [];
+      if (song.producerArtists!.isNotEmpty) {
+        final _prodArtists = <String>[];
         for (var x = 0; x < song.producerArtists!.length; x++) {
           _prodArtists.add(song.producerArtists![x].name);
         }
         producerArtists = _prodArtists.join(', ');
-      } else
+      } else {
         producerArtists = '';
+      }
 
       emit(
         SongComplete(

@@ -1,14 +1,14 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:music_lyrics/logic/cubit/log_check/log_check_cubit.dart';
-import 'package:music_lyrics/presentation/design/theme_colors.dart' as Style;
-import 'package:music_lyrics/presentation/design/theme_text_style.dart'
-    as StyleText;
 import 'package:get/get.dart';
+import 'package:music_lyrics/logic/cubit/log_check/log_check_cubit.dart';
+import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
+import 'package:music_lyrics/presentation/design/theme_text_style.dart'
+    as style_text;
 
 class SingIn extends StatefulWidget {
-  SingIn({Key? key}) : super(key: key);
+  const SingIn({Key? key}) : super(key: key);
 
   @override
   _SingInState createState() => _SingInState();
@@ -31,56 +31,55 @@ class _SingInState extends State<SingIn> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Sing in'.tr,
-            style: new TextStyle(
-                fontSize: 20.0,
+            style: const TextStyle(
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.white)),
-        backgroundColor: Style.Colors.backgroundColor,
+        backgroundColor: style.Colors.backgroundColor,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             TextFormField(
               keyboardType: TextInputType.emailAddress,
-              style: TextStyle(
-                fontSize: 16.0,
+              style: const TextStyle(
+                fontSize: 16,
                 color: Colors.white,
                 fontWeight: FontWeight.w400,
               ),
-              cursorColor: Style.Colors.letterColorRed,
+              cursorColor: style.Colors.letterColorRed,
               cursorWidth: 1.5,
               validator: (val) =>
                   val!.isNotEmpty ? null : 'Email should be valid'.tr,
               controller: _emailController,
-              decoration: new InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Email',
-                labelStyle: TextStyle(fontSize: 16.0, color: Colors.grey),
+                labelStyle: const TextStyle(fontSize: 16, color: Colors.grey),
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
-                    color: Style.Colors.letterMainColor.withOpacity(0.3),
+                    color: style.Colors.letterMainColor.withOpacity(0.3),
                   ),
                 ),
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
-                    color: Style.Colors.letterMainColor.withOpacity(0.8),
+                    color: style.Colors.letterMainColor.withOpacity(0.8),
                   ),
                 ),
-                prefixIcon: Icon(
+                prefixIcon: const Icon(
                   EvaIcons.emailOutline,
                   color: Colors.grey,
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextFormField(
               keyboardType: TextInputType.text,
               autocorrect: false,
               enableSuggestions: false,
-              style: TextStyle(
-                fontSize: 16.0,
+              style: const TextStyle(
+                fontSize: 16,
                 color: Colors.white,
                 fontWeight: FontWeight.w400,
               ),
@@ -89,22 +88,22 @@ class _SingInState extends State<SingIn> {
                   : null,
               obscureText: hidePassword,
               controller: _passwordController,
-              cursorColor: Style.Colors.letterColorRed,
+              cursorColor: style.Colors.letterColorRed,
               cursorWidth: 1.5,
-              decoration: new InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Password'.tr,
-                labelStyle: TextStyle(fontSize: 16.0, color: Colors.grey),
+                labelStyle: const TextStyle(fontSize: 16, color: Colors.grey),
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
-                    color: Style.Colors.letterMainColor.withOpacity(0.3),
+                    color: style.Colors.letterMainColor.withOpacity(0.3),
                   ),
                 ),
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
-                    color: Style.Colors.letterMainColor.withOpacity(0.8),
+                    color: style.Colors.letterMainColor.withOpacity(0.8),
                   ),
                 ),
-                prefixIcon: Icon(
+                prefixIcon: const Icon(
                   Icons.vpn_key,
                   color: Colors.grey,
                 ),
@@ -122,7 +121,7 @@ class _SingInState extends State<SingIn> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
@@ -132,7 +131,7 @@ class _SingInState extends State<SingIn> {
                   height: 30,
                   width: 120,
                   child: InkWell(
-                    child: Align(
+                    child: const Align(
                       child: Text(
                         // 'Forget password?'.tr,
                         '',
@@ -143,7 +142,6 @@ class _SingInState extends State<SingIn> {
                             textBaseline: TextBaseline.ideographic,
                             color: Colors.grey),
                       ),
-                      alignment: Alignment(0.0, 0.0),
                     ),
                     onTap: () {
                       // soon
@@ -156,8 +154,7 @@ class _SingInState extends State<SingIn> {
                   child: InkWell(
                     child: Align(
                       child: Text('Sing in'.tr,
-                          style: StyleText.TextStyles.clicableRedText),
-                      alignment: Alignment(0.0, 0.0),
+                          style: style_text.TextStyles.clicableRedText),
                     ),
                     onTap: () {
                       BlocProvider.of<UserCheckCubit>(context, listen: false)

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:music_lyrics/presentation/design/theme_colors.dart' as Style;
+import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
 
 class TextStyles {
-  static const TextStyle clicableRedText = const TextStyle(
-      fontSize: 18.0,
+  static const TextStyle clicableRedText = TextStyle(
+      fontSize: 18,
       fontWeight: FontWeight.bold,
-      color: Style.Colors.letterColorRed);
+      color: style.Colors.letterColorRed);
 
-  static const TextStyle mainWhiteText = const TextStyle(
-      fontSize: 16.0,
+  static const TextStyle mainWhiteText = TextStyle(
+      fontSize: 16,
       fontWeight: FontWeight.bold,
       color: Colors.white);
 }

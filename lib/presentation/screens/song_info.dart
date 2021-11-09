@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:music_lyrics/logic/cubit/song/song_cubit.dart';
 import 'package:music_lyrics/presentation/widgets/loading_widget.dart';
@@ -12,10 +13,9 @@ import 'package:music_lyrics/presentation/widgets/song_info/song_owner_info.dart
 import 'package:music_lyrics/presentation/widgets/song_info/text_lyric.dart';
 import 'package:music_lyrics/presentation/widgets/song_info/video_block.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'package:get/get.dart';
 
 class SongInfo extends StatefulWidget {
-  SongInfo({Key? key, required this.songId}) : super(key: key);
+  const SongInfo({Key? key, required this.songId}) : super(key: key);
   final int songId;
   @override
   _SongInfoState createState() => _SongInfoState();
@@ -24,9 +24,8 @@ class SongInfo extends StatefulWidget {
 class _SongInfoState extends State<SongInfo> {
   final YoutubePlayerController _ytubeController = YoutubePlayerController(
     initialVideoId: '',
-    flags: YoutubePlayerFlags(
+    flags: const YoutubePlayerFlags(
       enableCaption: false,
-      isLive: false,
       autoPlay: false,
     ),
   );
@@ -62,16 +61,16 @@ class _SongInfoState extends State<SongInfo> {
               listener: (context, state) {
                 if (state is SongComplete) {
                   setState(() {
-                    String id = YoutubePlayer.convertUrlToId(state.videoUrl)!;
+                    final id = YoutubePlayer.convertUrlToId(state.videoUrl)!;
                     print(id);
                     _ytubeController
                         .load(YoutubePlayer.convertUrlToId(state.videoUrl)!);
-                    print(_ytubeController.initialVideoId + ' xd');
+                    print('${_ytubeController.initialVideoId} xd');
                   });
                 }
               },
               builder: (context, state) {
-                if (state is SongComplete)
+                if (state is SongComplete) {
                   return SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
@@ -92,16 +91,20 @@ class _SongInfoState extends State<SongInfo> {
                                 child: SongOwnerInfo(song: state.song),
                               ),
                             ),
-                            state.song.lyric == '' ? SizedBox.shrink() : Container(
-                              color:
-                                  Theme.of(context).appBarTheme.backgroundColor,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 13),
-                              child: TextLyric(
-                                lyric: state.song.lyric,
+                            if (state.song.lyric == '')
+                              const SizedBox.shrink()
+                            else
+                              Container(
+                                color: Theme.of(context)
+                                    .appBarTheme
+                                    .backgroundColor,
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 13),
+                                child: TextLyric(
+                                  lyric: state.song.lyric,
+                                ),
                               ),
-                            ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Container(
                               color:
                                   Theme.of(context).appBarTheme.backgroundColor,
@@ -113,13 +116,14 @@ class _SongInfoState extends State<SongInfo> {
                                     line: 'Featuring'.tr,
                                     mainInfo: state.featuredArtists.toString(),
                                   ),
-                                  state.song.album != null
-                                      ? SongLinesInfo(
-                                          line: 'Album'.tr,
-                                          mainInfo:
-                                              state.song.album!.name.toString(),
-                                        )
-                                      : SizedBox.shrink(),
+                                  if (state.song.album != null)
+                                    SongLinesInfo(
+                                      line: 'Album'.tr,
+                                      mainInfo:
+                                          state.song.album!.name.toString(),
+                                    )
+                                  else
+                                    const SizedBox.shrink(),
                                   SongLinesInfo(
                                     line: 'Writer Artists'.tr,
                                     mainInfo: state.writeredArtists.toString(),
@@ -131,24 +135,27 @@ class _SongInfoState extends State<SongInfo> {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 10),
-                            state.videoUrl == ''
-                                ? SizedBox.shrink()
-                                : VideoBlock(
-                                    player: player,
-                                  ),
-                            state.song.releaseDate != null
-                                ? SongDividerData(
-                                    releaseDate: state.song.releaseDate!,
-                                  )
-                                : SizedBox.shrink(),
+                            const SizedBox(height: 10),
+                            if (state.videoUrl == '')
+                              const SizedBox.shrink()
+                            else
+                              VideoBlock(
+                                player: player,
+                              ),
+                            if (state.song.releaseDate != null)
+                              SongDividerData(
+                                releaseDate: state.song.releaseDate!,
+                              )
+                            else
+                              const SizedBox.shrink(),
                           ],
                         ),
                       ],
                     ),
                   );
-                else
-                  return LoadingWidget();
+                } else {
+                  return const LoadingWidget();
+                }
               },
             ),
           );

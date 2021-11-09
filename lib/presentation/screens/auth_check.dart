@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
         body: BlocBuilder<UserCheckCubit, UserCheckState>(
           builder: (context, state) {
             if (state is UserCheckInitial) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (state is UserCheckYep) {
               return MainScreen();
             } else if (state is UserCheckNop) {

@@ -12,7 +12,7 @@ class FavoriteSongRepository {
   Future<List<int>> loadFavoriteSongsId() async {
     final storage = await _storage;
 
-    List<int> favoriteSongId = [];
+    var favoriteSongId = <int>[];
     try {
       final favoriteSongIdString = storage.getStringList(idsKey)!.toList();
       favoriteSongId = favoriteSongIdString.map(int.parse).toList();
@@ -23,18 +23,17 @@ class FavoriteSongRepository {
 
   Future<bool> addFavoriteSongs(int id) async {
     final storage = await _storage;
-    List<String> favoriteSongIdString = [];
+    var favoriteSongIdString = <String>[];
     try {
       favoriteSongIdString = storage.getStringList(idsKey)!.toList();
     } catch (e) {}
-    
+
     try {
       favoriteSongIdString.add(id.toString());
       await storage.setStringList(idsKey, favoriteSongIdString);
     } catch (e) {
       return false;
     }
-
     return true;
   }
 
@@ -42,15 +41,15 @@ class FavoriteSongRepository {
     final storage = await _storage;
     List<String>? favoriteSongIdString = [];
 
-    favoriteSongIdString = storage.getStringList(idsKey)!.toList();
-    favoriteSongIdString.remove(id.toString());
+    favoriteSongIdString = storage.getStringList(idsKey)!.toList()
+      ..remove(id.toString());
     await storage.setStringList(idsKey, favoriteSongIdString);
   }
 
   Future<bool> checkFavoriteSongs(int id) async {
     final storage = await _storage;
-    bool check = false;
-    List<String> favoriteSongIdString = [];
+    var check = false;
+    var favoriteSongIdString = <String>[];
     try {
       favoriteSongIdString = storage.getStringList(idsKey)!.toList();
       check = favoriteSongIdString.contains(id.toString());
@@ -59,11 +58,11 @@ class FavoriteSongRepository {
   }
 
   Future<List<Song>> receiveFavoriteSongs() async {
-    final List<int> songIds = await loadFavoriteSongsId();
-    List<Song> favoriteSongList = [];
+    final songIds = await loadFavoriteSongsId();
+    final favoriteSongList = <Song>[];
     if (songIds.isNotEmpty) {
       for (var i = 0; i < songIds.length; i++) {
-        final Song song =
+        final song =
             await GeniusRepository(dio: GetIt.I.get<Dio>()).getSong(songIds[i]);
         favoriteSongList.add(song);
       }

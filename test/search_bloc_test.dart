@@ -10,8 +10,8 @@ class GeniusRepositoryMock extends Mock implements GeniusRepository {}
 void main() {
   final geniusRepositoryMock = GeniusRepositoryMock();
   final result = Result(id: 5);
-  List<Hit> listAnswer = [
-    Hit(index: "", result: result, type: ''),
+  final listAnswer = <Hit>[
+    Hit(index: '', result: result, type: ''),
   ];
   
 

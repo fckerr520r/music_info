@@ -9,9 +9,9 @@ void main() {
   final sPMock = SharedPreferencesMock();
 
   test('try to add song in favorite list', () async {
-    int id = 5;
-    List<String> favoriteSongIdString = ['64', '6897', '64648'];
-    bool boolka = false;
+    const id = 5;
+    final favoriteSongIdString = <String>['64', '6897', '64648'];
+    var boolka = false;
 
     when(() => sPMock.getStringList(any()))
         .thenAnswer((_) => favoriteSongIdString);

@@ -16,7 +16,7 @@ class VideoBlock extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Expanded(
+            const Expanded(
               child: Divider(
                 color: Colors.white,
                 thickness: 0.7,
@@ -25,13 +25,13 @@ class VideoBlock extends StatelessWidget {
             ),
             Text(
               'Official video'.tr,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            Expanded(
+            const Expanded(
               child: Divider(
                 color: Colors.white,
                 thickness: 0.7,

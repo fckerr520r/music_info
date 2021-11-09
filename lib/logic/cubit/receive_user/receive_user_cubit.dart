@@ -9,7 +9,7 @@ class ReceiveUserCubit extends Cubit<ReceiveUserState> {
     receiveUserInfo();
   }
 
-  receiveUserInfo(){
+  void receiveUserInfo(){
      emit(ReceiveUserComplete(FirebaseAuth.instance.currentUser));
   }
 }

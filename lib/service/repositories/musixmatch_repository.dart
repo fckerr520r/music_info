@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:music_lyrics/constants/tokens.dart';
 import 'package:music_lyrics/service/models/musix_match_models/lyric_model.dart';
@@ -14,13 +13,13 @@ class MusixmatchRepository {
   final String accessToken = Tokens.musixMatchToken;
 
   static String searchTrackUrl =
-      "http://api.musixmatch.com/ws/1.1/track.search";
+      'http://api.musixmatch.com/ws/1.1/track.search';
   static String searchTrackLyricUrl =
-      "https://api.musixmatch.com/ws/1.1/track.lyrics.get";
+      'https://api.musixmatch.com/ws/1.1/track.lyrics.get';
 
   Future<String> getTrackLyrics(String songName, String songArtist) async {
     try {
-      var paramsTrack = {
+      final paramsTrack = {
         'q_track': songName,
         'q_artist': songArtist,
         'page_size': 1,
@@ -28,18 +27,19 @@ class MusixmatchRepository {
         's_track_rating': 'desc',
         'apikey': accessToken,
       };
-      Response response =
+      final response =
           await _dio.get(searchTrackUrl, queryParameters: paramsTrack);
       final _searchModel = searchModelFromJson(response.data);
 
-      var paramsTrackLyric = {
-        'track_id': _searchModel.message.body!.trackList![0].track!.trackId!,
+      final tracks = _searchModel.message.body?.trackList ?? [];
+      final paramsTrackLyric = {
+        'track_id': tracks.isNotEmpty ? tracks[0].track?.trackId : '',
         'apikey': accessToken,
       };
-      Response responseLyric = await _dio.get(searchTrackLyricUrl,
+      final responseLyric = await _dio.get(searchTrackLyricUrl,
           queryParameters: paramsTrackLyric);
       final lyricModel = lyricModelFromJson(responseLyric.data);
-      return lyricModel.message.body!.lyrics!.lyricsBody ?? '';
+      return lyricModel.message.body?.lyrics?.lyricsBody ?? '';
     } catch (e) {
       return '';
     }

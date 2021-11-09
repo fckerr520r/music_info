@@ -32,12 +32,19 @@ class SongSmallPicture extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: Stack(
           children: [
-            Container(
+            SizedBox(
               width: double.maxFinite,
               height: 70,
               child: Row(
                 children: [
                   Container(
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: backgroundColor,
+                        ),
+                      ],
+                    ),
                     child: Image.network(
                       picUrl,
                       width: 100,
@@ -52,33 +59,26 @@ class SongSmallPicture extends StatelessWidget {
                         );
                       },
                     ),
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: backgroundColor,
-                        ),
-                      ],
-                    ),
                   ),
-                  SizedBox(width: 15),
+                  const SizedBox(width: 15),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 13),
+                        const SizedBox(height: 13),
                         Text(
                           nameSong,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 15,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        SizedBox(height: 9),
+                        const SizedBox(height: 9),
                         Text(
                           artistName,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.grey,
                             fontSize: 14,
                           ),

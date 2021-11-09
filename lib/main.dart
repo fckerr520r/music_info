@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -5,28 +6,26 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:music_lyrics/constants/app_translation.dart';
 import 'package:music_lyrics/factory.dart';
-import 'package:music_lyrics/service/repositories/change_lang.dart';
+import 'package:music_lyrics/logic/cubit/favorite/favorite_cubit.dart';
 import 'package:music_lyrics/logic/cubit/home/home_cubit.dart';
 import 'package:music_lyrics/logic/cubit/log_check/log_check_cubit.dart';
 import 'package:music_lyrics/logic/cubit/receive_user/receive_user_cubit.dart';
 import 'package:music_lyrics/logic/cubit/search/search_cubit.dart';
+import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
 import 'package:music_lyrics/presentation/screens/auth_check.dart';
 import 'package:music_lyrics/presentation/screens/auth_welcome.dart';
-import 'package:music_lyrics/presentation/screens/sing_in.dart';
-import 'package:music_lyrics/presentation/screens/sing_up.dart';
 import 'package:music_lyrics/presentation/screens/favorite_screen.dart';
 import 'package:music_lyrics/presentation/screens/search_screen.dart';
 import 'package:music_lyrics/presentation/screens/settings.dart';
+import 'package:music_lyrics/presentation/screens/sing_in.dart';
+import 'package:music_lyrics/presentation/screens/sing_up.dart';
 import 'package:music_lyrics/presentation/widgets/bottom_nav_bar.dart';
-import 'package:music_lyrics/presentation/design/theme_colors.dart' as Style;
-import 'package:firebase_core/firebase_core.dart';
+import 'package:music_lyrics/service/repositories/change_lang.dart';
 
-import 'package:music_lyrics/logic/cubit/favorite/favorite_cubit.dart';
-
-void main() async {
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  String lang = await ChangeLangClass().changeLocal();
+  final lang = await ChangeLangClass().changeLocal();
   Factory().initialize();
   runApp(MyApp(lang));
 }
@@ -56,33 +55,33 @@ class MyApp extends StatelessWidget {
       ],
       child: GetMaterialApp(
         translations: AppTranslations(),
-        fallbackLocale: Locale('en'),
+        fallbackLocale: const Locale('en'),
         theme: ThemeData(
-          scaffoldBackgroundColor: Style.Colors.backgroundColor,
-          bottomNavigationBarTheme: BottomNavigationBarThemeData(
-            backgroundColor: Style.Colors.backgroundColorLight,
-            selectedItemColor: Style.Colors.letterColorRed,
-            unselectedItemColor: Style.Colors.letterColorGreyLight,
+          scaffoldBackgroundColor: style.Colors.backgroundColor,
+          bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+            backgroundColor: style.Colors.backgroundColorLight,
+            selectedItemColor: style.Colors.letterColorRed,
+            unselectedItemColor: style.Colors.letterColorGreyLight,
           ),
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
             brightness: Brightness.dark,
-            backgroundColor: Style.Colors.backgroundColorLight,
+            backgroundColor: style.Colors.backgroundColorLight,
           ),
-          colorScheme: ColorScheme.dark(
-            secondary: Style.Colors.backgroundColorLight,
+          colorScheme: const ColorScheme.dark(
+            secondary: style.Colors.backgroundColorLight,
             onSurface: Colors.black,
           ),
         ),
         locale: lang.isNotEmpty ? Locale(lang) : Get.deviceLocale,
         routes: {
-          '/auth_welcome': (context) => WelcomeWidget(),
+          '/auth_welcome': (context) => const WelcomeWidget(),
           '/sing_up': (context) => SingUp(),
           '/sing_in': (context) => SingIn(),
-          '/homePage': (context) => HomePage(),
+          '/homePage': (context) => const HomePage(),
           '/main_screen': (context) => MainScreen(),
           '/settings': (context) => Settings(),
           '/search': (context) => MainSearch(),
-          '/favorite': (context) => FavoriteWidget(),
+          '/favorite': (context) => const FavoriteWidget(),
         },
         initialRoute: '/homePage',
       ),

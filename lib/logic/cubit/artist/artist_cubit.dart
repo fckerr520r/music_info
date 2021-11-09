@@ -28,8 +28,8 @@ class ArtistCubit extends Cubit<ArtistState> {
             .then((result) => socials = result),
       ]);
       emit(ArtistComplete(listArtistSongs, artist, socials));
-    } catch (e) {
-      emit(ArtistError());
+    } on Exception catch(e) {
+      emit(ArtistError()); //TODO
     }
   }
 }

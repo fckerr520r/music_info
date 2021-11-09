@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:music_lyrics/presentation/design/theme_colors.dart' as Style;
+import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
 import 'package:music_lyrics/presentation/screens/song_info.dart';
 
 class SongBigPicture extends StatelessWidget {
@@ -39,8 +39,8 @@ class SongBigPicture extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Style.Colors.backgroundColor.withOpacity(0.1),
-                  Style.Colors.backgroundColor.withOpacity(0.4),
+                  style.Colors.backgroundColor.withOpacity(0.1),
+                  style.Colors.backgroundColor.withOpacity(0.4),
                 ],
               ),
             ),
@@ -56,7 +56,7 @@ class SongBigPicture extends StatelessWidget {
           ),
           Positioned(
             child: Padding(
-              padding: EdgeInsets.only(right: 8, left: 8),
+              padding: const EdgeInsets.only(right: 8, left: 8),
               child: SizedBox(
                 width: 204,
                 child: Column(
@@ -65,7 +65,7 @@ class SongBigPicture extends StatelessWidget {
                   children: [
                     Text(
                       nameSong,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
@@ -77,13 +77,13 @@ class SongBigPicture extends StatelessWidget {
                       artistName,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w500,
                         fontSize: 12,
                       ),
                     ),
-                    SizedBox(height: 20)
+                    const SizedBox(height: 20)
                   ],
                 ),
               ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:music_lyrics/presentation/design/theme_colors.dart' as Style;
+import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
 import 'package:music_lyrics/presentation/screens/song_info.dart';
 
 class SongMediumPicture extends StatelessWidget {
@@ -31,7 +31,7 @@ class SongMediumPicture extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
+            margin: const EdgeInsets.symmetric(vertical: 10),
             width: 150,
             height: 140,
             decoration: BoxDecoration(
@@ -44,15 +44,13 @@ class SongMediumPicture extends StatelessWidget {
                   image: NetworkImage(picUrl), fit: BoxFit.cover),
             ),
           ),
-          SizedBox(
-            height: 2,
-          ),
+          const SizedBox(height: 2),
           SizedBox(
             width: 150,
             child: Text(
               nameSong,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,
                 fontSize: 13,
@@ -61,16 +59,14 @@ class SongMediumPicture extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          SizedBox(
-            height: 1,
-          ),
+          const SizedBox(height: 1),
           SizedBox(
             width: 150,
             child: Text(
               artistName,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Style.Colors.letterMainColor,
+              style: const TextStyle(
+                color: style.Colors.letterMainColor,
                 fontSize: 12,
               ),
               maxLines: 1,
