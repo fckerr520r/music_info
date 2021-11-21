@@ -71,7 +71,6 @@ class ArtistClass {
     required this.alternateNames,
     this.apiPath = '',
     this.facebookName = '',
-    required this.followersCount,
     this.headerImageUrl = '',
     required this.id,
     this.imageUrl = '',
@@ -87,7 +86,6 @@ class ArtistClass {
   List<String> alternateNames;
   String apiPath;
   String facebookName;
-  int followersCount;
   String headerImageUrl;
   int id;
   String imageUrl;
@@ -104,7 +102,6 @@ class ArtistClass {
             List<String>.from(json['alternate_names'].map((x) => x)),
         apiPath: json['api_path'] ?? '',
         facebookName: json['facebook_name'] ?? '',
-        followersCount: json['followers_count'] ?? '',
         headerImageUrl: json['header_image_url'] ?? '',
         id: json['id'] ?? '',
         imageUrl: json['image_url'] ?? '',
@@ -121,7 +118,6 @@ class ArtistClass {
         'alternate_names': List<dynamic>.from(alternateNames.map((x) => x)),
         'api_path': apiPath,
         'facebook_name': facebookName,
-        'followers_count': followersCount,
         'header_image_url': headerImageUrl,
         'id': id,
         'image_url': imageUrl,

@@ -59,9 +59,7 @@ class FavoriteScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return SongSmallPicture(
                     songId: state.favoriteList[index].id,
-                    artistName: state.favoriteList[index].primaryArtist!.name,
-                    backgroundColor: style.Colors.backgroundColorLight,
-                    //     state.favoriteList[index].songArtPrimaryColor,
+                    artistName: state.favoriteList[index].primaryArtist.name,
                     picUrl: state.favoriteList[index].headerImageUrl,
                     nameSong: state.favoriteList[index].title,
                   );

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:music_lyrics/service/models/song.dart';
+import 'package:music_lyrics/service/models/genius_models/song.dart';
 import 'package:music_lyrics/service/repositories/genius_repository.dart';
 
 part 'song_state.dart';
@@ -26,7 +26,7 @@ class SongCubit extends Cubit<SongState> {
           if (song.media[i].provider == 'youtube') {
             _videoUrl = song.media[i].url;
             if (_videoUrl.contains('https') == false) {
-              _videoUrl = _videoUrl.replaceFirst(RegExp(r'.{4}'), 'https');
+              _videoUrl = _videoUrl.replaceFirst(RegExp('.{4}'), 'https'); // TODO RegExp(r'.{4}')
             }
           }
         }
@@ -69,7 +69,7 @@ class SongCubit extends Cubit<SongState> {
         SongComplete(
             song, videoUrl, featuredArtists, writeredArtists, producerArtists),
       );
-    } catch (e) {
+    } on Exception {
       emit(SongError());
     }
   }

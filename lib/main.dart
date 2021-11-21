@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -11,6 +12,7 @@ import 'package:music_lyrics/logic/cubit/home/home_cubit.dart';
 import 'package:music_lyrics/logic/cubit/log_check/log_check_cubit.dart';
 import 'package:music_lyrics/logic/cubit/receive_user/receive_user_cubit.dart';
 import 'package:music_lyrics/logic/cubit/search/search_cubit.dart';
+import 'package:music_lyrics/presentation/design/text_theme.dart';
 import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
 import 'package:music_lyrics/presentation/screens/auth_check.dart';
 import 'package:music_lyrics/presentation/screens/auth_welcome.dart';
@@ -20,7 +22,7 @@ import 'package:music_lyrics/presentation/screens/settings.dart';
 import 'package:music_lyrics/presentation/screens/sing_in.dart';
 import 'package:music_lyrics/presentation/screens/sing_up.dart';
 import 'package:music_lyrics/presentation/widgets/bottom_nav_bar.dart';
-import 'package:music_lyrics/service/repositories/change_lang.dart';
+import 'package:music_lyrics/service/repositories/change_lang_repository.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +34,7 @@ Future main() async {
 
 class MyApp extends StatelessWidget {
   final String lang;
-  MyApp(this.lang);
+  const MyApp(this.lang, {Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -57,6 +59,17 @@ class MyApp extends StatelessWidget {
         translations: AppTranslations(),
         fallbackLocale: const Locale('en'),
         theme: ThemeData(
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                  style.Colors.backgroundColorLight,
+                ),
+                shape: MaterialStateProperty.all<OutlinedBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(9),
+                  ),
+                )),
+          ),
           scaffoldBackgroundColor: style.Colors.backgroundColor,
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: style.Colors.backgroundColorLight,
@@ -64,23 +77,24 @@ class MyApp extends StatelessWidget {
             unselectedItemColor: style.Colors.letterColorGreyLight,
           ),
           appBarTheme: const AppBarTheme(
-            brightness: Brightness.dark,
+            systemOverlayStyle: SystemUiOverlayStyle.dark,
             backgroundColor: style.Colors.backgroundColorLight,
           ),
-          colorScheme: const ColorScheme.dark(
+          colorScheme: ColorScheme.dark(
             secondary: style.Colors.backgroundColorLight,
-            onSurface: Colors.black,
+            onSurface: Colors.grey.shade300,
           ),
+          textTheme: AppTextTheme.textTheme,
         ),
         locale: lang.isNotEmpty ? Locale(lang) : Get.deviceLocale,
         routes: {
           '/auth_welcome': (context) => const WelcomeWidget(),
-          '/sing_up': (context) => SingUp(),
-          '/sing_in': (context) => SingIn(),
+          '/sing_up': (context) => const SingUp(),
+          '/sing_in': (context) => const SingIn(),
           '/homePage': (context) => const HomePage(),
-          '/main_screen': (context) => MainScreen(),
-          '/settings': (context) => Settings(),
-          '/search': (context) => MainSearch(),
+          '/main_screen': (context) => const MainScreen(),
+          '/settings': (context) => const Settings(),
+          '/search': (context) => const MainSearch(),
           '/favorite': (context) => const FavoriteWidget(),
         },
         initialRoute: '/homePage',

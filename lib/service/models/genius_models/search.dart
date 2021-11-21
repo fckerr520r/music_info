@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:music_lyrics/service/models/genius_models/main_artist_info.dart';
+
 GetSearch getSearchFromJson(String str) => GetSearch.fromJson(json.decode(str));
 
 String getSearchToJson(GetSearch data) => json.encode(data.toJson());
@@ -83,7 +85,6 @@ class Hit {
 
 class Result {
     Result({
-        this.annotationCount = 0,
         this.apiPath = '',
         this.fullTitle = '',
         this.headerImageThumbnailUrl = '',
@@ -100,10 +101,9 @@ class Result {
         // required this.songArtPrimaryColor,
         // required this.songArtSecondaryColor,
         // required this.songArtTextColor,
-        this.primaryArtist = const PrimaryArtist(),
+        this.primaryArtist = const ArtistMainInfo(),
     });
 
-    int annotationCount;
     String apiPath;
     String fullTitle;
     String headerImageThumbnailUrl;
@@ -120,10 +120,9 @@ class Result {
     // String songArtPrimaryColor;
     // String songArtSecondaryColor;
     // String songArtTextColor;
-    PrimaryArtist primaryArtist;
+    ArtistMainInfo primaryArtist;
 
     factory Result.fromJson(Map<String, dynamic> json) => Result(
-        annotationCount: json['annotation_count'],
         apiPath: json['api_path'],
         fullTitle: json['full_title'],
         headerImageThumbnailUrl: json['header_image_thumbnail_url'],
@@ -140,11 +139,10 @@ class Result {
         // songArtPrimaryColor: json['song_art_primary_color'],
         // songArtSecondaryColor: json['song_art_secondary_color'],
         // songArtTextColor: json['song_art_text_color'],
-        primaryArtist: PrimaryArtist.fromJson(json['primary_artist']),
+        primaryArtist: ArtistMainInfo.fromJson(json['primary_artist']),
     );
 
     Map<String, dynamic> toJson() => {
-        'annotation_count': annotationCount,
         'api_path': apiPath,
         'full_title': fullTitle,
         'header_image_thumbnail_url': headerImageThumbnailUrl,
@@ -165,38 +163,4 @@ class Result {
     };
 }
 
-class PrimaryArtist {
-    const PrimaryArtist({
-        this.apiPath  = '',
-        this.headerImageUrl = '',
-        this.id = 0,
-        this.imageUrl = '',
-        this.name = '',
-        this.url = '',
-    });
 
-    final String apiPath;
-    final String headerImageUrl;
-    final int id;
-    final String imageUrl;
-    final String name;
-    final String url;
-
-    factory PrimaryArtist.fromJson(Map<String, dynamic> json) => PrimaryArtist(
-        apiPath: json['api_path'],
-        headerImageUrl: json['header_image_url'],
-        id: json['id'],
-        imageUrl: json['image_url'],
-        name: json['name'],
-        url: json['url'],
-    );
-
-    Map<String, dynamic> toJson() => {
-        'api_path': apiPath,
-        'header_image_url': headerImageUrl,
-        'id': id,
-        'image_url': imageUrl,
-        'name': name,
-        'url': url,
-    };
-}

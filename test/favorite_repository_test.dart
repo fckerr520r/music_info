@@ -7,19 +7,19 @@ class SharedPreferencesMock extends Mock implements SharedPreferences {}
 
 void main() {
   final sPMock = SharedPreferencesMock();
+  final favoriteSongRepository = FavoriteSongRepository(storage: sPMock);
 
   test('try to add song in favorite list', () async {
     const id = 5;
     final favoriteSongIdString = <String>['64', '6897', '64648'];
-    var boolka = false;
+    var boool = false;
 
     when(() => sPMock.getStringList(any()))
         .thenAnswer((_) => favoriteSongIdString);
     when(() => sPMock.setStringList(any(), favoriteSongIdString));
 
-    boolka = await FavoriteSongRepository( )
-        .addFavoriteSongs(id);
+    boool = await favoriteSongRepository.addFavoriteSongs(id);
 
-    expect(boolka, true);
+    expect(boool, true);
   });
 }

@@ -4,8 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:music_lyrics/logic/cubit/log_check/log_check_cubit.dart';
 import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
-import 'package:music_lyrics/presentation/design/theme_text_style.dart'
-    as style_text;
 
 class SingIn extends StatefulWidget {
   const SingIn({Key? key}) : super(key: key);
@@ -136,11 +134,12 @@ class _SingInState extends State<SingIn> {
                         // 'Forget password?'.tr,
                         '',
                         style: TextStyle(
-                            fontSize: 13.5,
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline,
-                            textBaseline: TextBaseline.ideographic,
-                            color: Colors.grey),
+                          fontSize: 13.5,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline,
+                          textBaseline: TextBaseline.ideographic,
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
                     onTap: () {
@@ -154,7 +153,7 @@ class _SingInState extends State<SingIn> {
                   child: InkWell(
                     child: Align(
                       child: Text('Sing in'.tr,
-                          style: style_text.TextStyles.clicableRedText),
+                          style: Theme.of(context).textTheme.headline4),
                     ),
                     onTap: () {
                       BlocProvider.of<UserCheckCubit>(context, listen: false)

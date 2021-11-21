@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -43,13 +44,17 @@ class UserCheckCubit extends Cubit<UserCheckState> {
       );
 
       await firebaseAuth.signInWithCredential(credential);
-    } catch (error) {}
+    } on Exception catch (error) {
+      log(error.toString());
+    }
   }
 
   Future<void> logout() async {
     try {
       await googleSignIn.disconnect();
-    } catch (e) {}
+    } on Exception catch (error) {
+      log(error.toString());
+    }
     await firebaseAuth.signOut();
   }
 
@@ -57,14 +62,18 @@ class UserCheckCubit extends Cubit<UserCheckState> {
     try {
       await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-    } catch (error) {}
+    } on Exception catch (error) {
+      log(error.toString());
+    }
   }
 
   Future emailRegister(String email, String password) async {
     try {
       await firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
-    } catch (error) {}
+    } on Exception catch (error) {
+      log(error.toString());
+    }
   }
 
   @override

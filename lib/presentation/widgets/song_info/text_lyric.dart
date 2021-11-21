@@ -1,9 +1,14 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TextLyric extends StatelessWidget {
-  const TextLyric({Key? key, required this.lyric}) : super(key: key);
+  const TextLyric({Key? key, required this.lyrics, required this.lyricsUrl})
+      : super(key: key);
 
-  final String lyric;
+  final String lyrics;
+  final String lyricsUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,19 @@ class TextLyric extends StatelessWidget {
                 style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
               ),
               TextSpan(
-                text: lyric,
+                text: lyrics,
+              ),
+              TextSpan(
+                text: 'Tap to open full lyrics'.tr,
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Theme.of(context)
+                        .bottomNavigationBarTheme
+                        .selectedItemColor),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    launch(lyricsUrl);
+                  },
               )
             ],
           ),

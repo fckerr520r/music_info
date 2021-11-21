@@ -5,13 +5,11 @@ import 'package:music_lyrics/presentation/screens/song_info.dart';
 class SongMediumPicture extends StatelessWidget {
   const SongMediumPicture(
       {Key? key,
-      required this.backgroundColor,
       required this.picUrl,
       required this.nameSong,
       required this.artistName,
       required this.songId})
       : super(key: key);
-  final Color backgroundColor;
   final String picUrl;
   final String nameSong;
   final String artistName;
@@ -35,9 +33,9 @@ class SongMediumPicture extends StatelessWidget {
             width: 150,
             height: 140,
             decoration: BoxDecoration(
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
-                  color: backgroundColor,
+                  color: style.Colors.backgroundColor,
                 )
               ],
               image: DecorationImage(

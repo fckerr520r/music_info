@@ -1,15 +1,15 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:music_lyrics/logic/cubit/artist/artist_cubit.dart';
 import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
+import 'package:music_lyrics/presentation/widgets/artist_info/custom_app_bar.dart';
+import 'package:music_lyrics/presentation/widgets/artist_info/socials_widget.dart';
 import 'package:music_lyrics/presentation/widgets/loading_widget.dart';
 import 'package:music_lyrics/presentation/widgets/song_small_pic.dart';
-import 'package:music_lyrics/service/models/artist.dart';
-import 'package:music_lyrics/service/models/artist_social_data.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:music_lyrics/service/models/genius_models/artist.dart';
+import 'package:music_lyrics/service/models/genius_models/artist_social_data.dart';
 
 class ArtistInfo extends StatelessWidget {
   const ArtistInfo({
@@ -27,128 +27,67 @@ class ArtistInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<ArtistCubit>(
       create: (context) => GetIt.I.get<ArtistCubit>()..getAtristInfo(artistId),
-      child: Scaffold(
-        body: BlocBuilder<ArtistCubit, ArtistState>(
-          builder: (context, state) {
-            if (state is ArtistLoading) {
-              return Scaffold(
-                appBar: AppBar(),
-                body: const LoadingWidget(),
-              );
-            }
-            if (state is ArtistComplete) {
-              return CustomScrollView(
-                slivers: <Widget>[
-                  SliverAppBar(
-                    backgroundColor: style.Colors.backgroundColorLight,
-                    pinned: true,
-                    expandedHeight: 349,
-                    flexibleSpace: FlexibleSpaceBar(
-                      title: SizedBox(
-                        height: 350,
-                        width: MediaQuery.of(context).size.width,
-                        child: Stack(
-                          alignment: AlignmentDirectional.center,
-                          children: [
-                            Positioned(
-                              bottom: 40,
-                              child: CircleAvatar(
-                                radius: 53,
-                                backgroundColor: style.Colors.backgroundColor,
-                                child: Hero(
-                                  tag: 'artist_avatar',
-                                  child: CircleAvatar(
-                                    backgroundImage:
-                                        NetworkImage(artistImageUrl),
-                                    radius: 50,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              bottom: 0,
-                              right: 13,
-                              left: 13,
-                              child: AutoSizeText(
-                                artistName,
-                                textAlign: TextAlign.center,
-                                maxFontSize: 20,
-                                minFontSize: 15,
-                                maxLines: 2,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+      child: SafeArea(
+        child: Scaffold(
+          body: BlocBuilder<ArtistCubit, ArtistState>(
+            builder: (context, state) {
+              if (state is ArtistLoading) {
+                return Scaffold(
+                  appBar: AppBar(),
+                  body: const LoadingWidget(),
+                );
+              }
+              if (state is ArtistComplete) {
+                return CustomScrollView(
+                  slivers: <Widget>[
+                    SliverPersistentHeader(
+                      delegate: CustomAppBar(
+                        artistImageUrl: artistImageUrl,
+                        artistName: artistName,
+                        artistHeaderImageUrl: state.artist.headerImageUrl,
                       ),
-                      centerTitle: true,
-                      background: Container(
-                        height: 330,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(state.artist.headerImageUrl),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        foregroundDecoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              style.Colors.backgroundColor.withOpacity(0),
-                              style.Colors.backgroundColor.withOpacity(0.2),
-                              style.Colors.backgroundColor.withOpacity(0.4),
-                              style.Colors.backgroundColor.withOpacity(0.8),
-                              style.Colors.backgroundColor.withOpacity(1),
-                            ],
-                          ),
-                        ),
-                      ),
+                      // floating: true,
+                      pinned: true,
                     ),
-                  ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        if (index == 0) {
-                          return AtristInfo(
-                            artist: state.artist,
-                            socials: state.socials,
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          if (index == 0) {
+                            return AtristInfo(
+                              artist: state.artist,
+                              socials: state.socials,
+                            );
+                          }
+                          final currentSong = state.listArtistSongs[index - 1];
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 13),
+                            child: SongSmallPicture(
+                              songId: currentSong.id,
+                              artistName: currentSong.primaryArtist.name,
+                              picUrl: currentSong.songArtImageUrl,
+                              nameSong: currentSong.title,
+                            ),
                           );
-                        }
-                        final currentSong = state.listArtistSongs[index - 1];
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 13),
-                          child: SongSmallPicture(
-                            songId: currentSong.id,
-                            artistName: currentSong.primaryArtist.name,
-                            backgroundColor: style.Colors.backgroundColorLight,
-                            // searchList[index].result.songArtPrimaryColor,
-                            picUrl: currentSong.songArtImageUrl,
-                            nameSong: currentSong.title,
-                          ),
-                        );
-                      },
-                      childCount: 1 + state.listArtistSongs.length,
+                        },
+                        childCount: 1 + state.listArtistSongs.length,
+                      ),
                     ),
-                  ),
-                ],
-              );
-            }
-            if (state is ArtistError) {
-              return Scaffold(
-                appBar: AppBar(),
-                body: const Text('smth was wrong'), // TODO tr??
-              );
-            } else {
-              return Scaffold(
-                appBar: AppBar(),
-                body: const LoadingWidget(),
-              );
-            }
-          },
+                  ],
+                );
+              }
+              if (state is ArtistError) {
+                return Scaffold(
+                  appBar: AppBar(),
+                  body: const Text('smth was wrong'), 
+                );
+              } else {
+                return Scaffold(
+                  appBar: AppBar(),
+                  body: const LoadingWidget(),
+                );
+              }
+            },
+          ),
         ),
       ),
     );
@@ -214,62 +153,5 @@ class AtristInfo extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class SocialsWidget extends StatelessWidget {
-  const SocialsWidget({
-    Key? key,
-    required this.socials,
-  }) : super(key: key);
-  final List<SocialData> socials;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: Row(
-        children: socials.map((data) => _SocialRow(data: data)).toList(),
-      ),
-    );
-  }
-}
-
-class _SocialRow extends StatelessWidget {
-  const _SocialRow({
-    Key? key,
-    required this.data,
-  }) : super(key: key);
-
-  final SocialData data;
-
-  void redirecion(String url) {
-    launch(url);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (data.login != '') {
-      return Padding(
-        padding: const EdgeInsets.only(top: 10, right: 15),
-        child: GestureDetector(
-          onTap: () {
-            redirecion(data.url);
-          },
-          child: Column(
-            children: [
-              Icon(
-                data.icon,
-                size: 35,
-                color: style.Colors.letterMainColor,
-              ),
-              const SizedBox(height: 3),
-            ],
-          ),
-        ),
-      );
-    } else {
-      return const SizedBox.shrink();
-    }
   }
 }

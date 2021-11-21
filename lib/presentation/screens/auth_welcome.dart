@@ -3,11 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:music_lyrics/constants/specific_pic.dart';
-// import 'package:music_lyrics/firebase_service/facebook_sing_in.dart';
 import 'package:music_lyrics/logic/cubit/log_check/log_check_cubit.dart';
-import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
-import 'package:music_lyrics/presentation/design/theme_text_style.dart'
-    as style_text;
 
 class WelcomeWidget extends StatelessWidget {
   const WelcomeWidget({Key? key}) : super(key: key);
@@ -62,7 +58,7 @@ class _SingUpWidget extends StatelessWidget {
       child: InkWell(
         child: Align(
           child:
-              Text('Sing up'.tr, style: style_text.TextStyles.clicableRedText),
+              Text('Sing up'.tr, style: Theme.of(context).textTheme.headline4),
         ),
         onTap: () {
           Navigator.of(context).pushNamed('/sing_up');
@@ -84,7 +80,7 @@ class _SingInWidget extends StatelessWidget {
       child: InkWell(
         child: Align(
           child:
-              Text('Sing in'.tr, style: style_text.TextStyles.clicableRedText),
+              Text('Sing in'.tr, style: Theme.of(context).textTheme.headline4),
         ),
         onTap: () {
           Navigator.of(context).pushNamed('/sing_in');
@@ -105,13 +101,6 @@ class _GoogleSingInWidget extends StatelessWidget {
       height: 50,
       width: 300,
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: style.Colors.backgroundColorLight,
-          onSurface: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(9),
-          ),
-        ),
         onPressed: () {
           BlocProvider.of<UserCheckCubit>(context, listen: false).googleLogin();
         },
@@ -122,8 +111,10 @@ class _GoogleSingInWidget extends StatelessWidget {
               color: Colors.white,
             ),
             const SizedBox(width: 60),
-            Text('Continue with Google'.tr,
-                style: style_text.TextStyles.mainWhiteText),
+            Text(
+              'Continue with Google'.tr,
+              style: Theme.of(context).textTheme.button,
+            ),
           ],
         ),
       ),

@@ -6,7 +6,7 @@ import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
 import 'package:music_lyrics/presentation/widgets/drawer.dart';
 import 'package:music_lyrics/presentation/widgets/loading_widget.dart';
 import 'package:music_lyrics/presentation/widgets/song_small_pic.dart';
-import 'package:music_lyrics/service/models/search.dart';
+import 'package:music_lyrics/service/models/genius_models/search.dart';
 
 class MainSearch extends StatelessWidget {
   const MainSearch({Key? key}) : super(key: key);
@@ -117,8 +117,6 @@ class SearchListWidget extends StatelessWidget {
         return SongSmallPicture(
           songId: searchList[index].result.id,
           artistName: searchList[index].result.primaryArtist.name,
-          backgroundColor: style.Colors.backgroundColorLight,
-          // searchList[index].result.songArtPrimaryColor,
           picUrl: searchList[index].result.headerImageUrl,
           nameSong: searchList[index].result.title,
         );

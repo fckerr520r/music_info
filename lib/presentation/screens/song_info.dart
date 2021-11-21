@@ -22,13 +22,36 @@ class SongInfo extends StatefulWidget {
 }
 
 class _SongInfoState extends State<SongInfo> {
-  final YoutubePlayerController _ytubeController = YoutubePlayerController(
-    initialVideoId: '',
+  String code = '';
+  late YoutubePlayerController _ytubeController = YoutubePlayerController(
+    initialVideoId: code,
     flags: const YoutubePlayerFlags(
       enableCaption: false,
       autoPlay: false,
     ),
   );
+
+  // @override
+  // void didChangeDependencies() {
+
+  //   super.didChangeDependencies();
+  // }
+  void video(String code) {
+    WidgetsBinding.instance!.addPostFrameCallback((_)=>
+      setState(
+        () {
+          _ytubeController = YoutubePlayerController(
+            initialVideoId: code,
+            flags: const YoutubePlayerFlags(
+              enableCaption: false,
+              autoPlay: false,
+            ),
+          );
+          print(code);
+        },
+      ),
+    );
+  }
 
   @override
   void dispose() {
@@ -60,13 +83,23 @@ class _SongInfoState extends State<SongInfo> {
             body: BlocConsumer<SongCubit, SongState>(
               listener: (context, state) {
                 if (state is SongComplete) {
-                  setState(() {
-                    final id = YoutubePlayer.convertUrlToId(state.videoUrl)!;
-                    print(id);
-                    _ytubeController
-                        .load(YoutubePlayer.convertUrlToId(state.videoUrl)!);
-                    print('${_ytubeController.initialVideoId} xd');
-                  });
+                  code = YoutubePlayer.convertUrlToId(state.videoUrl)!;
+                  video(code);
+                  // didChangeDependencies(); //
+
+                  // _ytubeController = YoutubePlayerController(
+                  //   initialVideoId:
+                  //       YoutubePlayer.convertUrlToId(state.videoUrl)!
+                  //           .toString(),
+                  //   flags: const YoutubePlayerFlags(
+                  //     enableCaption: false,
+                  //     autoPlay: false,
+                  //   ),
+                  // );
+                  // _ytubeController.load(YoutubePlayer.convertUrlToId(state.videoUrl)!.toString());
+                  // _ytubeController.reload;
+                  // setState(() {});
+                  // print(_ytubeController.initialVideoId);
                 }
               },
               builder: (context, state) {
@@ -91,7 +124,7 @@ class _SongInfoState extends State<SongInfo> {
                                 child: SongOwnerInfo(song: state.song),
                               ),
                             ),
-                            if (state.song.lyric == '')
+                            if (state.song.lyric.isEmpty)
                               const SizedBox.shrink()
                             else
                               Container(
@@ -101,7 +134,8 @@ class _SongInfoState extends State<SongInfo> {
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 13),
                                 child: TextLyric(
-                                  lyric: state.song.lyric,
+                                  lyrics: state.song.lyric,
+                                  lyricsUrl: state.song.url,
                                 ),
                               ),
                             const SizedBox(height: 10),
@@ -136,7 +170,7 @@ class _SongInfoState extends State<SongInfo> {
                               ),
                             ),
                             const SizedBox(height: 10),
-                            if (state.videoUrl == '')
+                            if (state.videoUrl.isEmpty)
                               const SizedBox.shrink()
                             else
                               VideoBlock(

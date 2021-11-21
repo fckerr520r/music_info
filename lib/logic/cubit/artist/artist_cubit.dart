@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:music_lyrics/service/models/artist.dart';
-import 'package:music_lyrics/service/models/artist_social_data.dart';
-import 'package:music_lyrics/service/models/artist_track.dart';
+import 'package:music_lyrics/service/models/genius_models/artist.dart';
+import 'package:music_lyrics/service/models/genius_models/artist_social_data.dart';
+import 'package:music_lyrics/service/models/genius_models/artist_track.dart';
 import 'package:music_lyrics/service/repositories/genius_repository.dart';
 
 part 'artist_state.dart';
@@ -27,9 +27,13 @@ class ArtistCubit extends Cubit<ArtistState> {
             .getArtistSocials(artistId)
             .then((result) => socials = result),
       ]);
-      emit(ArtistComplete(listArtistSongs, artist, socials));
-    } on Exception catch(e) {
-      emit(ArtistError()); //TODO
+      emit(ArtistComplete(
+        artist: artist,
+        listArtistSongs: listArtistSongs,
+        socials: socials,
+      ));
+    } on Exception {
+      emit(ArtistError());
     }
   }
 }

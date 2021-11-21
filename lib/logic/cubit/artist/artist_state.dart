@@ -12,11 +12,11 @@ class ArtistComplete extends ArtistState {
   final ArtistClass artist;
   final List<SocialData> socials;
 
-  ArtistComplete(
-    this.listArtistSongs,
-    this.artist,
-    this.socials,
-  );
+  ArtistComplete({
+    required this.listArtistSongs,
+    required this.artist,
+    required this.socials,
+  });
 }
 
 class ArtistError extends ArtistState {}

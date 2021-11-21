@@ -9,11 +9,11 @@
             "request": "launch",
             "type": "dart"
         },
-        {
-            "name": "music_lyrics (profile mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        }
+        // {
+        //     "name": "music_lyrics (profile mode)",
+        //     "request": "launch",
+        //     "type": "dart",
+        //     "flutterMode": "profile"
+        // }
     ]
 }

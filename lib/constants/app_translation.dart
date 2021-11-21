@@ -38,6 +38,7 @@ class AppTranslations extends Translations {
           'Popular songs (country)': 'Top 10 Belarus',
           'Popular songs': 'Popular songs',
 
+          'Tap to open full lyrics': 'Tap to open full lyrics',
           'Featuring': 'Featuring:',
           'Album': 'Album:',
           'Writer Artists': 'Written By:',
@@ -79,6 +80,7 @@ class AppTranslations extends Translations {
           'Popular songs (country)': 'Топ-10 Беларуси',
           'Popular songs': 'Популярные песни',
 
+          'Tap to open full lyrics': 'Нажмите, чтобы открыть полный текст песни',
           'Featuring': 'При участии:',
           'Album': 'Альбом:',
           'Writer Artists': 'Авторы:',

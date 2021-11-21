@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:music_lyrics/service/models/genius_models/main_artist_info.dart';
+
 TrackChart trackChartFromJson(String str) =>
     TrackChart.fromJson(json.decode(str));
 
@@ -73,8 +75,6 @@ class Song {
     this.headerImageThumbnailUrl = '',
     this.headerImageUrl = '',
     required this.id,
-    this.lyricsOwnerId = 0,
-    this.lyricsState = '',
     this.path = '',
     this.releaseDate,
     this.songArtImageThumbnailUrl = '',
@@ -87,7 +87,7 @@ class Song {
     // required this.songArtTextColor,
     this.album,
     this.media = const [],
-    this.primaryArtist,
+    required this.primaryArtist,
     this.verifiedLyricsBy = const [],
     this.featuredArtists = const [],
     this.producerArtists = const [],
@@ -103,8 +103,6 @@ class Song {
   String headerImageThumbnailUrl;
   String headerImageUrl;
   int id;
-  int lyricsOwnerId;
-  String lyricsState;
   String path;
   DateTime? releaseDate;
   String? songArtImageThumbnailUrl;
@@ -117,11 +115,11 @@ class Song {
   // String songArtTextColor;
   SongAlbum? album;
   List<Media> media;
-  Artist? primaryArtist;
+  ArtistMainInfo primaryArtist;
   List<dynamic> verifiedLyricsBy;
-  List<Artist>? featuredArtists;
-  List<Artist>? producerArtists;
-  List<Artist>? writerArtists;
+  List<ArtistMainInfo>? featuredArtists;
+  List<ArtistMainInfo>? producerArtists;
+  List<ArtistMainInfo>? writerArtists;
   String lyric;
 
   factory Song.fromJson(Map<String, dynamic> json) => Song(
@@ -133,8 +131,6 @@ class Song {
         headerImageThumbnailUrl: json['header_image_thumbnail_url'],
         headerImageUrl: json['header_image_url'],
         id: json['id'],
-        lyricsOwnerId: json['lyrics_owner_id'],
-        lyricsState: json['lyrics_state'],
         path: json['path'],
         releaseDate: (json['release_date']) == null
             ? null
@@ -149,23 +145,21 @@ class Song {
         // songArtTextColor: json['song_art_text_color'],
         album: json['album'] == null ? null : SongAlbum.fromJson(json['album']),
         media: List<Media>.from(json['media'].map((x) => Media.fromJson(x))),
-        primaryArtist: json['primary_artist'] == null
-            ? null
-            : Artist.fromJson(json['primary_artist']),
+        primaryArtist: ArtistMainInfo.fromJson(json['primary_artist']),
         verifiedLyricsBy:
             List<dynamic>.from(json['verified_lyrics_by'].map((x) => x)),
         featuredArtists: (json['featured_artists']) == null
             ? null
-            : List<Artist>.from(
-                json['featured_artists'].map((x) => Artist.fromJson(x))),
+            : List<ArtistMainInfo>.from(json['featured_artists']
+                .map((x) => ArtistMainInfo.fromJson(x))),
         producerArtists: (json['producer_artists']) == null
             ? null
-            : List<Artist>.from(
-                json['producer_artists'].map((x) => Artist.fromJson(x))),
+            : List<ArtistMainInfo>.from(json['producer_artists']
+                .map((x) => ArtistMainInfo.fromJson(x))),
         writerArtists: (json['writer_artists']) == null
             ? null
-            : List<Artist>.from(
-                json['writer_artists'].map((x) => Artist.fromJson(x))),
+            : List<ArtistMainInfo>.from(
+                json['writer_artists'].map((x) => ArtistMainInfo.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -177,8 +171,6 @@ class Song {
         'header_image_thumbnail_url': headerImageThumbnailUrl,
         'header_image_url': headerImageUrl,
         'id': id,
-        'lyrics_owner_id': lyricsOwnerId,
-        'lyrics_state': lyricsState,
         'path': path,
         'release_date': releaseDate == null
             ? null
@@ -193,8 +185,7 @@ class Song {
         // 'song_art_text_color': songArtTextColor,
         'album': album == null ? null : album!.toJson(),
         'media': List<dynamic>.from(media.map((x) => x.toJson())),
-        'primary_artist':
-            primaryArtist == null ? null : primaryArtist!.toJson(),
+        'primary_artist': primaryArtist.toJson(),
         'verified_lyrics_by':
             List<dynamic>.from(verifiedLyricsBy.map((x) => x)),
         'featured_artists': List<dynamic>.from(featuredArtists!.map((x) => x)),
@@ -222,7 +213,7 @@ class SongAlbum {
   int id;
   String name;
   String url;
-  Artist artist;
+  ArtistMainInfo artist;
 
   factory SongAlbum.fromJson(Map<String, dynamic> json) => SongAlbum(
         apiPath: json['api_path'],
@@ -231,7 +222,7 @@ class SongAlbum {
         id: json['id'],
         name: json['name'],
         url: json['url'],
-        artist: Artist.fromJson(json['artist']),
+        artist: ArtistMainInfo.fromJson(json['artist']),
       );
 
   Map<String, dynamic> toJson() => {
@@ -245,49 +236,49 @@ class SongAlbum {
       };
 }
 
-class Artist {
-  Artist({
-    required this.apiPath,
-    required this.headerImageUrl,
-    required this.id,
-    required this.imageUrl,
-    required this.isMemeVerified,
-    required this.isVerified,
-    required this.name,
-    required this.url,
-  });
+// class Artist {
+//   Artist({
+//     required this.apiPath,
+//     required this.headerImageUrl,
+//     required this.id,
+//     required this.imageUrl,
+//     required this.isMemeVerified,
+//     required this.isVerified,
+//     required this.name,
+//     required this.url,
+//   });
 
-  String apiPath;
-  String headerImageUrl;
-  int id;
-  String imageUrl;
-  bool isMemeVerified;
-  bool isVerified;
-  String name;
-  String url;
+//   String apiPath;
+//   String headerImageUrl;
+//   int id;
+//   String imageUrl;
+//   bool isMemeVerified;
+//   bool isVerified;
+//   String name;
+//   String url;
 
-  factory Artist.fromJson(Map<String, dynamic> json) => Artist(
-        apiPath: json['api_path'],
-        headerImageUrl: json['header_image_url'],
-        id: json['id'],
-        imageUrl: json['image_url'],
-        isMemeVerified: json['is_meme_verified'],
-        isVerified: json['is_verified'],
-        name: json['name'],
-        url: json['url'],
-      );
+//   factory Artist.fromJson(Map<String, dynamic> json) => Artist(
+//         apiPath: json['api_path'],
+//         headerImageUrl: json['header_image_url'],
+//         id: json['id'],
+//         imageUrl: json['image_url'],
+//         isMemeVerified: json['is_meme_verified'],
+//         isVerified: json['is_verified'],
+//         name: json['name'],
+//         url: json['url'],
+//       );
 
-  Map<String, dynamic> toJson() => {
-        'api_path': apiPath,
-        'header_image_url': headerImageUrl,
-        'id': id,
-        'image_url': imageUrl,
-        'is_meme_verified': isMemeVerified,
-        'is_verified': isVerified,
-        'name': name,
-        'url': url,
-      };
-}
+//   Map<String, dynamic> toJson() => {
+//         'api_path': apiPath,
+//         'header_image_url': headerImageUrl,
+//         'id': id,
+//         'image_url': imageUrl,
+//         'is_meme_verified': isMemeVerified,
+//         'is_verified': isVerified,
+//         'name': name,
+//         'url': url,
+//       };
+// }
 
 class Media {
   Media({

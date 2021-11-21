@@ -14,11 +14,11 @@ class HomePage extends StatelessWidget {
             if (state is UserCheckInitial) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is UserCheckYep) {
-              return MainScreen();
+              return const MainScreen();
             } else if (state is UserCheckNop) {
-              return WelcomeWidget();
+              return const WelcomeWidget();
             } else {
-              return WelcomeWidget();
+              return const WelcomeWidget();
             }
           },
         ),

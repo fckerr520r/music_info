@@ -9,23 +9,23 @@ class HomeLoading extends HomeState {}
 
 class HomeCompleted extends HomeState {
   final List<ArtistClass>? listTopArtists;
-  final List<Song>? listTopSongs;
-  final List<Song>? listTopCounrtySong;
+  final List<BriefGeniusSongModel>? listRandomTopSongs;
+  final List<BriefGeniusSongModel>? listTopCounrtySong;
 
   HomeCompleted({
     this.listTopArtists,
-    this.listTopSongs,
+    this.listRandomTopSongs,
     this.listTopCounrtySong,
   });
 
   HomeCompleted copyWith({
     List<ArtistClass>? listTopArtists,
-    List<Song>? listTopSongs,
-    List<Song>? listTopCounrtySong,
+    List<BriefGeniusSongModel>? listRandomTopSongs,
+    List<BriefGeniusSongModel>? listTopCounrtySong,
   }) {
     return HomeCompleted(
       listTopArtists: listTopArtists ?? this.listTopArtists,
-      listTopSongs: listTopSongs ?? this.listTopSongs,
+      listRandomTopSongs: listRandomTopSongs ?? this.listRandomTopSongs,
       listTopCounrtySong: listTopCounrtySong ?? this.listTopCounrtySong,
     );
   }

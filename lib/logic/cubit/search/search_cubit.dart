@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:music_lyrics/service/models/search.dart';
+import 'package:music_lyrics/service/models/genius_models/search.dart';
 import 'package:music_lyrics/service/repositories/genius_repository.dart';
 
 part 'search_state.dart';
@@ -19,7 +19,7 @@ class SearchCubit extends Cubit<SearchState> {
         return;
       }
       emit(SearchCompleted(que));
-    } catch (e) {
+    } on Exception {
       emit(SearchError());
     }
   }

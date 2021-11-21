@@ -1,44 +1,52 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:music_lyrics/service/models/song.dart';
+import 'package:music_lyrics/service/models/genius_models/song.dart';
 import 'package:music_lyrics/service/repositories/genius_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FavoriteSongRepository {
-  final _storage = SharedPreferences.getInstance();
+  FavoriteSongRepository({
+    required SharedPreferences storage,
+  }) : _storage = storage;
+
+  final SharedPreferences _storage;
   static const idsKey = 'ids';
   List<int> favoriteSongId = [];
 
   Future<List<int>> loadFavoriteSongsId() async {
-    final storage = await _storage;
+    final storage = _storage;
 
     var favoriteSongId = <int>[];
     try {
       final favoriteSongIdString = storage.getStringList(idsKey)!.toList();
       favoriteSongId = favoriteSongIdString.map(int.parse).toList();
-    } catch (e) {}
+    } on Exception catch (error) {
+      log(error.toString());
+    }
 
     return favoriteSongId;
   }
 
   Future<bool> addFavoriteSongs(int id) async {
-    final storage = await _storage;
+    final storage = _storage;
     var favoriteSongIdString = <String>[];
-    try {
+    if (storage.containsKey(idsKey)) {
       favoriteSongIdString = storage.getStringList(idsKey)!.toList();
-    } catch (e) {}
+    }
 
     try {
       favoriteSongIdString.add(id.toString());
       await storage.setStringList(idsKey, favoriteSongIdString);
-    } catch (e) {
+    } on Exception {
       return false;
     }
     return true;
   }
 
   Future deleteFavoriteSongs(int id) async {
-    final storage = await _storage;
+    final storage = _storage;
     List<String>? favoriteSongIdString = [];
 
     favoriteSongIdString = storage.getStringList(idsKey)!.toList()
@@ -47,13 +55,15 @@ class FavoriteSongRepository {
   }
 
   Future<bool> checkFavoriteSongs(int id) async {
-    final storage = await _storage;
+    final storage = _storage;
     var check = false;
     var favoriteSongIdString = <String>[];
     try {
       favoriteSongIdString = storage.getStringList(idsKey)!.toList();
       check = favoriteSongIdString.contains(id.toString());
-    } catch (e) {}
+    } on Exception catch (error) {
+      log(error.toString());
+    }
     return check;
   }
 
@@ -62,8 +72,10 @@ class FavoriteSongRepository {
     final favoriteSongList = <Song>[];
     if (songIds.isNotEmpty) {
       for (var i = 0; i < songIds.length; i++) {
-        final song =
-            await GeniusRepository(dio: GetIt.I.get<Dio>()).getSong(songIds[i]);
+        final song = await GeniusRepository(
+          dio: GetIt.I.get<Dio>(),
+          storage: GetIt.I.get<SharedPreferences>(),
+        ).getSong(songIds[i]);
         favoriteSongList.add(song);
       }
     }

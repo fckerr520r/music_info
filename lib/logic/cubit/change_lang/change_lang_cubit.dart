@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:music_lyrics/service/repositories/change_lang.dart';
+import 'package:music_lyrics/service/repositories/change_lang_repository.dart';
 
 part 'change_lang_state.dart';
 

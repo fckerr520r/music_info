@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
 import 'package:music_lyrics/presentation/screens/artist_info.dart';
-import 'package:music_lyrics/service/models/song.dart';
+import 'package:music_lyrics/service/models/genius_models/song.dart';
 
 class SongOwnerInfo extends StatelessWidget {
   const SongOwnerInfo({Key? key, required this.song}) : super(key: key);
@@ -17,9 +17,9 @@ class SongOwnerInfo extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => ArtistInfo(
-              artistId: song.primaryArtist!.id,
-              artistImageUrl: song.primaryArtist!.imageUrl,
-              artistName: song.primaryArtist!.name,
+              artistId: song.primaryArtist.id,
+              artistImageUrl: song.primaryArtist.imageUrl,
+              artistName: song.primaryArtist.name,
             ),
           ),
         );
@@ -35,7 +35,7 @@ class SongOwnerInfo extends StatelessWidget {
               child: CircleAvatar(
                 radius: 57,
                 backgroundColor: style.Colors.backgroundColorLight,
-                backgroundImage: NetworkImage(song.primaryArtist!.imageUrl),
+                backgroundImage: NetworkImage(song.primaryArtist.imageUrl),
               ),
             ),
           ),
@@ -44,7 +44,7 @@ class SongOwnerInfo extends StatelessWidget {
             left: 133,
             right: 13,
             child: AutoSizeText(
-              song.primaryArtist!.name,
+              song.primaryArtist.name,
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

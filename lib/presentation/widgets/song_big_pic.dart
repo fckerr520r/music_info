@@ -5,13 +5,11 @@ import 'package:music_lyrics/presentation/screens/song_info.dart';
 class SongBigPicture extends StatelessWidget {
   const SongBigPicture(
       {Key? key,
-      required this.backgroundColor,
       required this.picUrl,
       required this.nameSong,
       required this.artistName,
       required this.songId})
       : super(key: key);
-  final Color backgroundColor;
   final String picUrl;
   final String nameSong;
   final String artistName;
@@ -45,9 +43,9 @@ class SongBigPicture extends StatelessWidget {
               ),
             ),
             decoration: BoxDecoration(
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
-                  color: backgroundColor,
+                  color: style.Colors.backgroundColor,
                 )
               ],
               image: DecorationImage(
@@ -65,7 +63,8 @@ class SongBigPicture extends StatelessWidget {
                   children: [
                     Text(
                       nameSong,
-                      style: const TextStyle(
+                      style: 
+                      const TextStyle(
                         color: Colors.white,
                         fontSize: 20,
                         fontWeight: FontWeight.w600,

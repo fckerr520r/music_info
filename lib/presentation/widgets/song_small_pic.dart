@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:music_lyrics/constants/specific_pic.dart';
+import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
 import 'package:music_lyrics/presentation/screens/song_info.dart';
 
 class SongSmallPicture extends StatelessWidget {
   const SongSmallPicture(
       {Key? key,
-      required this.backgroundColor,
       required this.picUrl,
       required this.nameSong,
       required this.artistName,
-      required this.songId})
+      required this.songId,})
       : super(key: key);
-  final Color backgroundColor;
   final String picUrl;
   final String nameSong;
   final String artistName;
@@ -38,10 +37,10 @@ class SongSmallPicture extends StatelessWidget {
               child: Row(
                 children: [
                   Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: backgroundColor,
+                          color: style.Colors.backgroundColorLight,
                         ),
                       ],
                     ),

@@ -5,8 +5,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:music_lyrics/logic/cubit/log_check/log_check_cubit.dart';
 import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
-import 'package:music_lyrics/presentation/design/theme_text_style.dart'
-    as style_text;
 
 class SingUp extends StatefulWidget {
   const SingUp({Key? key}) : super(key: key);
@@ -137,8 +135,7 @@ class _SingUpState extends State<SingUp> {
               obscureText: hidePassword,
               decoration: InputDecoration(
                 labelText: 'Password (6-20 characters)'.tr,
-                labelStyle:
-                    const TextStyle(fontSize: 16, color: Colors.grey),
+                labelStyle: const TextStyle(fontSize: 16, color: Colors.grey),
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
                     color: style.Colors.letterMainColor.withOpacity(0.3),
@@ -188,8 +185,7 @@ class _SingUpState extends State<SingUp> {
               obscureText: hideConfirmPassword,
               decoration: InputDecoration(
                 labelText: 'Confirm password'.tr,
-                labelStyle:
-                    const TextStyle(fontSize: 16, color: Colors.grey),
+                labelStyle: const TextStyle(fontSize: 16, color: Colors.grey),
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
                     color: style.Colors.letterMainColor.withOpacity(0.3),
@@ -230,19 +226,17 @@ class _SingUpState extends State<SingUp> {
                   child: InkWell(
                     child: Align(
                       child: Text('Sing up'.tr,
-                          style: style_text.TextStyles.clicableRedText),
+                          style: Theme.of(context).textTheme.headline4),
                     ),
                     onTap: () {
                       if (_passwordController.text.trim() ==
                           _confirmPasswordController.text.trim()) {
-                        BlocProvider.of<UserCheckCubit>(context,
-                                listen: false)
+                        BlocProvider.of<UserCheckCubit>(context, listen: false)
                             .emailRegister(_emailController.text.trim(),
                                 _passwordController.text.trim());
                         Navigator.of(context).pop();
                       } else {
-                        Fluttertoast.showToast(
-                            msg: "Passwords don't match".tr);
+                        Fluttertoast.showToast(msg: "Passwords don't match".tr);
                       }
                     },
                   ),
