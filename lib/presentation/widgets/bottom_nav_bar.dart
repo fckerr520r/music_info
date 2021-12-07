@@ -32,30 +32,32 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const DrawerMain(),
-      appBar: AppBar(),
-      body: SizedBox(
-        width: double.infinity,
-        child: _widgetOptions.elementAt(_selectedTab),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedTab,
-        items: [
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.home),
-            label: 'Home'.tr,
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.bookmark),
-            label: 'Favorite'.tr,
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.search),
-            label: 'Search'.tr,
-          ),
-        ],
-        onTap: onSelectedTab,
+    return SafeArea(
+      child: Scaffold(
+        drawer: const DrawerMain(),
+        appBar: AppBar(),
+        body: SizedBox(
+          width: double.infinity,
+          child: _widgetOptions.elementAt(_selectedTab),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedTab,
+          items: [
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.home),
+              label: 'Home'.tr,
+            ),
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.bookmark),
+              label: 'Favorite'.tr,
+            ),
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.search),
+              label: 'Search'.tr,
+            ),
+          ],
+          onTap: onSelectedTab,
+        ),
       ),
     );
   }

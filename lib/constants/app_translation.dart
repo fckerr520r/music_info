@@ -32,10 +32,10 @@ class AppTranslations extends Translations {
           'Favorite': 'Favorite',
           'The list is empty': 'The list is empty',
 
-          'Trending now': 'Top 10 in the world',
+          'Now trending in': 'Now trending in',
           'Something went wrong': 'Something went wrong 🙁',
-          'Popular artist (country)': 'Popular artists of Belarus',
-          'Popular songs (country)': 'Top 10 Belarus',
+          'Popular artist (country)': 'Popular artists of ',
+          'Popular songs (country)': 'Top 10',
           'Popular songs': 'Popular songs',
 
           'Tap to open full lyrics': 'Tap to open full lyrics',
@@ -45,6 +45,16 @@ class AppTranslations extends Translations {
           'Producer Artists': 'Produced by:',
           'Official video': 'Official video',
           'Release date': 'Release date: ',
+
+          'USA': 'USA',
+          'Italy': 'Italy',
+          'Germany': 'Germany',
+          'Spain': 'Spain',
+          'Portugal': 'Portugal',
+          'United Kingdom': 'United Kingdom',
+          'Czech Republic': 'Czech Republic',
+          'Brazil': 'Brazil',
+          'Russia': 'Russia',
         },
         'ru': {
           'Continue with Google': 'Войти через Google',
@@ -74,10 +84,10 @@ class AppTranslations extends Translations {
           'Favorite': 'Избранное',
           'The list is empty': 'Список пуст',
 
-          'Trending now': 'Топ-10 в мире',
+          'Now trending in': 'Популярно сейчас в',
           'Something went wrong': 'Что-то пошло не так 🙁',
-          'Popular artist (country)': 'Популярные исполнители Беларуси',
-          'Popular songs (country)': 'Топ-10 Беларуси',
+          'Popular artist (country)': 'Популярные исполнители',
+          'Popular songs (country)': 'Топ-10',
           'Popular songs': 'Популярные песни',
 
           'Tap to open full lyrics': 'Нажмите, чтобы открыть полный текст песни',
@@ -87,6 +97,16 @@ class AppTranslations extends Translations {
           'Producer Artists': 'Продюссеры:',
           'Official video': 'Официальное видео',
           'Release date': 'Дата выхода: ',
+
+          'USA': 'США',
+          'Italy': 'Италии',
+          'Germany': 'Германии',
+          'Spain': 'Испании',
+          'Portugal': 'Португалии',
+          'United Kingdom': 'Великобритании',
+          'Czech Republic': 'Чехии',
+          'Brazil': 'Бразилии',
+          'Russia': 'России',
         }
       };
 }

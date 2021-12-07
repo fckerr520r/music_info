@@ -6,29 +6,29 @@ class CacheRepository {
 
   final SharedPreferences storage;
 
-  final artistCacheKey = 'artist_cache';
   final topCountrySongsCacheKey = 'top_country_songs_cache';
 
-  List<BriefGeniusSongModel> checkListSongInCache(String countryCode) {
-    final cacheKey = '${topCountrySongsCacheKey}_$countryCode';
+  BriefGeniusCountrySongsModel? checkListSongInCache(String cacheName) {
+    final cacheKey = cacheName;
     if (storage.containsKey(cacheKey)) {
       final jsonString = storage.getString(cacheKey)!;
-      return briefSongModelListFromJson(jsonString);
+      return briefGeniusCountrySongsModelFromJson(jsonString);
     } else {
-      return [];
+      return null;
     }
   }
 
-  void removeKey(String countryCode) {
-    final cacheKey = '${topCountrySongsCacheKey}_$countryCode';
+  void removeKey(String cacheName) {
+    final cacheKey = cacheName;
     storage.remove(cacheKey);
   }
 
   void saveListSongInCache({
-    required List<BriefGeniusSongModel> listChartSongs,
-    required String countryCode,
+    required BriefGeniusCountrySongsModel listChartSongs,
+    required String cacheName,
   }) {
-    final cacheKey = '${topCountrySongsCacheKey}_$countryCode';
-    storage.setString(cacheKey, briefSongModelListToJson(listChartSongs));
+    final cacheKey = cacheName;
+    storage.setString(
+        cacheKey, briefGeniusCountrySongsModelToJson(listChartSongs));
   }
 }

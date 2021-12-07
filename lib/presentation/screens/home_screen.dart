@@ -40,8 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 10),
                   if (state.listRandomTopSongs != null)
                     GroupSongsWidget(
-                      listTopSongs: state.listRandomTopSongs!,
-                      titleGroupSong: 'Trending now'.tr,
+                      listTopSongs: state.listRandomTopSongs!.songs,
+                      titleGroupSong: 'Now trending in'.tr,
+                      country: state.listRandomTopSongs!.countryName,
                     )
                   else
                     const SizedBox(
@@ -51,7 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 10),
                   if (state.listTopCounrtySong != null)
                     PopularSongInCountry(
-                      listTopSongs: state.listTopCounrtySong!,
+                      listTopSongs: state.listTopCounrtySong!.songs,
+                      countryName: state.listTopCounrtySong!.countryName,
+                      titleGroupSong: 'Popular songs (country)'.tr,
                     )
                   else
                     const SizedBox(
@@ -168,18 +171,22 @@ class PopularArtistInCountry extends StatelessWidget {
 
 class GroupSongsWidget extends StatelessWidget {
   const GroupSongsWidget(
-      {Key? key, required this.listTopSongs, required this.titleGroupSong})
+      {Key? key,
+      required this.listTopSongs,
+      required this.titleGroupSong,
+      required this.country})
       : super(key: key);
 
   final List<BriefGeniusSongModel> listTopSongs;
   final String titleGroupSong;
+  final String country;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Text(
-          titleGroupSong,
+          '$titleGroupSong ${country.tr}',
           style: const TextStyle(
             color: Colors.white,
             fontSize: 22,
@@ -212,17 +219,23 @@ class GroupSongsWidget extends StatelessWidget {
 }
 
 class PopularSongInCountry extends StatelessWidget {
-  const PopularSongInCountry({Key? key, required this.listTopSongs})
-      : super(key: key);
+  const PopularSongInCountry({
+    Key? key,
+    required this.listTopSongs,
+    required this.countryName,
+    required this.titleGroupSong,
+  }) : super(key: key);
 
   final List<BriefGeniusSongModel> listTopSongs;
+  final String countryName;
+  final String titleGroupSong;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Text(
-          'Popular songs (country)'.tr,
+          '$titleGroupSong ${countryName.tr}',
           style: const TextStyle(
             color: Colors.white,
             fontSize: 22,

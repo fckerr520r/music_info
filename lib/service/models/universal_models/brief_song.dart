@@ -2,18 +2,37 @@ import 'dart:convert';
 
 import 'package:music_lyrics/service/models/genius_models/main_artist_info.dart';
 
-BriefGeniusSongModel briefSongModelFromJson(String str) =>
-    BriefGeniusSongModel.fromJson(json.decode(str));
+BriefGeniusCountrySongsModel briefGeniusCountrySongsModelFromJson(String str) =>
+    BriefGeniusCountrySongsModel.fromJson(json.decode(str));
 
-String briefSongModelToJson(BriefGeniusSongModel data) =>
+String briefGeniusCountrySongsModelToJson(BriefGeniusCountrySongsModel data) =>
     json.encode(data.toJson());
 
-List<BriefGeniusSongModel> briefSongModelListFromJson(String str) =>
-    List<BriefGeniusSongModel>.from(
-        json.decode(str).map((x) => BriefGeniusSongModel.fromJson(x)));
+class BriefGeniusCountrySongsModel {
+  BriefGeniusCountrySongsModel({
+    required this.countryCode,
+    required this.countryName,
+    required this.songs,
+  });
 
-String briefSongModelListToJson(List<BriefGeniusSongModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+  String countryCode;
+  String countryName;
+  List<BriefGeniusSongModel> songs;
+
+  factory BriefGeniusCountrySongsModel.fromJson(Map<String, dynamic> json) =>
+      BriefGeniusCountrySongsModel(
+        countryCode: json['country_code'],
+        countryName: json['country_name'],
+        songs: List<BriefGeniusSongModel>.from(
+            json['songs'].map((x) => BriefGeniusSongModel.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'country_code': countryCode,
+        'country_name': countryName,
+        'songs': List<dynamic>.from(songs.map((x) => x.toJson())),
+      };
+}
 
 class BriefGeniusSongModel {
   BriefGeniusSongModel({

@@ -26,7 +26,7 @@ class SongCubit extends Cubit<SongState> {
           if (song.media[i].provider == 'youtube') {
             _videoUrl = song.media[i].url;
             if (_videoUrl.contains('https') == false) {
-              _videoUrl = _videoUrl.replaceFirst(RegExp('.{4}'), 'https'); // TODO RegExp(r'.{4}')
+              _videoUrl = _videoUrl.replaceFirst(RegExp('.{4}'), 'https');
             }
           }
         }

@@ -13,7 +13,6 @@ class SocialsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
       child: Row(
         children: socials.map((data) => _SocialRow(data: data)).toList(),
       ),

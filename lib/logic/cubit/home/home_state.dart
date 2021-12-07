@@ -1,7 +1,9 @@
 part of 'home_cubit.dart';
 
 @immutable
-abstract class HomeState {}
+abstract class HomeState {
+  const HomeState();
+}
 
 class HomeInitial extends HomeState {}
 
@@ -9,10 +11,10 @@ class HomeLoading extends HomeState {}
 
 class HomeCompleted extends HomeState {
   final List<ArtistClass>? listTopArtists;
-  final List<BriefGeniusSongModel>? listRandomTopSongs;
-  final List<BriefGeniusSongModel>? listTopCounrtySong;
+  final BriefGeniusCountrySongsModel? listRandomTopSongs;
+  final BriefGeniusCountrySongsModel? listTopCounrtySong;
 
-  HomeCompleted({
+  const HomeCompleted({
     this.listTopArtists,
     this.listRandomTopSongs,
     this.listTopCounrtySong,
@@ -20,8 +22,8 @@ class HomeCompleted extends HomeState {
 
   HomeCompleted copyWith({
     List<ArtistClass>? listTopArtists,
-    List<BriefGeniusSongModel>? listRandomTopSongs,
-    List<BriefGeniusSongModel>? listTopCounrtySong,
+    BriefGeniusCountrySongsModel? listRandomTopSongs,
+    BriefGeniusCountrySongsModel? listTopCounrtySong,
   }) {
     return HomeCompleted(
       listTopArtists: listTopArtists ?? this.listTopArtists,

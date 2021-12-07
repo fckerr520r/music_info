@@ -21,11 +21,12 @@ class GeniusRepository {
   })  : _dio = dio,
         _storage = storage;
 
-  final SharedPreferences _storage;
-  final Dio _dio;
   final musixmatchRepository = MusixmatchRepository(dio: GetIt.I.get<Dio>());
   final cacheRepository =
       CacheRepository(storage: GetIt.I.get<SharedPreferences>());
+
+  final SharedPreferences _storage;
+  final Dio _dio;
   final String clientAccessToken = Tokens.geniusAccessToken;
 
   static String mainUrl = 'https://api.genius.com';
@@ -179,17 +180,26 @@ class GeniusRepository {
     }
   }
 
-  Future<List<BriefGeniusSongModel>> receiveChartTracksList(
-      {required String countryCode, required bool needUpdate}) async {
-    var listChartSongs = <BriefGeniusSongModel>[];
+  Future<BriefGeniusCountrySongsModel> receiveChartTracksList({
+    required String countryCode,
+    required bool needUpdate,
+    required String countryName,
+    required String cacheName,
+  }) async {
+    BriefGeniusCountrySongsModel? listChartSongs;
     if (needUpdate == false) {
       // проверка на необходимость апдэйта
-      listChartSongs = cacheRepository.checkListSongInCache(countryCode);
-      if (listChartSongs.isNotEmpty) {
+      listChartSongs = cacheRepository.checkListSongInCache(cacheName);
+      if (listChartSongs != null) {
         return listChartSongs; // проверка кэша
       }
     }
 
+    listChartSongs = BriefGeniusCountrySongsModel(
+      countryCode: countryCode,
+      countryName: countryName,
+      songs: [],
+    );
     final listMX = await musixmatchRepository
         .receiveChartTracksMX(countryCode); // получаем список топ треков из mx
     for (var i = 0; i < listMX.length; i++) {
@@ -197,7 +207,7 @@ class GeniusRepository {
       if (oneItem.id == 0) {
         continue; // скип, если песня не найдена в genius
       }
-      listChartSongs.add(
+      listChartSongs.songs.add(
         // добавляем 0 элемент в список итоговой модели
         BriefGeniusSongModel(
           id: oneItem.id,
@@ -209,7 +219,7 @@ class GeniusRepository {
     }
 
     cacheRepository.saveListSongInCache(
-        countryCode: countryCode,
+        cacheName: cacheName,
         listChartSongs: listChartSongs); // запись в кэш
     return listChartSongs;
   }
