@@ -10,7 +10,7 @@ class HomeInitial extends HomeState {}
 class HomeLoading extends HomeState {}
 
 class HomeCompleted extends HomeState {
-  final List<ArtistClass>? listTopArtists;
+  final List<ArtistFullInfo>? listTopArtists;
   final BriefGeniusCountrySongsModel? listRandomTopSongs;
   final BriefGeniusCountrySongsModel? listTopCounrtySong;
 
@@ -21,7 +21,7 @@ class HomeCompleted extends HomeState {
   });
 
   HomeCompleted copyWith({
-    List<ArtistClass>? listTopArtists,
+    List<ArtistFullInfo>? listTopArtists,
     BriefGeniusCountrySongsModel? listRandomTopSongs,
     BriefGeniusCountrySongsModel? listTopCounrtySong,
   }) {

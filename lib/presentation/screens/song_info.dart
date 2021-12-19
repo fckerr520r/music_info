@@ -37,8 +37,8 @@ class _SongInfoState extends State<SongInfo> {
   //   super.didChangeDependencies();
   // }
   void video(String code) {
-    WidgetsBinding.instance!.addPostFrameCallback((_)=>
-      setState(
+    WidgetsBinding.instance!.addPostFrameCallback(
+      (_) => setState(
         () {
           _ytubeController = YoutubePlayerController(
             initialVideoId: code,
@@ -83,8 +83,11 @@ class _SongInfoState extends State<SongInfo> {
             body: BlocConsumer<SongCubit, SongState>(
               listener: (context, state) {
                 if (state is SongComplete) {
-                  code = YoutubePlayer.convertUrlToId(state.videoUrl)!;
-                  video(code);
+                  if (code.isNotEmpty) {
+                    code = YoutubePlayer.convertUrlToId(state.videoUrl)!;
+                    video(code);
+                  }
+
                   // didChangeDependencies(); //
 
                   // _ytubeController = YoutubePlayerController(

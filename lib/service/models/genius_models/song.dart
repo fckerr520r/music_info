@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:music_lyrics/service/models/genius_models/main_artist_info.dart';
 
 TrackChart trackChartFromJson(String str) =>
     TrackChart.fromJson(json.decode(str));
@@ -236,49 +235,42 @@ class SongAlbum {
       };
 }
 
-// class Artist {
-//   Artist({
-//     required this.apiPath,
-//     required this.headerImageUrl,
-//     required this.id,
-//     required this.imageUrl,
-//     required this.isMemeVerified,
-//     required this.isVerified,
-//     required this.name,
-//     required this.url,
-//   });
+class ArtistMainInfo {
+  const ArtistMainInfo({
+    this.apiPath = '',
+    this.headerImageUrl = '',
+    this.id = 0,
+    this.imageUrl = '',
+    this.name = '',
+    this.url = '',
+  });
 
-//   String apiPath;
-//   String headerImageUrl;
-//   int id;
-//   String imageUrl;
-//   bool isMemeVerified;
-//   bool isVerified;
-//   String name;
-//   String url;
+  final String apiPath;
+  final String headerImageUrl;
+  final int id;
+  final String imageUrl;
+  final String name;
+  final String url;
 
-//   factory Artist.fromJson(Map<String, dynamic> json) => Artist(
-//         apiPath: json['api_path'],
-//         headerImageUrl: json['header_image_url'],
-//         id: json['id'],
-//         imageUrl: json['image_url'],
-//         isMemeVerified: json['is_meme_verified'],
-//         isVerified: json['is_verified'],
-//         name: json['name'],
-//         url: json['url'],
-//       );
+  factory ArtistMainInfo.fromJson(Map<String, dynamic> json) => ArtistMainInfo(
+        apiPath: json['api_path'],
+        headerImageUrl: json['header_image_url'],
+        id: json['id'],
+        imageUrl: json['image_url'],
+        name: json['name'],
+        url: json['url'],
+      );
 
-//   Map<String, dynamic> toJson() => {
-//         'api_path': apiPath,
-//         'header_image_url': headerImageUrl,
-//         'id': id,
-//         'image_url': imageUrl,
-//         'is_meme_verified': isMemeVerified,
-//         'is_verified': isVerified,
-//         'name': name,
-//         'url': url,
-//       };
-// }
+  Map<String, dynamic> toJson() => {
+        'api_path': apiPath,
+        'header_image_url': headerImageUrl,
+        'id': id,
+        'image_url': imageUrl,
+        'name': name,
+        'url': url,
+      };
+}
+
 
 class Media {
   Media({

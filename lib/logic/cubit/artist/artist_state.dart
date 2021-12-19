@@ -9,7 +9,7 @@ class ArtistLoading extends ArtistState {}
 
 class ArtistComplete extends ArtistState {
   final List<SongA> listArtistSongs;
-  final ArtistClass artist;
+  final ArtistFullInfo artist;
   final List<SocialData> socials;
 
   ArtistComplete({

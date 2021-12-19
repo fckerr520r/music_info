@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:music_lyrics/service/models/genius_models/search.dart';
+import 'package:music_lyrics/service/models/genius_models/search_model/search_genius_model.dart';
 import 'package:music_lyrics/service/repositories/genius_repository.dart';
 
 part 'search_state.dart';

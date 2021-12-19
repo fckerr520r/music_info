@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:music_lyrics/service/models/genius_models/main_artist_info.dart';
-
 BriefGeniusCountrySongsModel briefGeniusCountrySongsModelFromJson(String str) =>
     BriefGeniusCountrySongsModel.fromJson(json.decode(str));
 
@@ -36,29 +34,70 @@ class BriefGeniusCountrySongsModel {
 
 class BriefGeniusSongModel {
   BriefGeniusSongModel({
-    required this.id,
+    required this.songId,
     required this.title,
-    required this.headerImageUrl,
-    required this.primaryArtist,
+    required this.songHeaderImageUrl,
+    required this.artistId,
+    required this.artistName,
   });
 
-  int id;
+  int songId;
   String title;
-  String headerImageUrl;
-  ArtistMainInfo primaryArtist;
+  String songHeaderImageUrl;
+  int artistId;
+  String artistName;
 
   factory BriefGeniusSongModel.fromJson(Map<String, dynamic> json) =>
       BriefGeniusSongModel(
-        id: json['id'],
+        songId: json['song_id'],
         title: json['title'],
-        headerImageUrl: json['headerImageUrl'],
-        primaryArtist: ArtistMainInfo.fromJson(json['artist']),
+        songHeaderImageUrl: json['header_image_url'],
+        artistId: json['artist_id'],
+        artistName: json['artist_name'],
       );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
+        'song_id': songId,
         'title': title,
-        'headerImageUrl': headerImageUrl,
-        'artist': primaryArtist.toJson(),
+        'header_image_url': songHeaderImageUrl,
+        'artist_id': artistId,
+        'artist_name': artistName,
       };
 }
+
+
+// class ArtistMainInfo {
+//   const ArtistMainInfo({
+//     this.apiPath = '',
+//     this.headerImageUrl = '',
+//     this.id = 0,
+//     this.imageUrl = '',
+//     this.name = '',
+//     this.url = '',
+//   });
+
+//   final String apiPath;
+//   final String headerImageUrl;
+//   final int id;
+//   final String imageUrl;
+//   final String name;
+//   final String url;
+
+//   factory ArtistMainInfo.fromJson(Map<String, dynamic> json) => ArtistMainInfo(
+//         apiPath: json['api_path'],
+//         headerImageUrl: json['header_image_url'],
+//         id: json['id'],
+//         imageUrl: json['image_url'],
+//         name: json['name'],
+//         url: json['url'],
+//       );
+
+//   Map<String, dynamic> toJson() => {
+//         'api_path': apiPath,
+//         'header_image_url': headerImageUrl,
+//         'id': id,
+//         'image_url': imageUrl,
+//         'name': name,
+//         'url': url,
+//       };
+// }

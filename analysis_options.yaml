@@ -171,9 +171,9 @@ linter:
     - valid_regexps
     - void_checks
 
-analyser:
+analyzer:
   exclude:
-    - '**/*.g.dart'
-    - '**/*.freezed.dart'
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
   errors:
     invalid_annotation_target: ignore

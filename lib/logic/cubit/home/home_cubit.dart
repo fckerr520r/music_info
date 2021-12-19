@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:music_lyrics/service/models/genius_models/artist.dart';
+import 'package:music_lyrics/service/models/genius_models/artist_model/artist_model.dart';
 import 'package:music_lyrics/service/models/universal_models/brief_song.dart';
 import 'package:music_lyrics/service/repositories/genius_repository.dart';
 import 'package:music_lyrics/service/repositories/random_country_repository.dart';

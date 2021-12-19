@@ -6,7 +6,7 @@ import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
 import 'package:music_lyrics/presentation/widgets/drawer.dart';
 import 'package:music_lyrics/presentation/widgets/loading_widget.dart';
 import 'package:music_lyrics/presentation/widgets/song_small_pic.dart';
-import 'package:music_lyrics/service/models/genius_models/search.dart';
+import 'package:music_lyrics/service/models/genius_models/search_model/search_genius_model.dart';
 
 class MainSearch extends StatelessWidget {
   const MainSearch({Key? key}) : super(key: key);

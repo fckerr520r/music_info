@@ -24,6 +24,7 @@ dependencies:
   auto_size_text: ^3.0.0-nullsafety.0
   bloc: ^7.1.0
   bloc_test: ^8.4.0
+  build_runner: ^2.1.5
   circle_flags: ^0.0.2
   cupertino_icons: ^1.0.3
   dio: ^4.0.0
@@ -42,6 +43,8 @@ dependencies:
   get_it: ^7.2.0
   google_sign_in: ^5.0.7
   intl: ^0.17.0
+  json_annotation: ^4.4.0
+  json_serializable: ^6.1.1
   mocktail: null
   rxdart: ^0.27.1
   shared_preferences: ^2.0.7

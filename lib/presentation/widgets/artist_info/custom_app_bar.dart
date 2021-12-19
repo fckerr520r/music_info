@@ -15,7 +15,10 @@ class CustomAppBar extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     return Stack(
       fit: StackFit.expand,
       clipBehavior: Clip.none,
@@ -56,76 +59,6 @@ class CustomAppBar extends SliverPersistentHeaderDelegate {
         )
       ],
     );
-
-    //     SliverAppBar(
-    //   backgroundColor: style.Colors.backgroundColorLight,
-    //   pinned: true,
-    //   expandedHeight: 349,
-    //   flexibleSpace: FlexibleSpaceBar(
-    //     title: SizedBox(
-    //       height: 350,
-    //       width: MediaQuery.of(context).size.width,
-    //       child: Stack(
-    //         alignment: AlignmentDirectional.center,
-    //         children: [
-    //           Positioned(
-    //             bottom: 40,
-    //             child: CircleAvatar(
-    //               radius: 53,
-    //               backgroundColor: style.Colors.backgroundColor,
-    //               child: Hero(
-    //                 tag: 'artist_avatar',
-    //                 child: CircleAvatar(
-    //                   backgroundImage: NetworkImage(artistImageUrl),
-    //                   radius: 50,
-    //                 ),
-    //               ),
-    //             ),
-    //           ),
-    //           Positioned(
-    //             bottom: 0,
-    //             right: 13,
-    //             left: 13,
-    //             child: AutoSizeText(
-    //               artistName,
-    //               textAlign: TextAlign.center,
-    //               maxFontSize: 20,
-    //               minFontSize: 15,
-    //               maxLines: 2,
-    //               style: const TextStyle(
-    //                 color: Colors.white,
-    //                 fontWeight: FontWeight.bold,
-    //               ),
-    //             ),
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //     centerTitle: true,
-    //     background: Container(
-    //       height: 330,
-    //       decoration: BoxDecoration(
-    //         image: DecorationImage(
-    //           image: NetworkImage(artistHeaderImageUrl),
-    //           fit: BoxFit.cover,
-    //         ),
-    //       ),
-    //       foregroundDecoration: BoxDecoration(
-    //         gradient: LinearGradient(
-    //           begin: Alignment.topCenter,
-    //           end: Alignment.bottomCenter,
-    //           colors: [
-    //             style.Colors.backgroundColor.withOpacity(0),
-    //             style.Colors.backgroundColor.withOpacity(0.2),
-    //             style.Colors.backgroundColor.withOpacity(0.4),
-    //             style.Colors.backgroundColor.withOpacity(0.8),
-    //             style.Colors.backgroundColor.withOpacity(1),
-    //           ],
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 
   double xd(double shrinkOffset) {
@@ -135,7 +68,6 @@ class CustomAppBar extends SliverPersistentHeaderDelegate {
                 (shrinkOffset - (expandedHeight * 65 / 100)) /
                     (expandedHeight * 35 / 100))
         .toDouble();
-    // print(x);
     return x;
   }
 

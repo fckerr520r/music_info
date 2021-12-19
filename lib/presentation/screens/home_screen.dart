@@ -7,7 +7,7 @@ import 'package:music_lyrics/presentation/widgets/error_screen.dart';
 import 'package:music_lyrics/presentation/widgets/loading_widget.dart';
 import 'package:music_lyrics/presentation/widgets/song_big_pic.dart';
 import 'package:music_lyrics/presentation/widgets/song_medium_pic.dart';
-import 'package:music_lyrics/service/models/genius_models/artist.dart';
+import 'package:music_lyrics/service/models/genius_models/artist_model/artist_model.dart';
 import 'package:music_lyrics/service/models/universal_models/brief_song.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -90,7 +90,7 @@ class PopularArtistInCountry extends StatelessWidget {
   const PopularArtistInCountry({Key? key, required this.listTopArtists})
       : super(key: key);
 
-  final List<ArtistClass> listTopArtists;
+  final List<ArtistFullInfo> listTopArtists;
 
   @override
   Widget build(BuildContext context) {
@@ -205,9 +205,9 @@ class GroupSongsWidget extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return SongBigPicture(
-                songId: listTopSongs[index].id,
-                artistName: listTopSongs[index].primaryArtist.name,
-                picUrl: listTopSongs[index].headerImageUrl,
+                songId: listTopSongs[index].songId,
+                artistName: listTopSongs[index].artistName,
+                picUrl: listTopSongs[index].songHeaderImageUrl,
                 nameSong: listTopSongs[index].title,
               );
             },
@@ -255,9 +255,9 @@ class PopularSongInCountry extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return SongMediumPicture(
-                songId: listTopSongs[index].id,
-                artistName: listTopSongs[index].primaryArtist.name,
-                picUrl: listTopSongs[index].headerImageUrl,
+                songId: listTopSongs[index].songId,
+                artistName: listTopSongs[index].artistName,
+                picUrl: listTopSongs[index].songHeaderImageUrl,
                 nameSong: listTopSongs[index].title,
               );
             },

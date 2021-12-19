@@ -50,7 +50,7 @@ class SongSmallPicture extends StatelessWidget {
                       height: 80,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
-                        return Image.network(
+                        return Image.asset(
                           SpecificPic.errorSongPicture,
                           width: 100,
                           height: 80,

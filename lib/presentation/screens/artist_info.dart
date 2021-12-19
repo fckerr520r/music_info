@@ -8,7 +8,7 @@ import 'package:music_lyrics/presentation/widgets/artist_info/custom_app_bar.dar
 import 'package:music_lyrics/presentation/widgets/artist_info/socials_widget.dart';
 import 'package:music_lyrics/presentation/widgets/loading_widget.dart';
 import 'package:music_lyrics/presentation/widgets/song_small_pic.dart';
-import 'package:music_lyrics/service/models/genius_models/artist.dart';
+import 'package:music_lyrics/service/models/genius_models/artist_model/artist_model.dart';
 import 'package:music_lyrics/service/models/genius_models/artist_social_data.dart';
 
 class ArtistInfo extends StatelessWidget {
@@ -100,7 +100,7 @@ class AtristInfo extends StatelessWidget {
     required this.artist,
     required this.socials,
   }) : super(key: key);
-  final ArtistClass artist;
+  final ArtistFullInfo artist;
   final List<SocialData> socials;
 
   @override

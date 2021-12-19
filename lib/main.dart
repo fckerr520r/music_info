@@ -77,7 +77,11 @@ class MyApp extends StatelessWidget {
             unselectedItemColor: style.Colors.letterColorGreyLight,
           ),
           appBarTheme: const AppBarTheme(
-            systemOverlayStyle: SystemUiOverlayStyle.dark,
+            systemOverlayStyle: SystemUiOverlayStyle(
+              systemNavigationBarIconBrightness: Brightness.light,
+              statusBarBrightness: Brightness.light,
+              systemStatusBarContrastEnforced: true,
+            ),
             backgroundColor: style.Colors.backgroundColorLight,
           ),
           colorScheme: ColorScheme.dark(

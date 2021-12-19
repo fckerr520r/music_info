@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:music_lyrics/service/models/genius_models/song.dart';
@@ -17,13 +15,12 @@ class FavoriteSongRepository {
 
   Future<List<int>> loadFavoriteSongsId() async {
     final storage = _storage;
-
     var favoriteSongId = <int>[];
-    try {
-      final favoriteSongIdString = storage.getStringList(idsKey)!.toList();
+    var favoriteSongIdString = <String>[];
+
+    if (storage.containsKey(idsKey)) {
+      favoriteSongIdString = storage.getStringList(idsKey)!.toList();
       favoriteSongId = favoriteSongIdString.map(int.parse).toList();
-    } on Exception catch (error) {
-      log(error.toString());
     }
 
     return favoriteSongId;
@@ -32,10 +29,10 @@ class FavoriteSongRepository {
   Future<bool> addFavoriteSongs(int id) async {
     final storage = _storage;
     var favoriteSongIdString = <String>[];
+
     if (storage.containsKey(idsKey)) {
       favoriteSongIdString = storage.getStringList(idsKey)!.toList();
     }
-
     try {
       favoriteSongIdString.add(id.toString());
       await storage.setStringList(idsKey, favoriteSongIdString);
@@ -58,11 +55,9 @@ class FavoriteSongRepository {
     final storage = _storage;
     var check = false;
     var favoriteSongIdString = <String>[];
-    try {
+    if (storage.containsKey(idsKey)) {
       favoriteSongIdString = storage.getStringList(idsKey)!.toList();
       check = favoriteSongIdString.contains(id.toString());
-    } on Exception catch (error) {
-      log(error.toString());
     }
     return check;
   }

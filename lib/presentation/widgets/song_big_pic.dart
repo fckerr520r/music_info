@@ -49,7 +49,9 @@ class SongBigPicture extends StatelessWidget {
                 )
               ],
               image: DecorationImage(
-                  image: NetworkImage(picUrl), fit: BoxFit.cover),
+                image: NetworkImage(picUrl),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Positioned(
@@ -63,8 +65,7 @@ class SongBigPicture extends StatelessWidget {
                   children: [
                     Text(
                       nameSong,
-                      style: 
-                      const TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20,
                         fontWeight: FontWeight.w600,

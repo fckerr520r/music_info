@@ -1,14 +1,15 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:music_lyrics/constants/tokens.dart';
-import 'package:music_lyrics/service/models/musix_match_models/chart_tracks.dart';
-import 'package:music_lyrics/service/models/musix_match_models/lyric_model.dart';
-import 'package:music_lyrics/service/models/musix_match_models/search_model.dart';
+import 'package:music_lyrics/service/models/musix_match_models/chart_modes/chart_tracks_model.dart';
+import 'package:music_lyrics/service/models/musix_match_models/lyrics_model/lyrics_model.dart';
+import 'package:music_lyrics/service/models/musix_match_models/search_model/search_model.dart';
 
 class MusixmatchRepository {
   MusixmatchRepository({required Dio dio}) : _dio = dio;
 
   final Dio _dio;
-
   final String accessToken = Tokens.musixMatchToken;
 
   static String searchTrackUrl =
@@ -30,7 +31,7 @@ class MusixmatchRepository {
       };
       final _response =
           await _dio.get(searchTrackUrl, queryParameters: _paramsTrack);
-      final _searchModel = searchModelFromJson(_response.data);
+      final _searchModel = SearchModel.fromJson(json.decode(_response.data));
 
       final tracks = _searchModel.message.body?.trackList ?? [];
       if (tracks.isNotEmpty) {
@@ -40,9 +41,12 @@ class MusixmatchRepository {
         };
         final responseLyric = await _dio.get(searchTrackLyricUrl,
             queryParameters: paramsTrackLyric);
-        final lyricModel = lyricModelFromJson(
-            responseLyric.data); // TODO null вместо листа песен
-        return lyricModel.message.body?.lyrics?.lyricsBody ?? '';
+        final lyricModel =
+            LyricsModel.fromJson(json.decode(responseLyric.data));
+        if (lyricModel.message.header.statusCode == 200){
+          return lyricModel.message.body!.lyrics!.lyricsBody ?? '';
+        }
+        return'';
       }
       return '';
     } on Exception {
@@ -63,7 +67,7 @@ class MusixmatchRepository {
       final _response =
           await _dio.get(chartTracksUrl, queryParameters: _paramsTrack);
       if (_response.statusCode == 200) {
-        final _searchModel = chartTracksFromJson(_response.data);
+        final _searchModel = ChartTracks.fromJson(json.decode(_response.data));
         final trackList = _searchModel.message.body?.trackList ?? [];
         if (trackList == []) {
           return [];
@@ -71,7 +75,7 @@ class MusixmatchRepository {
         final queryTracksList = <String>[];
         for (var i = 0; i < trackList.length; i++) {
           queryTracksList.add(
-              '${trackList[i].track.trackName} ${trackList[i].track.artistName}');
+              '${trackList[i].track?.trackName} ${trackList[i].track?.artistName}');
         }
         return queryTracksList;
       }

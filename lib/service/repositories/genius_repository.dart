@@ -2,11 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:music_lyrics/constants/tokens.dart';
 import 'package:music_lyrics/presentation/Icons/social_icons.dart';
-import 'package:music_lyrics/service/models/genius_models/artist.dart';
+import 'package:music_lyrics/service/models/genius_models/artist_model/artist_model.dart';
 import 'package:music_lyrics/service/models/genius_models/artist_social_data.dart';
-import 'package:music_lyrics/service/models/genius_models/artist_track.dart'
+import 'package:music_lyrics/service/models/genius_models/artist_tracks_model/artist_tracks_model.dart'
     hide Response;
-import 'package:music_lyrics/service/models/genius_models/search.dart'
+import 'package:music_lyrics/service/models/genius_models/search_model/search_genius_model.dart'
     hide Response;
 import 'package:music_lyrics/service/models/genius_models/song.dart';
 import 'package:music_lyrics/service/models/universal_models/brief_song.dart';
@@ -40,7 +40,7 @@ class GeniusRepository {
   final topCountrySongsCacheKey = 'top_country_songs_cache';
   final topSongsCacheKey = 'top_songs_cache';
 
-  Future<ArtistClass> getArtist(int idArtist) async {
+  Future<ArtistFullInfo> getArtist(int idArtist) async {
     final params = {
       'access_token': clientAccessToken,
     };
@@ -48,7 +48,7 @@ class GeniusRepository {
       final thisArtistUrl = '$artistUrl/$idArtist';
       final response = await _dio.get(thisArtistUrl, queryParameters: params);
       if (response.statusCode == 200) {
-        final result = Artists.fromJson(response.data);
+        final result = ArtistModel.fromJson(response.data);
         final singleArtist = result.response.artist;
         return singleArtist;
       } else {
@@ -60,7 +60,7 @@ class GeniusRepository {
     }
   }
 
-  Future<List<ArtistClass>> getListArtist() async {
+  Future<List<ArtistFullInfo>> getListArtist() async {
     final artIds = <int>[
       1705319,
       1267272,
@@ -73,7 +73,7 @@ class GeniusRepository {
       1717172,
       1050560
     ];
-    var artistList = <ArtistClass>[];
+    var artistList = <ArtistFullInfo>[];
     String jsonArtists;
     final storage = _storage;
 
@@ -145,8 +145,8 @@ class GeniusRepository {
     try {
       final response = await _dio.get(searchUrl, queryParameters: params);
       if (response.statusCode == 200) {
-        final result = GetSearch.fromJson(response.data);
-        final searchList = result.response.hits.toList();
+        final result = SearchGeniusModel.fromJson(response.data);
+        final searchList = result.response.hits!.toList();
         return searchList;
       } else {
         throw Exception('smth was wrong');
@@ -168,9 +168,8 @@ class GeniusRepository {
       final response =
           await _dio.get(thisArtistSongsUrl, queryParameters: params);
       if (response.statusCode == 200) {
-        final result = ArtistTracks.fromJson(response.data);
-        final listOfArtistSongs = result.response.songs;
-        return listOfArtistSongs;
+        final result = ArtistTracksModel.fromJson(response.data);
+        return result.response.songs ?? [];
       } else {
         throw Exception('smth was wrong');
       }
@@ -210,17 +209,17 @@ class GeniusRepository {
       listChartSongs.songs.add(
         // добавляем 0 элемент в список итоговой модели
         BriefGeniusSongModel(
-          id: oneItem.id,
+          songId: oneItem.id,
           title: oneItem.title,
-          headerImageUrl: oneItem.headerImageUrl,
-          primaryArtist: oneItem.primaryArtist,
+          songHeaderImageUrl: oneItem.headerImageUrl,
+          artistId: oneItem.primaryArtist.id,
+          artistName: oneItem.primaryArtist.name,
         ),
       );
     }
 
     cacheRepository.saveListSongInCache(
-        cacheName: cacheName,
-        listChartSongs: listChartSongs); // запись в кэш
+        cacheName: cacheName, listChartSongs: listChartSongs); // запись в кэш
     return listChartSongs;
   }
 
@@ -232,11 +231,11 @@ class GeniusRepository {
     try {
       final response = await _dio.get(searchUrl, queryParameters: params);
       if (response.statusCode == 200) {
-        final result = GetSearch.fromJson(response.data);
-        if (result.response.hits.isNotEmpty) {
-          return result.response.hits[0].result;
+        final result = SearchGeniusModel.fromJson(response.data);
+        if (result.response.hits!.isNotEmpty) {
+          return result.response.hits![0].result;
         }
-        return Result(id: 0);
+        return const Result(id: 0);
       } else {
         throw Exception('smth was wrong');
       }
