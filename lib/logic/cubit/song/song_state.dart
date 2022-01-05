@@ -1,26 +1,14 @@
 part of 'song_cubit.dart';
 
-@immutable
-abstract class SongState {}
-
-class SongInitial extends SongState {}
-
-class SongLoading extends SongState {}
-
-class SongComplete extends SongState {
-  final Song song;
-  final String videoUrl;
-  final String featuredArtists;
-  final String writeredArtists;
-  final String producerArtists;
-
-  SongComplete(
-    this.song,
-    this.videoUrl,
-    this.featuredArtists,
-    this.producerArtists,
-    this.writeredArtists,
-  );
+@freezed
+class SongState with _$SongState {
+  const factory SongState.loading() = _SongLoadingState; 
+  const factory SongState.loaded({
+    required Song song,
+    required String videoUrl,
+    required String featuredArtists,
+    required String writeredArtists, 
+    required String producerArtists,
+  }) = SongLoadedState; 
+  const factory SongState.error() = _SongErrorState;  
 }
-
-class SongError extends SongState {}

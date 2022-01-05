@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:music_lyrics/logic/cubit/favorite/favorite_cubit.dart';
 import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
+import 'package:music_lyrics/presentation/screens/song_info.dart';
 import 'package:music_lyrics/presentation/widgets/drawer.dart';
-import 'package:music_lyrics/presentation/widgets/loading_widget.dart';
-import 'package:music_lyrics/presentation/widgets/song_small_pic.dart';
+import 'package:ui/ui.dart';
 
 class FavoriteWidget extends StatelessWidget {
   const FavoriteWidget({Key? key}) : super(key: key);
@@ -62,6 +62,7 @@ class FavoriteScreen extends StatelessWidget {
                     artistName: state.favoriteList[index].primaryArtist.name,
                     picUrl: state.favoriteList[index].headerImageUrl,
                     nameSong: state.favoriteList[index].title,
+                    widget: SongInfo(songId: state.favoriteList[index].id)
                   );
                 },
               ),

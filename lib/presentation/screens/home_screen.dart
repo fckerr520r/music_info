@@ -3,12 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:music_lyrics/logic/cubit/home/home_cubit.dart';
 import 'package:music_lyrics/presentation/screens/artist_info.dart';
-import 'package:music_lyrics/presentation/widgets/error_screen.dart';
-import 'package:music_lyrics/presentation/widgets/loading_widget.dart';
-import 'package:music_lyrics/presentation/widgets/song_big_pic.dart';
-import 'package:music_lyrics/presentation/widgets/song_medium_pic.dart';
+import 'package:music_lyrics/presentation/screens/song_info.dart';
 import 'package:music_lyrics/service/models/genius_models/artist_model/artist_model.dart';
 import 'package:music_lyrics/service/models/universal_models/brief_song.dart';
+import 'package:ui/ui.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -76,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           }
           if (state is HomeError) {
-            return const ErrorScreen();
+            return const ErrorScreenWidget();
           } else {
             return const LoadingWidget();
           }
@@ -209,6 +207,7 @@ class GroupSongsWidget extends StatelessWidget {
                 artistName: listTopSongs[index].artistName,
                 picUrl: listTopSongs[index].songHeaderImageUrl,
                 nameSong: listTopSongs[index].title,
+                widget: SongInfo(songId: listTopSongs[index].songId),
               );
             },
           ),
@@ -259,6 +258,7 @@ class PopularSongInCountry extends StatelessWidget {
                 artistName: listTopSongs[index].artistName,
                 picUrl: listTopSongs[index].songHeaderImageUrl,
                 nameSong: listTopSongs[index].title,
+                widget: SongInfo(songId: listTopSongs[index].songId),
               );
             },
           ),

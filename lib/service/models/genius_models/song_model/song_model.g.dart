@@ -50,7 +50,7 @@ _$_Song _$$_SongFromJson(Map<String, dynamic> json) => _$_Song(
       path: json['path'] as String? ?? '',
       releaseDate: json['release_date'] == null
           ? null
-          : DateTime.parse(json['release_date'] as String) ?? '',
+          : DateTime.parse(json['release_date'] as String),
       songArtImageThumbnailUrl:
           json['song_art_image_thumbnail_url'] as String? ?? '',
       songArtImageUrl: json['song_art_image_url'] as String? ?? '',
@@ -61,8 +61,9 @@ _$_Song _$$_SongFromJson(Map<String, dynamic> json) => _$_Song(
           ? null
           : SongAlbum.fromJson(json['album'] as Map<String, dynamic>),
       media: (json['media'] as List<dynamic>?)
-          ?.map((e) => Media.fromJson(e as Map<String, dynamic>))
-          .toList(),
+              ?.map((e) => Media.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       primaryArtist: ArtistMainInfo.fromJson(
           json['primary_artist'] as Map<String, dynamic>),
       verifiedLyricsBy:
@@ -99,7 +100,7 @@ Map<String, dynamic> _$$_SongToJson(_$_Song instance) => <String, dynamic>{
       'title_with_featured': instance.titleWithFeatured,
       'url': instance.url,
       'album': instance.album?.toJson(),
-      'media': instance.media?.map((e) => e.toJson()).toList(),
+      'media': instance.media.map((e) => e.toJson()).toList(),
       'primary_artist': instance.primaryArtist.toJson(),
       'verified_lyrics_by': instance.verifiedLyricsBy,
       'featured_artists':

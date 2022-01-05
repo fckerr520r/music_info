@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of ui;
 
 class LoadingWidget extends StatelessWidget {
   const LoadingWidget({Key? key}) : super(key: key);

@@ -531,7 +531,7 @@ class _$SongTearOff {
       int id = 0,
       String path = '',
       @JsonKey(name: 'release_date')
-          DateTime? releaseDate = '',
+          DateTime? releaseDate,
       @JsonKey(name: 'song_art_image_thumbnail_url')
           String songArtImageThumbnailUrl = '',
       @JsonKey(name: 'song_art_image_url')
@@ -541,7 +541,7 @@ class _$SongTearOff {
           String titleWithFeatured = '',
       String url = '',
       SongAlbum? album,
-      List<Media>? media,
+      List<Media> media = const [],
       @JsonKey(name: 'primary_artist')
           required ArtistMainInfo primaryArtist,
       @JsonKey(name: 'verified_lyrics_by')
@@ -617,7 +617,7 @@ mixin _$Song {
   String get titleWithFeatured => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
   SongAlbum? get album => throw _privateConstructorUsedError;
-  List<Media>? get media => throw _privateConstructorUsedError;
+  List<Media> get media => throw _privateConstructorUsedError;
   @JsonKey(name: 'primary_artist')
   ArtistMainInfo get primaryArtist => throw _privateConstructorUsedError;
   @JsonKey(name: 'verified_lyrics_by')
@@ -669,7 +669,7 @@ abstract class $SongCopyWith<$Res> {
           String titleWithFeatured,
       String url,
       SongAlbum? album,
-      List<Media>? media,
+      List<Media> media,
       @JsonKey(name: 'primary_artist')
           ArtistMainInfo primaryArtist,
       @JsonKey(name: 'verified_lyrics_by')
@@ -788,7 +788,7 @@ class _$SongCopyWithImpl<$Res> implements $SongCopyWith<$Res> {
       media: media == freezed
           ? _value.media
           : media // ignore: cast_nullable_to_non_nullable
-              as List<Media>?,
+              as List<Media>,
       primaryArtist: primaryArtist == freezed
           ? _value.primaryArtist
           : primaryArtist // ignore: cast_nullable_to_non_nullable
@@ -868,7 +868,7 @@ abstract class _$SongCopyWith<$Res> implements $SongCopyWith<$Res> {
           String titleWithFeatured,
       String url,
       SongAlbum? album,
-      List<Media>? media,
+      List<Media> media,
       @JsonKey(name: 'primary_artist')
           ArtistMainInfo primaryArtist,
       @JsonKey(name: 'verified_lyrics_by')
@@ -990,7 +990,7 @@ class __$SongCopyWithImpl<$Res> extends _$SongCopyWithImpl<$Res>
       media: media == freezed
           ? _value.media
           : media // ignore: cast_nullable_to_non_nullable
-              as List<Media>?,
+              as List<Media>,
       primaryArtist: primaryArtist == freezed
           ? _value.primaryArtist
           : primaryArtist // ignore: cast_nullable_to_non_nullable
@@ -1041,7 +1041,7 @@ class _$_Song implements _Song {
       this.id = 0,
       this.path = '',
       @JsonKey(name: 'release_date')
-          this.releaseDate = '',
+          this.releaseDate,
       @JsonKey(name: 'song_art_image_thumbnail_url')
           this.songArtImageThumbnailUrl = '',
       @JsonKey(name: 'song_art_image_url')
@@ -1051,7 +1051,7 @@ class _$_Song implements _Song {
           this.titleWithFeatured = '',
       this.url = '',
       this.album,
-      this.media,
+      this.media = const [],
       @JsonKey(name: 'primary_artist')
           required this.primaryArtist,
       @JsonKey(name: 'verified_lyrics_by')
@@ -1113,8 +1113,9 @@ class _$_Song implements _Song {
   final String url;
   @override
   final SongAlbum? album;
+  @JsonKey(defaultValue: const [])
   @override
-  final List<Media>? media;
+  final List<Media> media;
   @override
   @JsonKey(name: 'primary_artist')
   final ArtistMainInfo primaryArtist;
@@ -1251,7 +1252,7 @@ abstract class _Song implements Song {
           String titleWithFeatured,
       String url,
       SongAlbum? album,
-      List<Media>? media,
+      List<Media> media,
       @JsonKey(name: 'primary_artist')
           required ArtistMainInfo primaryArtist,
       @JsonKey(name: 'verified_lyrics_by')
@@ -1310,7 +1311,7 @@ abstract class _Song implements Song {
   @override
   SongAlbum? get album;
   @override
-  List<Media>? get media;
+  List<Media> get media;
   @override
   @JsonKey(name: 'primary_artist')
   ArtistMainInfo get primaryArtist;

@@ -1,19 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
-import 'package:music_lyrics/presentation/screens/song_info.dart';
+part of ui;
 
 class SongMediumPicture extends StatelessWidget {
-  const SongMediumPicture(
-      {Key? key,
-      required this.picUrl,
-      required this.nameSong,
-      required this.artistName,
-      required this.songId})
-      : super(key: key);
+  const SongMediumPicture({
+    Key? key,
+    required this.picUrl,
+    required this.nameSong,
+    required this.artistName,
+    required this.songId,
+    required this.widget,
+  }) : super(key: key);
   final String picUrl;
   final String nameSong;
   final String artistName;
   final int songId;
+  final Widget widget;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class SongMediumPicture extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => SongInfo(songId: songId),
+            builder: (context) => widget,
           ),
         );
       },
@@ -33,9 +33,9 @@ class SongMediumPicture extends StatelessWidget {
             width: 150,
             height: 140,
             decoration: BoxDecoration(
-              boxShadow: const [
+              boxShadow: [
                 BoxShadow(
-                  color: style.Colors.backgroundColor,
+                  color: ThemeData().shadowColor,
                 )
               ],
               image: DecorationImage(
@@ -64,7 +64,7 @@ class SongMediumPicture extends StatelessWidget {
               artistName,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                color: style.Colors.letterMainColor,
+                color: Color(0xFFC8CBCC),
                 fontSize: 12,
               ),
               maxLines: 1,

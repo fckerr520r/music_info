@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta/meta.dart';
 import 'package:music_lyrics/service/models/genius_models/artist_model/artist_model.dart';
 import 'package:music_lyrics/service/models/genius_models/artist_social_data.dart';
@@ -6,9 +7,10 @@ import 'package:music_lyrics/service/models/genius_models/artist_tracks_model/ar
 import 'package:music_lyrics/service/repositories/genius_repository.dart';
 
 part 'artist_state.dart';
+part 'artist_cubit.freezed.dart';
 
 class ArtistCubit extends Cubit<ArtistState> {
-  ArtistCubit({required this.repository}) : super(ArtistInitial());
+  ArtistCubit({required this.repository}) : super(const ArtistState.initial());
 
   final GeniusRepository repository;
   late final List<SongA> listArtistSongs;
@@ -17,7 +19,7 @@ class ArtistCubit extends Cubit<ArtistState> {
 
   Future<void> getAtristInfo(int artistId) async {
     try {
-      emit(ArtistLoading());
+      emit(const ArtistState.loading());
       await Future.wait([
         repository.getArtist(artistId).then((result) => artist = result),
         repository
@@ -27,13 +29,13 @@ class ArtistCubit extends Cubit<ArtistState> {
             .getArtistSocials(artistId)
             .then((result) => socials = result),
       ]);
-      emit(ArtistComplete(
+      emit(ArtistState.loaded(
         artist: artist,
         listArtistSongs: listArtistSongs,
         socials: socials,
       ));
     } on Exception {
-      emit(ArtistError());
+      emit(const ArtistState.error());
     }
   }
 }

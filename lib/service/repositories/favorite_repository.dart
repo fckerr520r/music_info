@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:music_lyrics/service/models/genius_models/song.dart';
+import 'package:music_lyrics/service/models/genius_models/song_model/song_model.dart';
 import 'package:music_lyrics/service/repositories/genius_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

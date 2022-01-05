@@ -65,7 +65,7 @@ class Song with _$Song {
     @Default('') @JsonKey(name: 'header_image_url') String headerImageUrl,
     @Default(0) int id,
     @Default('') String path,
-    @Default('') @JsonKey(name: 'release_date') DateTime? releaseDate,
+    @JsonKey(name: 'release_date') DateTime? releaseDate,
     @Default('')
     @JsonKey(name: 'song_art_image_thumbnail_url')
         String songArtImageThumbnailUrl,
@@ -74,7 +74,7 @@ class Song with _$Song {
     @Default('') @JsonKey(name: 'title_with_featured') String titleWithFeatured,
     @Default('') String url,
     SongAlbum? album,
-    List<Media>? media,
+    @Default([]) List<Media> media,
     @JsonKey(name: 'primary_artist') required ArtistMainInfo primaryArtist,
     @Default([])
     @JsonKey(name: 'verified_lyrics_by')

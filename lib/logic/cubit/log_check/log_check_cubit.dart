@@ -28,7 +28,7 @@ class UserCheckCubit extends Cubit<UserCheckState> {
   final FirebaseAuth firebaseAuth;
   final GoogleSignIn googleSignIn;
   final GoogleAuthProvider googleAuthProvider;
-  GoogleSignInAccount? _user; // TODO
+  GoogleSignInAccount? _user;
   GoogleSignInAccount get user => _user!;
   late final StreamSubscription<User?> authLisener;
 

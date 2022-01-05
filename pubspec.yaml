@@ -48,8 +48,11 @@ dependencies:
   mocktail: null
   rxdart: ^0.27.1
   shared_preferences: ^2.0.7
+  ui:
+    path: packages/ui
   url_launcher: ^6.0.9
   youtube_player_flutter: ^8.0.0
+  
 
 flutter_icons:
   android: true

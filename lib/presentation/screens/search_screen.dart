@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:music_lyrics/logic/cubit/search/search_cubit.dart';
 import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
+import 'package:music_lyrics/presentation/screens/song_info.dart';
 import 'package:music_lyrics/presentation/widgets/drawer.dart';
-import 'package:music_lyrics/presentation/widgets/loading_widget.dart';
-import 'package:music_lyrics/presentation/widgets/song_small_pic.dart';
 import 'package:music_lyrics/service/models/genius_models/search_model/search_genius_model.dart';
+import 'package:ui/ui.dart';
 
 class MainSearch extends StatelessWidget {
   const MainSearch({Key? key}) : super(key: key);
@@ -119,6 +119,7 @@ class SearchListWidget extends StatelessWidget {
           artistName: searchList[index].result.primaryArtist.name,
           picUrl: searchList[index].result.headerImageUrl,
           nameSong: searchList[index].result.title,
+          widget: SongInfo(songId: searchList[index].result.id),
         );
       },
     );

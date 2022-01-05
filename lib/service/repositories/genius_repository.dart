@@ -8,7 +8,7 @@ import 'package:music_lyrics/service/models/genius_models/artist_tracks_model/ar
     hide Response;
 import 'package:music_lyrics/service/models/genius_models/search_model/search_genius_model.dart'
     hide Response;
-import 'package:music_lyrics/service/models/genius_models/song.dart';
+import 'package:music_lyrics/service/models/genius_models/song_model/song_model.dart';
 import 'package:music_lyrics/service/models/universal_models/brief_song.dart';
 import 'package:music_lyrics/service/repositories/cache_repository.dart';
 import 'package:music_lyrics/service/repositories/musixmatch_repository.dart';
@@ -118,14 +118,14 @@ class GeniusRepository {
       final thisSongUrl = '$songsUrl/$idSong';
       final response = await _dio.get(thisSongUrl, queryParameters: params);
       if (response.statusCode == 200) {
-        final result = TrackChart.fromJson(response.data);
+        final result = SongModel.fromJson(response.data);
         final singleSong = result.response.song;
         final lyric = await MusixmatchRepository(dio: GetIt.I.get<Dio>())
             .receiveTrackLyrics(
                 singleSong.title, singleSong.primaryArtist.name);
         if (lyric.isNotEmpty) {
           final index = lyric.indexOf('*');
-          singleSong.lyric = lyric.substring(0, index);
+          return singleSong.copyWith(lyric: lyric.substring(0, index)); // TODO kostyl? copywith
         }
         return singleSong;
       } else {

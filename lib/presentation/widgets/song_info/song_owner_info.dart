@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
 import 'package:music_lyrics/presentation/screens/artist_info.dart';
-import 'package:music_lyrics/service/models/genius_models/song.dart';
+import 'package:music_lyrics/service/models/genius_models/song_model/song_model.dart';
 
 class SongOwnerInfo extends StatelessWidget {
   const SongOwnerInfo({Key? key, required this.song}) : super(key: key);

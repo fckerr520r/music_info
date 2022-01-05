@@ -59,6 +59,7 @@ class MyApp extends StatelessWidget {
         translations: AppTranslations(),
         fallbackLocale: const Locale('en'),
         theme: ThemeData(
+          shadowColor: style.Colors.backgroundColor,
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(

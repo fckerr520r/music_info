@@ -1,20 +1,24 @@
-import 'package:flutter/material.dart';
-import 'package:music_lyrics/constants/specific_pic.dart';
-import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
-import 'package:music_lyrics/presentation/screens/song_info.dart';
+part of ui;
+
+// import 'package:flutter/material.dart';
+// import 'package:music_lyrics/constants/specific_pic.dart';
+// import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
+// import 'package:music_lyrics/presentation/screens/song_info.dart';
 
 class SongSmallPicture extends StatelessWidget {
-  const SongSmallPicture(
-      {Key? key,
-      required this.picUrl,
-      required this.nameSong,
-      required this.artistName,
-      required this.songId,})
-      : super(key: key);
+  const SongSmallPicture({
+    Key? key,
+    required this.picUrl,
+    required this.nameSong,
+    required this.artistName,
+    required this.songId,
+    required this.widget,
+  }) : super(key: key);
   final String picUrl;
   final String nameSong;
   final String artistName;
   final int songId;
+  final Widget widget;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,7 @@ class SongSmallPicture extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => SongInfo(songId: songId),
+            builder: (context) => widget,
           ),
         );
       },
@@ -37,10 +41,10 @@ class SongSmallPicture extends StatelessWidget {
               child: Row(
                 children: [
                   Container(
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: style.Colors.backgroundColorLight,
+                          color: ThemeData().shadowColor,
                         ),
                       ],
                     ),
@@ -51,7 +55,7 @@ class SongSmallPicture extends StatelessWidget {
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return Image.asset(
-                          SpecificPic.errorSongPicture,
+                          AssetsPic.errorSongPicture,
                           width: 100,
                           height: 80,
                           fit: BoxFit.cover,

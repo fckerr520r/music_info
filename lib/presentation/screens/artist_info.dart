@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:music_lyrics/logic/cubit/artist/artist_cubit.dart';
 import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
+import 'package:music_lyrics/presentation/screens/song_info.dart';
 import 'package:music_lyrics/presentation/widgets/artist_info/custom_app_bar.dart';
 import 'package:music_lyrics/presentation/widgets/artist_info/socials_widget.dart';
-import 'package:music_lyrics/presentation/widgets/loading_widget.dart';
-import 'package:music_lyrics/presentation/widgets/song_small_pic.dart';
 import 'package:music_lyrics/service/models/genius_models/artist_model/artist_model.dart';
 import 'package:music_lyrics/service/models/genius_models/artist_social_data.dart';
+import 'package:ui/ui.dart';
 
 class ArtistInfo extends StatelessWidget {
   const ArtistInfo({
@@ -31,20 +31,22 @@ class ArtistInfo extends StatelessWidget {
         child: Scaffold(
           body: BlocBuilder<ArtistCubit, ArtistState>(
             builder: (context, state) {
-              if (state is ArtistLoading) {
-                return Scaffold(
+              return state.when(
+                initial: () => Scaffold(
                   appBar: AppBar(),
                   body: const LoadingWidget(),
-                );
-              }
-              if (state is ArtistComplete) {
-                return CustomScrollView(
+                ),
+                loading: () => Scaffold(
+                  appBar: AppBar(),
+                  body: const LoadingWidget(),
+                ),
+                loaded: (listArtistSongs, artist, socials) => CustomScrollView(
                   slivers: <Widget>[
                     SliverPersistentHeader(
                       delegate: CustomAppBar(
                         artistImageUrl: artistImageUrl,
                         artistName: artistName,
-                        artistHeaderImageUrl: state.artist.headerImageUrl,
+                        artistHeaderImageUrl: artist.headerImageUrl,
                       ),
                       // floating: true,
                       pinned: true,
@@ -54,38 +56,31 @@ class ArtistInfo extends StatelessWidget {
                         (context, index) {
                           if (index == 0) {
                             return AtristInfo(
-                              artist: state.artist,
-                              socials: state.socials,
+                              artist: artist,
+                              socials: socials,
                             );
                           }
-                          final currentSong = state.listArtistSongs[index - 1];
+                          final currentSong = listArtistSongs[index - 1];
                           return Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 13),
                             child: SongSmallPicture(
-                              songId: currentSong.id,
-                              artistName: currentSong.primaryArtist.name,
-                              picUrl: currentSong.songArtImageUrl,
-                              nameSong: currentSong.title,
-                            ),
+                                songId: currentSong.id,
+                                artistName: currentSong.primaryArtist.name,
+                                picUrl: currentSong.songArtImageUrl,
+                                nameSong: currentSong.title,
+                                widget: SongInfo(songId: currentSong.id)),
                           );
                         },
-                        childCount: 1 + state.listArtistSongs.length,
+                        childCount: 1 + listArtistSongs.length,
                       ),
                     ),
                   ],
-                );
-              }
-              if (state is ArtistError) {
-                return Scaffold(
+                ),
+                error: () => Scaffold(
                   appBar: AppBar(),
-                  body: const Text('smth was wrong'), 
-                );
-              } else {
-                return Scaffold(
-                  appBar: AppBar(),
-                  body: const LoadingWidget(),
-                );
-              }
+                  body: const Text('smth was wrong'),
+                ),
+              );
             },
           ),
         ),

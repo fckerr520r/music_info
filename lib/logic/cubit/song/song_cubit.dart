@@ -1,17 +1,18 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
-import 'package:music_lyrics/service/models/genius_models/song.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:music_lyrics/service/models/genius_models/song_model/song_model.dart';
 import 'package:music_lyrics/service/repositories/genius_repository.dart';
 
 part 'song_state.dart';
+part 'song_cubit.freezed.dart';
 
 class SongCubit extends Cubit<SongState> {
-  SongCubit({required this.repository}) : super(SongInitial());
+  SongCubit({required this.repository}) : super(const SongState.loading());
 
   final GeniusRepository repository;
 
   Future<void> getSongInfo(int songId) async {
-    emit(SongLoading());
+    emit(const SongState.loading());
     final Song song;
     final String featuredArtists;
     final String writeredArtists;
@@ -66,11 +67,16 @@ class SongCubit extends Cubit<SongState> {
       }
 
       emit(
-        SongComplete(
-            song, videoUrl, featuredArtists, writeredArtists, producerArtists),
+        SongState.loaded(
+          song: song,
+          videoUrl: videoUrl,
+          featuredArtists: featuredArtists,
+          writeredArtists: writeredArtists,
+          producerArtists: producerArtists,
+        ),
       );
     } on Exception {
-      emit(SongError());
+      emit(const SongState.error());
     }
   }
 }
