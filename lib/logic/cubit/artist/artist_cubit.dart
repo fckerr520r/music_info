@@ -10,7 +10,7 @@ part 'artist_state.dart';
 part 'artist_cubit.freezed.dart';
 
 class ArtistCubit extends Cubit<ArtistState> {
-  ArtistCubit({required this.repository}) : super(const ArtistState.initial());
+  ArtistCubit({required this.repository}) : super(const ArtistState.loading());
 
   final GeniusRepository repository;
   late final List<SongA> listArtistSongs;
@@ -29,6 +29,12 @@ class ArtistCubit extends Cubit<ArtistState> {
             .getArtistSocials(artistId)
             .then((result) => socials = result),
       ]);
+      if (artist.alternateNames.isNotEmpty) {
+        artist.alternateNames[0] = artist.alternateNames
+            .toString()
+            .replaceAll('[', '')
+            .replaceAll(']', '');
+      } // Запись всех alternateNames в первую стрингу list'a
       emit(ArtistState.loaded(
         artist: artist,
         listArtistSongs: listArtistSongs,

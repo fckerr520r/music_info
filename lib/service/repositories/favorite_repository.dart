@@ -34,7 +34,7 @@ class FavoriteSongRepository {
       favoriteSongIdString = storage.getStringList(idsKey)!.toList();
     }
     try {
-      favoriteSongIdString.add(id.toString());
+      favoriteSongIdString.insert(0, id.toString());
       await storage.setStringList(idsKey, favoriteSongIdString);
     } on Exception {
       return false;
@@ -70,7 +70,7 @@ class FavoriteSongRepository {
         final song = await GeniusRepository(
           dio: GetIt.I.get<Dio>(),
           storage: GetIt.I.get<SharedPreferences>(),
-        ).getSong(songIds[i]);
+        ).getSong(idSong: songIds[i], needLyric: false);
         favoriteSongList.add(song);
       }
     }

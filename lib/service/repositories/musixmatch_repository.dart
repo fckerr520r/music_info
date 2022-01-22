@@ -41,12 +41,17 @@ class MusixmatchRepository {
         };
         final responseLyric = await _dio.get(searchTrackLyricUrl,
             queryParameters: paramsTrackLyric);
-        final lyricModel =
-            LyricsModel.fromJson(json.decode(responseLyric.data));
-        if (lyricModel.message.header.statusCode == 200){
-          return lyricModel.message.body!.lyrics!.lyricsBody ?? '';
+        if (responseLyric.statusCode == 200) {
+          try {
+            final decodedJson = json.decode(responseLyric.data);
+            final lyricModel = LyricsModel.fromJson(decodedJson);
+            return lyricModel.message.body!.lyrics!.lyricsBody ?? '';
+          // ignore: avoid_catches_without_on_clauses
+          } catch (e) {
+            return '';
+          }
         }
-        return'';
+        return '';
       }
       return '';
     } on Exception {

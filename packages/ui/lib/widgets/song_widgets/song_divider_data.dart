@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
-import 'package:intl/intl.dart';
+part of ui;
 
 class SongDividerData extends StatelessWidget {
   const SongDividerData({
@@ -8,7 +6,8 @@ class SongDividerData extends StatelessWidget {
     required this.releaseDate,
   }) : super(key: key);
 
-  final DateTime releaseDate;
+  final Widget releaseDate;
+  
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -19,8 +18,8 @@ class SongDividerData extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(top: 3, bottom: 5),
-          child: Text(
-            'Release date'.tr + DateFormat.yMMMMd().format(releaseDate),
+          child: DefaultTextStyle(
+            child: releaseDate,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 16,

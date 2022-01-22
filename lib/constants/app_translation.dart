@@ -25,6 +25,8 @@ class AppTranslations extends Translations {
 
           'Home': 'Home',
           'Search': 'Search',
+          'Your search returned no result': 'Your search returned no result',
+          'Enter the name of the song': 'Enter the name of the song',
 
           'Song deleted': 'Song deleted',
           'Song added': 'Song added',
@@ -77,6 +79,8 @@ class AppTranslations extends Translations {
 
           'Home': 'Главная',
           'Search': 'Поиск',
+          'Your search returned no result': 'Ваш поиск не дал результатов',
+          'Enter the name of the song': 'Введите название песни',
 
           'Song deleted': 'Песня удалена из избранного',
           'Song added': 'Песня добавлена в избранное',

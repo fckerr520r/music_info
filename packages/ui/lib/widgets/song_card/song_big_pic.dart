@@ -1,31 +1,19 @@
 part of ui;
 
-class SongBigPicture extends StatefulWidget {
-  const SongBigPicture({
+class SongBigCard extends StatelessWidget {
+  const SongBigCard({
     Key? key,
-    required this.picUrl,
+    required this.pictureUrl,
     required this.nameSong,
     required this.artistName,
     required this.songId,
     required this.widget,
   }) : super(key: key);
-  final String picUrl;
-  final String nameSong;
-  final String artistName;
+  final String pictureUrl;
+  final Widget nameSong;
+  final Widget artistName;
   final int songId;
   final Widget widget;
-
-  @override
-  State<SongBigPicture> createState() => _SongBigPictureState();
-}
-
-class _SongBigPictureState extends State<SongBigPicture> {
-  var image;
-  @override
-  void initState() {
-    image = NetworkImage(widget.picUrl);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +22,7 @@ class _SongBigPictureState extends State<SongBigPicture> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => widget.widget,
+            builder: (context) => widget,
           ),
         );
       },
@@ -61,12 +49,7 @@ class _SongBigPictureState extends State<SongBigPicture> {
                 )
               ],
               image: DecorationImage(
-                image: image,
-                onError: (exception, stackTrace) {
-                  image = const AssetImage(
-                    AssetsPic.errorSongPicture,
-                  ); // TODO error picture
-                },
+                image: NetworkImage(pictureUrl),
                 fit: BoxFit.cover,
               ),
             ),
@@ -80,8 +63,8 @@ class _SongBigPictureState extends State<SongBigPicture> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.nameSong,
+                    DefaultTextStyle(
+                      child: nameSong,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -90,8 +73,8 @@ class _SongBigPictureState extends State<SongBigPicture> {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    Text(
-                      widget.artistName,
+                    DefaultTextStyle(
+                      child: artistName,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(

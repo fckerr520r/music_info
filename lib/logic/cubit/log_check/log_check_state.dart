@@ -1,12 +1,8 @@
 part of 'log_check_cubit.dart';
 
-@immutable
-abstract class UserCheckState {}
-
-class UserCheckInitial extends UserCheckState {}
-
-class UserCheckYep extends UserCheckState {}
-
-class UserCheckLoading extends UserCheckState {}
-
-class UserCheckNop extends UserCheckState {}
+@freezed
+class UserCheckState with _$UserCheckState {
+  const factory UserCheckState.loading() = _UserCheckLoadingState;
+  const factory UserCheckState.logged() = _UserCheckLoggedState;
+  const factory UserCheckState.notLogged() = _UserCheckNotLoggedState;
+}

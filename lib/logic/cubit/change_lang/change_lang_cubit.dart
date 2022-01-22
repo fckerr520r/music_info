@@ -1,11 +1,13 @@
 import 'package:bloc/bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta/meta.dart';
 import 'package:music_lyrics/service/repositories/change_lang_repository.dart';
 
 part 'change_lang_state.dart';
+part 'change_lang_cubit.freezed.dart';
 
 class ChangeLangCubit extends Cubit<ChangeLangState> {
-  ChangeLangCubit({required this.langRepository}) : super(ChangeLangInitial()) {
+  ChangeLangCubit({required this.langRepository}) : super(const ChangeLangState.initial()) {
     loadLocales();
   }
   
@@ -16,6 +18,6 @@ class ChangeLangCubit extends Cubit<ChangeLangState> {
   }
 
   void loadLocales() {
-    emit(ChangeLangLoaded(locales: langRepository.locales));
+    emit(ChangeLangState.loaded(locales: langRepository.locales));
   }
 }

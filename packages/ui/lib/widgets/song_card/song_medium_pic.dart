@@ -3,15 +3,15 @@ part of ui;
 class SongMediumPicture extends StatelessWidget {
   const SongMediumPicture({
     Key? key,
-    required this.picUrl,
+    required this.pictureUrl,
     required this.nameSong,
     required this.artistName,
     required this.songId,
     required this.widget,
   }) : super(key: key);
-  final String picUrl;
-  final String nameSong;
-  final String artistName;
+  final String pictureUrl;
+  final Widget nameSong;
+  final Widget artistName;
   final int songId;
   final Widget widget;
 
@@ -39,14 +39,14 @@ class SongMediumPicture extends StatelessWidget {
                 )
               ],
               image: DecorationImage(
-                  image: NetworkImage(picUrl), fit: BoxFit.cover),
+                  image: NetworkImage(pictureUrl), fit: BoxFit.cover),
             ),
           ),
           const SizedBox(height: 2),
           SizedBox(
             width: 150,
-            child: Text(
-              nameSong,
+            child: DefaultTextStyle(
+              child: nameSong,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 color: Colors.white,
@@ -60,8 +60,8 @@ class SongMediumPicture extends StatelessWidget {
           const SizedBox(height: 1),
           SizedBox(
             width: 150,
-            child: Text(
-              artistName,
+            child: DefaultTextStyle(
+              child: artistName,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 color: Color(0xFFC8CBCC),

@@ -110,7 +110,7 @@ class GeniusRepository {
     return socials;
   }
 
-  Future<Song> getSong(int idSong) async {
+  Future<Song> getSong({required int idSong, bool needLyric = true}) async {
     final params = {
       'access_token': clientAccessToken,
     };
@@ -120,12 +120,14 @@ class GeniusRepository {
       if (response.statusCode == 200) {
         final result = SongModel.fromJson(response.data);
         final singleSong = result.response.song;
-        final lyric = await MusixmatchRepository(dio: GetIt.I.get<Dio>())
-            .receiveTrackLyrics(
-                singleSong.title, singleSong.primaryArtist.name);
-        if (lyric.isNotEmpty) {
-          final index = lyric.indexOf('*');
-          return singleSong.copyWith(lyric: lyric.substring(0, index)); // TODO kostyl? copywith
+        if (needLyric) {
+          final lyric = await MusixmatchRepository(dio: GetIt.I.get<Dio>())
+              .receiveTrackLyrics(
+                  singleSong.title, singleSong.primaryArtist.name);
+          if (lyric.isNotEmpty) {
+            final index = lyric.indexOf('*');
+            return singleSong.copyWith(lyric: lyric.substring(0, index));
+          }
         }
         return singleSong;
       } else {

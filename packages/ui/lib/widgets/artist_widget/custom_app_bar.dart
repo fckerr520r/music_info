@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
+part of ui;
 
 class CustomAppBar extends SliverPersistentHeaderDelegate {
   CustomAppBar({
@@ -37,21 +36,38 @@ class CustomAppBar extends SliverPersistentHeaderDelegate {
               elevation: 0,
               child: CircleAvatar(
                 radius: 82,
-                backgroundColor: style.Colors.backgroundColor,
-                child: Hero(
-                  tag: 'artist_avatar',
-                  child: CircleAvatar(
-                    backgroundImage: NetworkImage(artistImageUrl),
-                    radius: 80,
-                  ),
+                backgroundColor: AppColors.backgroundColor,
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(artistImageUrl),
+                  radius: 80,
                 ),
               ),
             ),
           ),
         ),
         AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
           elevation: 0,
-          title: Text(artistName),
+          shadowColor: Theme.of(context)
+              .appBarTheme
+              .backgroundColor!
+              .withOpacity(xd(shrinkOffset)),
+          title: Text(
+            artistName,
+            style: const TextStyle(
+              shadows: <Shadow>[
+                Shadow(
+                  color: Colors.black,
+                  blurRadius: 40,
+                )
+              ],
+            ),
+          ),
           backgroundColor:
               Theme.of(context).appBarTheme.backgroundColor!.withOpacity(
                     xd(shrinkOffset),

@@ -1,13 +1,9 @@
 part of 'change_lang_cubit.dart';
 
-@immutable
-abstract class ChangeLangState {}
+@freezed
+class ChangeLangState with _$ChangeLangState{
+  const factory ChangeLangState.initial() = _ChangeLangInitialState;
 
-class ChangeLangInitial extends ChangeLangState {}
-
-class ChangeLangLoaded extends ChangeLangState {
-  final List<Map<String, String>> locales;
-
-  ChangeLangLoaded({required this.locales});
+  const factory ChangeLangState.loaded({required List<Map<String, String>> locales}) = _ChangeLangLoadedState;
 }
 

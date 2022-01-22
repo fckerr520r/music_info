@@ -28,56 +28,54 @@ class _HomeScreenState extends State<HomeScreen> {
       onRefresh: _pullRefresh,
       child: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
-          if (state is HomeLoading) {
-            return const LoadingWidget();
-          }
-          if (state is HomeCompleted) {
-            return SingleChildScrollView(
+          return state.map(
+            loading: (loading) => const Center(child: LoadingWidget()),
+            loaded: (loaded) => SingleChildScrollView(
               child: Column(
                 children: [
                   const SizedBox(height: 10),
-                  if (state.listRandomTopSongs != null)
+                  if (loaded.listRandomTopSongs != null)
                     GroupSongsWidget(
-                      listTopSongs: state.listRandomTopSongs!.songs,
+                      listTopSongs: loaded.listRandomTopSongs!.songs,
                       titleGroupSong: 'Now trending in'.tr,
-                      country: state.listRandomTopSongs!.countryName,
+                      country: loaded.listRandomTopSongs!.countryName,
                     )
                   else
                     const SizedBox(
                       height: 250,
-                      child: LoadingWidget(),
+                      child: Center(child: LoadingWidget()),
                     ),
                   const SizedBox(height: 10),
-                  if (state.listTopCounrtySong != null)
+                  if (loaded.listTopCounrtySong != null)
                     PopularSongInCountry(
-                      listTopSongs: state.listTopCounrtySong!.songs,
-                      countryName: state.listTopCounrtySong!.countryName,
+                      listTopSongs: loaded.listTopCounrtySong!.songs,
+                      countryName: loaded.listTopCounrtySong!.countryName,
                       titleGroupSong: 'Popular songs (country)'.tr,
                     )
                   else
                     const SizedBox(
                       height: 250,
-                      child: LoadingWidget(),
+                      child: Center(child: LoadingWidget()),
                     ),
                   const SizedBox(height: 10),
-                  if (state.listTopArtists != null)
+                  if (loaded.listTopArtists != null)
                     PopularArtistInCountry(
-                      listTopArtists: state.listTopArtists!,
+                      listTopArtists: loaded.listTopArtists!,
                     )
                   else
                     const SizedBox(
                       height: 250,
-                      child: LoadingWidget(),
+                      child: Center(child: LoadingWidget()),
                     ),
                 ],
               ),
-            );
-          }
-          if (state is HomeError) {
-            return const ErrorScreenWidget();
-          } else {
-            return const LoadingWidget();
-          }
+            ),
+            error: (error) => InfoScreenWidget(
+              child: Text(
+                'Something went wrong'.tr,
+              ),
+            ),
+          );
         },
       ),
     );
@@ -95,7 +93,7 @@ class PopularArtistInCountry extends StatelessWidget {
     return Column(
       children: [
         Text(
-          'Popular artist (country)'.tr,
+          '${'Popular artist (country)'.tr} ${'Russia'.tr}',
           style: const TextStyle(
             color: Colors.white,
             fontSize: 22,
@@ -124,25 +122,21 @@ class PopularArtistInCountry extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => ArtistInfo(
-                                artistId: listTopArtists[index].id,
-                                artistImageUrl: listTopArtists[index].imageUrl,
-                                artistName: listTopArtists[index].name),
+                              artistId: listTopArtists[index].id,
+                              artistImageUrl: listTopArtists[index].imageUrl,
+                              artistName: listTopArtists[index].name,
+                            ),
                           ),
                         );
                       },
                       child: Column(
                         children: [
-                          Hero(
-                            tag: 'artist_avatar${listTopArtists[index].id}',
-                            child: CircleAvatar(
-                              backgroundImage:
-                                  NetworkImage(listTopArtists[index].imageUrl),
-                              radius: 60,
-                            ),
+                          CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(listTopArtists[index].imageUrl),
+                            radius: 60,
                           ),
-                          const SizedBox(
-                            height: 5,
-                          ),
+                          const SizedBox(height: 5),
                           Text(
                             listTopArtists[index].name,
                             maxLines: 1,
@@ -202,11 +196,11 @@ class GroupSongsWidget extends StatelessWidget {
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              return SongBigPicture(
+              return SongBigCard(
                 songId: listTopSongs[index].songId,
-                artistName: listTopSongs[index].artistName,
-                picUrl: listTopSongs[index].songHeaderImageUrl,
-                nameSong: listTopSongs[index].title,
+                artistName: Text(listTopSongs[index].artistName),
+                pictureUrl: listTopSongs[index].songHeaderImageUrl,
+                nameSong: Text(listTopSongs[index].title),
                 widget: SongInfo(songId: listTopSongs[index].songId),
               );
             },
@@ -255,9 +249,9 @@ class PopularSongInCountry extends StatelessWidget {
             itemBuilder: (context, index) {
               return SongMediumPicture(
                 songId: listTopSongs[index].songId,
-                artistName: listTopSongs[index].artistName,
-                picUrl: listTopSongs[index].songHeaderImageUrl,
-                nameSong: listTopSongs[index].title,
+                artistName: Text(listTopSongs[index].artistName),
+                pictureUrl: listTopSongs[index].songHeaderImageUrl,
+                nameSong: Text(listTopSongs[index].title),
                 widget: SongInfo(songId: listTopSongs[index].songId),
               );
             },

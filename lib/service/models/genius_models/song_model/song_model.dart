@@ -104,7 +104,7 @@ class SongAlbum with _$SongAlbum {
     @Default(0) int id,
     @Default('') String name,
     @Default('') String url,
-    required ArtistMainInfo artist, // TODO @Default(ArtistMainInfo())
+    required ArtistMainInfo artist,
   }) = _SongAlbum;
 
   factory SongAlbum.fromJson(Map<String, dynamic> json) =>

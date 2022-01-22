@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:music_lyrics/constants/specific_pic.dart';
+import 'package:music_lyrics/constants/assets_app_picture.dart';
 import 'package:music_lyrics/logic/cubit/change_lang/change_lang_cubit.dart';
 import 'package:music_lyrics/logic/cubit/log_check/log_check_cubit.dart';
 import 'package:music_lyrics/logic/cubit/receive_user/receive_user_cubit.dart';
 import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
+import 'package:ui/ui.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -24,8 +25,9 @@ class _SettingsState extends State<Settings> {
         create: (context) => GetIt.I.get<ChangeLangCubit>(),
         child: BlocBuilder<ChangeLangCubit, ChangeLangState>(
           builder: (context, state) {
-            if (state is ChangeLangLoaded) {
-              return AlertDialog(
+            return state.map(
+              initial: (initial) => const SizedBox.square(),
+              loaded: (loaded) => AlertDialog(
                 backgroundColor: style.Colors.backgroundColor,
                 title: Text(
                   'Select a language'.tr,
@@ -44,34 +46,23 @@ class _SettingsState extends State<Settings> {
                         ),
                       );
                     },
-                    itemBuilder: (context, index) => InkWell(
-                      child: Row(
-                        children: [
-                          CircleFlag(
-                            state.locales[index]['id']!,
-                            size: 30,
-                          ),
-                          const SizedBox(width: 22),
-                          Text(
-                            state.locales[index]['name']!,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ],
+                    itemBuilder: (context, index) => TextWithCurcleFlag(
+                      curcleFlag: CircleFlag(
+                        loaded.locales[index]['id']!,
+                        size: 30,
                       ),
-                      onTap: () => {
+                      onTap: () {
                         context
                             .read<ChangeLangCubit>()
-                            .updateLang(state.locales[index]['locale']!),
-                        Navigator.of(context).pop(),
+                            .updateLang(loaded.locales[index]['locale']!);
+                        Navigator.of(context).pop();
                       },
+                      text: Text(loaded.locales[index]['name']!),
                     ),
                   ),
                 ),
-              );
-            } else {
-              Navigator.of(context).pop();
-            }
-            return const SizedBox.square();
+              ),
+            );
           },
         ),
       ),
@@ -84,120 +75,70 @@ class _SettingsState extends State<Settings> {
       appBar: AppBar(),
       body: BlocBuilder<ReceiveUserCubit, ReceiveUserState>(
         builder: (context, state) {
-          if (state is ReceiveUserComplete) {
-            return Padding(
-              padding: const EdgeInsets.only(top: 15),
-              child: Column(
-                children: [
-                  CircleAvatar(
-                    radius: 100,
-                    backgroundColor: Colors.grey,
-                    backgroundImage: state.user!.photoURL != null
-                        ? NetworkImage(state.user!.photoURL.toString())
-                        : const AssetImage(SpecificPic.defaltUserPhoto)
-                            as ImageProvider,
-                  ),
-                  const SizedBox(height: 5),
-                  if (state.user!.displayName != null)
-                    Text(
-                      state.user!.displayName.toString(),
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    )
-                  else
-                    const SizedBox.shrink(),
-                  const SizedBox(height: 5),
-                  Text(
-                    state.user!.email.toString(),
-                    style: const TextStyle(
-                      fontSize: 15,
-                      color: Colors.white70,
+          return state.map(
+            loading: (loading) => const Center(child: LoadingWidget()),
+            loaded: (loaded) {
+              final user = loaded.user;
+              return Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: Column(
+                  children: [
+                    UserInformationColumnWidget(
+                      userPicture: user?.photoURL != null
+                          ? NetworkImage(user!.photoURL.toString())
+                          : const AssetImage(AssetsAppPicture.errorSongPicture)
+                              as ImageProvider,
+                      userEmail: user != null
+                          ? Text(user.email.toString())
+                          : const SizedBox(),
+                      userName: user?.displayName != null
+                          ? Text(user!.displayName.toString())
+                          : null,
                     ),
-                  ),
-                  const SizedBox(height: 15),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Text(
-                          'Settings'.tr,
-                          style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white),
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          SizedBox(
-                            height: 50,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: style.Colors.backgroundColorLight,
-                              ),
-                              onPressed: () => showLocalDialog(context),
-                              child: Row(
-                                children: [
-                                  const Icon(
-                                    Icons.settings,
-                                    color: Colors.white,
-                                  ),
-                                  const SizedBox(width: 30),
-                                  Text(
-                                    'Language'.tr,
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                    const SizedBox(height: 15),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Text(
+                            'Settings'.tr,
+                            style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white),
                           ),
-                          SizedBox(
-                            height: 50,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: style.Colors.backgroundColorLight,
-                              ),
+                        ),
+                        Column(
+                          children: [
+                            SettingsButton(
+                              text: Text('Language'.tr),
+                              onPressed: () => showLocalDialog(context),
+                              preficsIcon: const Icon(Icons.settings),
+                            ),
+                            SettingsButton(
+                              widgetClildColor: style.Colors.letterColorRed,
+                              preficsIcon: const Icon(Icons.logout),
+                              text: Text('Log out'.tr),
                               onPressed: () {
                                 Navigator.of(context).pop();
                                 BlocProvider.of<UserCheckCubit>(context,
                                         listen: false)
                                     .logout();
                               },
-                              child: Row(
-                                children: [
-                                  const Icon(
-                                    Icons.logout,
-                                    color: style.Colors.letterColorRed,
-                                  ),
-                                  const SizedBox(width: 30),
-                                  Text(
-                                    'Log out'.tr,
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      color: style.Colors.letterColorRed,
-                                    ),
-                                  ),
-                                ],
-                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            );
-          } else {
-            return const Text('xd');
-          }
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            },
+            error: (error) => InfoScreenWidget(
+              child: Text('Something went wrong'.tr),
+            ),
+          );
         },
       ),
     );

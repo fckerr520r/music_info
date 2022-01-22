@@ -1,10 +1,7 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
-import 'package:music_lyrics/constants/specific_pic.dart';
-import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
+part of ui;
 
-class MainPic extends StatelessWidget {
-  const MainPic({
+class MainPicture extends StatelessWidget {
+  const MainPicture({
     Key? key,
     required this.songArtImageUrl,
     required this.title,
@@ -22,7 +19,7 @@ class MainPic extends StatelessWidget {
           decoration: BoxDecoration(
             boxShadow: const [
               BoxShadow(
-                color: style.Colors.backgroundColorLight,
+                color: AppColors.backgroundColorLight,
               ),
             ],
             image: DecorationImage(
@@ -30,7 +27,7 @@ class MainPic extends StatelessWidget {
               fit: BoxFit.cover,
               onError: (context, stackTrace) {
                 Image.network(
-                  SpecificPic.errorSongPicture,
+                  AssetsPicture.errorSongPicture,
                   width: 100,
                   height: 80,
                   fit: BoxFit.cover,
@@ -43,9 +40,9 @@ class MainPic extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                style.Colors.backgroundColor.withOpacity(0),
-                style.Colors.backgroundColor.withOpacity(0.5),
-                style.Colors.backgroundColor.withOpacity(1),
+                AppColors.backgroundColor.withOpacity(0),
+                AppColors.backgroundColor.withOpacity(0.5),
+                AppColors.backgroundColor.withOpacity(1),
               ],
             ),
           ),
@@ -54,14 +51,16 @@ class MainPic extends StatelessWidget {
           top: 330,
           left: 15,
           right: 15,
-          child: AutoSizeText(
-            title,
+          child: DefaultTextStyle(
+            child: AutoSizeText(
+              title,
+              maxFontSize: 30,
+              minFontSize: 27,
+            ),
             style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
-            maxFontSize: 30,
-            minFontSize: 27,
             textAlign: TextAlign.start,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,

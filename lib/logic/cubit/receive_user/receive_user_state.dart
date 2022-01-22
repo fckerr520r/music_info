@@ -1,12 +1,8 @@
 part of 'receive_user_cubit.dart';
 
-@immutable
-abstract class ReceiveUserState {}
-
-class ReceiveUserInitial extends ReceiveUserState {}
-
-class ReceiveUserComplete extends ReceiveUserState {
-  final User? user;
-
-  ReceiveUserComplete(this.user);
+@freezed
+class ReceiveUserState with _$ReceiveUserState{
+  const factory ReceiveUserState.loading() = _ReceiveUserInitialState;
+  const factory ReceiveUserState.loaded(User? user) = _ReceiveUserLoadedState;
+  const factory ReceiveUserState.error() = _ReceiveUserErrorState;
 }

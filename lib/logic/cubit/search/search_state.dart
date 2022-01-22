@@ -1,18 +1,10 @@
 part of 'search_cubit.dart';
 
-@immutable
-abstract class SearchState {}
-
-class SearchInitial extends SearchState {}
-
-class SearchCompleted extends SearchState {
-  final List<Hit> searchList;
-
-  SearchCompleted(this.searchList);
+@freezed
+class SearchState with _$SearchState {
+  const factory SearchState.initial() = _SearchInitialState;
+  const factory SearchState.loading() = _SearchLoadingState;
+  const factory SearchState.loaded(List<Hit> searchList) = _SearchLoadedState;
+  const factory SearchState.noFound() = _SearchNoFoundState;
+  const factory SearchState.error() = _SearchErrorState;
 }
-
-class SearchLoading extends SearchState {}
-
-class SearchNoFind extends SearchState {}
-
-class SearchError extends SearchState {}

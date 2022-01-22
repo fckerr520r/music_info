@@ -36,10 +36,7 @@ class _MainScreenState extends State<MainScreen> {
       child: Scaffold(
         drawer: const DrawerMain(),
         appBar: AppBar(),
-        body: SizedBox(
-          width: double.infinity,
-          child: _widgetOptions.elementAt(_selectedTab),
-        ),
+        body: _widgetOptions.elementAt(_selectedTab),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedTab,
           items: [

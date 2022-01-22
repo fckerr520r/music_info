@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:music_lyrics/logic/cubit/log_check/log_check_cubit.dart';
-import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
+import 'package:ui/ui.dart';
 
 class SingUp extends StatefulWidget {
   const SingUp({Key? key}) : super(key: key);
@@ -16,6 +16,7 @@ class SingUp extends StatefulWidget {
 class _SingUpState extends State<SingUp> {
   bool hidePassword = true;
   bool hideConfirmPassword = true;
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
@@ -32,217 +33,100 @@ class _SingUpState extends State<SingUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Sing up'.tr,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+        title: AppBarTitleWithIcon(
+          text: Text('Sing up'.tr),
         ),
-        backgroundColor: style.Colors.backgroundColor,
+        backgroundColor: Theme.of(context).backgroundColor,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            const SizedBox(
-              height: 50,
-            ),
-            // new TextFormField(
-            //   keyboardType: TextInputType.name,
-            //   style: TextStyle(
-            //     fontSize: 16.0,
-            //     color: Colors.white,
-            //     fontWeight: FontWeight.w400,
-            //   ),
-            //   controller: _usernameController,
-            //   cursorColor: Style.Colors.letterColorRed,
-            //   cursorWidth: 1.5,
-            //   validator: (val) =>
-            //       val!.isEmpty ? 'Please enter some text' : null,
-            //   decoration: new InputDecoration(
-            //     labelText: 'Username',
-            //     labelStyle: TextStyle(fontSize: 16.0, color: Colors.grey),
-            //     enabledBorder: UnderlineInputBorder(
-            //       borderSide: BorderSide(
-            //         color: Style.Colors.letterMainColor.withOpacity(0.3),
-            //       ),
-            //     ),
-            //     focusedBorder: UnderlineInputBorder(
-            //       borderSide: BorderSide(
-            //         color: Style.Colors.letterMainColor.withOpacity(0.8),
-            //       ),
-            //     ),
-            //     prefixIcon: Icon(
-            //       Icons.person,
-            //       color: Colors.grey,
-            //     ),
-            //   ),
-            // ),
-            const SizedBox(
-              height: 10,
-            ),
-            TextFormField(
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+            DefaultAppTextFormField(
+              textEditingController: _emailController,
+              labelText: 'Email'.tr,
+              validator: (input) =>
+                  input!.isNotEmpty ? null : 'Email should be valid'.tr,
+              prefixIcon: const Icon(
+                EvaIcons.emailOutline,
+                color: Colors.grey,
+              ),
               keyboardType: TextInputType.emailAddress,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-                fontWeight: FontWeight.w400,
-              ),
-              controller: _emailController,
-              cursorColor: style.Colors.letterColorRed,
-              cursorWidth: 1.5,
-              validator: (val) =>
-                  val!.isEmpty ? 'Please enter some text' : null,
-              decoration: InputDecoration(
-                labelText: 'Email',
-                labelStyle: const TextStyle(fontSize: 16, color: Colors.grey),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: style.Colors.letterMainColor.withOpacity(0.3),
-                  ),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: style.Colors.letterMainColor.withOpacity(0.8),
-                  ),
-                ),
-                prefixIcon: const Icon(
-                  EvaIcons.emailOutline,
-                  color: Colors.grey,
-                ),
-              ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              keyboardType: TextInputType.text,
-              autocorrect: false,
-              enableSuggestions: false,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-                fontWeight: FontWeight.w400,
-              ),
-              controller: _passwordController,
-              cursorColor: style.Colors.letterColorRed,
-              cursorWidth: 1.5,
-              validator: (input) => input!.length < 6
-                  ? 'Password should be more than 6 characters'.tr
-                  : null,
+            const SizedBox(height: 10),
+            DefaultAppTextFormField(
               obscureText: hidePassword,
-              decoration: InputDecoration(
-                labelText: 'Password (6-20 characters)'.tr,
-                labelStyle: const TextStyle(fontSize: 16, color: Colors.grey),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: style.Colors.letterMainColor.withOpacity(0.3),
-                  ),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: style.Colors.letterMainColor.withOpacity(0.8),
-                  ),
-                ),
-                prefixIcon: const Icon(
-                  Icons.vpn_key,
-                  color: Colors.grey,
-                ),
-                suffixIcon: IconButton(
-                  color: Colors.grey.withOpacity(0.5),
-                  icon: Icon(
-                      hidePassword ? Icons.visibility_off : Icons.visibility),
-                  onPressed: () {
-                    setState(
-                      () {
-                        hidePassword = !hidePassword;
-                      },
-                    );
-                  },
-                ),
+              labelText: 'Password'.tr,
+              textEditingController: _passwordController,
+              prefixIcon: const Icon(
+                Icons.vpn_key,
+                color: Colors.grey,
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              keyboardType: TextInputType.text,
-              autocorrect: false,
-              enableSuggestions: false,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-                fontWeight: FontWeight.w400,
-              ),
-              controller: _confirmPasswordController,
-              cursorColor: style.Colors.letterColorRed,
-              cursorWidth: 1.5,
               validator: (input) => input!.length < 6
                   ? 'Password should be more than 6 characters'.tr
                   : null,
-              obscureText: hideConfirmPassword,
-              decoration: InputDecoration(
-                labelText: 'Confirm password'.tr,
-                labelStyle: const TextStyle(fontSize: 16, color: Colors.grey),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: style.Colors.letterMainColor.withOpacity(0.3),
-                  ),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: style.Colors.letterMainColor.withOpacity(0.8),
-                  ),
-                ),
-                prefixIcon: const Icon(
-                  Icons.vpn_key,
-                  color: Colors.grey,
-                ),
-                suffixIcon: IconButton(
-                  color: Colors.grey.withOpacity(0.5),
-                  icon: Icon(hideConfirmPassword
-                      ? Icons.visibility_off
-                      : Icons.visibility),
-                  onPressed: () {
-                    setState(
-                      () {
-                        hideConfirmPassword = !hideConfirmPassword;
-                      },
-                    );
-                  },
-                ),
+              autocorrect: false,
+              keyboardType: TextInputType.text,
+              suffixIcon: IconButton(
+                color: Colors.grey.withOpacity(0.5),
+                icon: Icon(
+                    hidePassword ? Icons.visibility_off : Icons.visibility),
+                onPressed: () {
+                  setState(
+                    () {
+                      hidePassword = !hidePassword;
+                    },
+                  );
+                },
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                SizedBox(
-                  height: 30,
-                  child: InkWell(
-                    child: Align(
-                      child: Text('Sing up'.tr,
-                          style: Theme.of(context).textTheme.headline4),
-                    ),
-                    onTap: () {
-                      if (_passwordController.text.trim() ==
-                          _confirmPasswordController.text.trim()) {
-                        BlocProvider.of<UserCheckCubit>(context, listen: false)
-                            .emailRegister(_emailController.text.trim(),
-                                _passwordController.text.trim());
-                        Navigator.of(context).pop();
-                      } else {
-                        Fluttertoast.showToast(msg: "Passwords don't match".tr);
-                      }
+            const SizedBox(height: 10),
+            DefaultAppTextFormField(
+              obscureText: hideConfirmPassword,
+              labelText: 'Confirm password'.tr,
+              textEditingController: _confirmPasswordController,
+              prefixIcon: const Icon(
+                Icons.vpn_key,
+                color: Colors.grey,
+              ),
+              validator: (input) => input!.length < 6
+                  ? 'Password should be more than 6 characters'.tr
+                  : null,
+              autocorrect: false,
+              keyboardType: TextInputType.text,
+              suffixIcon: IconButton(
+                color: Colors.grey.withOpacity(0.5),
+                icon: Icon(hideConfirmPassword
+                    ? Icons.visibility_off
+                    : Icons.visibility),
+                onPressed: () {
+                  setState(
+                    () {
+                      hideConfirmPassword = !hideConfirmPassword;
                     },
-                  ),
-                ),
-              ],
-            )
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 20),
+            Align(
+              alignment: Alignment.centerRight,
+              child: RedClicableText(
+                text: Text('Sing up'.tr),
+                onTap: () {
+                  if (_passwordController.text.trim() ==
+                      _confirmPasswordController.text.trim()) {
+                    BlocProvider.of<UserCheckCubit>(context, listen: false)
+                        .emailRegister(_emailController.text.trim(),
+                            _passwordController.text.trim());
+                    Navigator.of(context).pop();
+                  } else {
+                    Fluttertoast.showToast(msg: "Passwords don't match".tr);
+                  }
+                },
+              ),
+            ),
           ],
         ),
       ),

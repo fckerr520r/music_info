@@ -12,7 +12,6 @@ import 'package:music_lyrics/logic/cubit/home/home_cubit.dart';
 import 'package:music_lyrics/logic/cubit/log_check/log_check_cubit.dart';
 import 'package:music_lyrics/logic/cubit/receive_user/receive_user_cubit.dart';
 import 'package:music_lyrics/logic/cubit/search/search_cubit.dart';
-import 'package:music_lyrics/presentation/design/text_theme.dart';
 import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
 import 'package:music_lyrics/presentation/screens/auth_check.dart';
 import 'package:music_lyrics/presentation/screens/auth_welcome.dart';
@@ -59,17 +58,19 @@ class MyApp extends StatelessWidget {
         translations: AppTranslations(),
         fallbackLocale: const Locale('en'),
         theme: ThemeData(
+          backgroundColor: style.Colors.backgroundColor,
           shadowColor: style.Colors.backgroundColor,
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                  style.Colors.backgroundColorLight,
+              backgroundColor: MaterialStateProperty.all<Color>(
+                style.Colors.backgroundColorLight,
+              ),
+              shape: MaterialStateProperty.all<OutlinedBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(9),
                 ),
-                shape: MaterialStateProperty.all<OutlinedBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(9),
-                  ),
-                )),
+              ),
+            ),
           ),
           scaffoldBackgroundColor: style.Colors.backgroundColor,
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
@@ -81,6 +82,7 @@ class MyApp extends StatelessWidget {
             systemOverlayStyle: SystemUiOverlayStyle(
               systemNavigationBarIconBrightness: Brightness.light,
               statusBarBrightness: Brightness.light,
+              statusBarIconBrightness: Brightness.light,
               systemStatusBarContrastEnforced: true,
             ),
             backgroundColor: style.Colors.backgroundColorLight,
@@ -89,7 +91,7 @@ class MyApp extends StatelessWidget {
             secondary: style.Colors.backgroundColorLight,
             onSurface: Colors.grey.shade300,
           ),
-          textTheme: AppTextTheme.textTheme,
+          // textTheme: AppTextTheme.textTheme,
         ),
         locale: lang.isNotEmpty ? Locale(lang) : Get.deviceLocale,
         routes: {

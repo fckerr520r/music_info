@@ -8,19 +8,18 @@ class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: BlocBuilder<UserCheckCubit, UserCheckState>(
-          builder: (context, state) {
-            if (state is UserCheckInitial) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is UserCheckYep) {
-              return const MainScreen();
-            } else if (state is UserCheckNop) {
-              return const WelcomeWidget();
-            } else {
-              return const WelcomeWidget();
-            }
-          },
-        ),
-      );
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: BlocBuilder<UserCheckCubit, UserCheckState>(
+        builder: (context, state) {
+          return state.map(
+            loading: (loading) =>
+                const Center(child: CircularProgressIndicator()),
+            logged: (logged) => const MainScreen(),
+            notLogged: (notLogged) => const WelcomeWidget(),
+          );
+        },
+      ),
+    );
+  }
 }

@@ -32,44 +32,41 @@ class FavoriteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<FavoriteCubit, FavoriteState>(
       builder: (context, state) {
-        if (state is FavoriteLoading) {
-          return const LoadingWidget();
-        }
-        if (state is FavoriteNoFind) {
-          return Center(
-            child: Text(
-              'The list is empty'.tr,
-              style: const TextStyle(color: Colors.white, fontSize: 20),
-            ),
-          );
-        }
-        if (state is FavoriteError) {
-          return const Text('error');
-        }
-        if (state is FavoriteCompleted) {
-          return Container(
+        return state.map(
+          loaded: (loaded) => Container(
             color: style.Colors.backgroundColor,
             height: double.infinity,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 10),
               child: ListView.builder(
-                itemCount: state.favoriteList.length,
+                itemCount: loaded.favoriteList.length,
                 keyboardDismissBehavior:
                     ScrollViewKeyboardDismissBehavior.onDrag,
                 itemBuilder: (context, index) {
                   return SongSmallPicture(
-                    songId: state.favoriteList[index].id,
-                    artistName: state.favoriteList[index].primaryArtist.name,
-                    picUrl: state.favoriteList[index].headerImageUrl,
-                    nameSong: state.favoriteList[index].title,
-                    widget: SongInfo(songId: state.favoriteList[index].id)
+                    songId: loaded.favoriteList[index].id,
+                    artistName:
+                        Text(loaded.favoriteList[index].primaryArtist.name),
+                    pictureUrl: loaded.favoriteList[index].headerImageUrl,
+                    nameSong: Text(loaded.favoriteList[index].title),
+                    widget: SongInfo(songId: loaded.favoriteList[index].id),
                   );
                 },
               ),
             ),
-          );
-        }
-        return const LoadingWidget();
+          ),
+          loading: (loading) => const Center(child: LoadingWidget()),
+          error: (error) => Center(
+            child: InfoScreenWidget(
+              child: Text('Something went wrong'.tr),
+            ),
+          ),
+          noFound: (noFound) => Center(
+            child: InfoScreenWidget(
+              child: Text('The list is empty'.tr),
+            ),
+          ),
+        );
       },
     );
   }

@@ -1,12 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
+part of ui;
 
-class VideoBlock extends StatelessWidget {
-  const VideoBlock({
+class VideoPlayer extends StatelessWidget {
+  const VideoPlayer({
     Key? key,
     required this.player,
+    required this.text,
   }) : super(key: key);
 
+  final Widget text;
   final Widget player;
 
   @override
@@ -23,8 +24,8 @@ class VideoBlock extends StatelessWidget {
                 endIndent: 5,
               ),
             ),
-            Text(
-              'Official video'.tr,
+            DefaultTextStyle(
+              child: text,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 13,

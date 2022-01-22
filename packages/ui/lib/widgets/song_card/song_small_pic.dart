@@ -1,22 +1,17 @@
 part of ui;
 
-// import 'package:flutter/material.dart';
-// import 'package:music_lyrics/constants/specific_pic.dart';
-// import 'package:music_lyrics/presentation/design/theme_colors.dart' as style;
-// import 'package:music_lyrics/presentation/screens/song_info.dart';
-
 class SongSmallPicture extends StatelessWidget {
   const SongSmallPicture({
     Key? key,
-    required this.picUrl,
+    required this.pictureUrl,
     required this.nameSong,
     required this.artistName,
     required this.songId,
     required this.widget,
   }) : super(key: key);
-  final String picUrl;
-  final String nameSong;
-  final String artistName;
+  final String pictureUrl;
+  final Widget nameSong;
+  final Widget artistName;
   final int songId;
   final Widget widget;
 
@@ -49,13 +44,13 @@ class SongSmallPicture extends StatelessWidget {
                       ],
                     ),
                     child: Image.network(
-                      picUrl,
+                      pictureUrl,
                       width: 100,
                       height: 80,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return Image.asset(
-                          AssetsPic.errorSongPicture,
+                          AssetsPicture.errorSongPicture,
                           width: 100,
                           height: 80,
                           fit: BoxFit.cover,
@@ -69,8 +64,8 @@ class SongSmallPicture extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 13),
-                        Text(
-                          nameSong,
+                        DefaultTextStyle(
+                          child: nameSong,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 15,
@@ -79,8 +74,8 @@ class SongSmallPicture extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 9),
-                        Text(
-                          artistName,
+                        DefaultTextStyle(
+                          child: artistName,
                           style: const TextStyle(
                             color: Colors.grey,
                             fontSize: 14,

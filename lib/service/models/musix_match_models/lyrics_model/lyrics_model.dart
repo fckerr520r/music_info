@@ -22,13 +22,6 @@ class Message with _$Message {
     Body? body,
   }) = _Message;
 
-  // const factory Message.error({
-  //   required Header header,
-  //   required List<dynamic> noFound,
-  // }) = _MessageError; // TODO question object or list
-  // https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=226562358&apikey=ee12f2d17b7ecfc725a3eff87c24a559
-  // https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=199783650&apikey=ee12f2d17b7ecfc725a3eff87c24a559
-
   factory Message.fromJson(Map<String, dynamic> json) =>
       _$MessageFromJson(json);
 }

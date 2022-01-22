@@ -19,7 +19,7 @@ class SongCubit extends Cubit<SongState> {
     final String producerArtists;
     final String videoUrl;
     try {
-      song = await repository.getSong(songId);
+      song = await repository.getSong(idSong: songId);
 
       if (song.media.isNotEmpty) {
         var _videoUrl = '';
