@@ -1,8 +1,11 @@
 part of ui;
 
 class SongLinesInfo extends StatelessWidget {
-  const SongLinesInfo({Key? key, required this.mainInfo, required this.line})
-      : super(key: key);
+  const SongLinesInfo({
+    Key? key,
+    required this.mainInfo,
+    required this.line,
+  }) : super(key: key);
 
   final Widget line;
   final Widget mainInfo;

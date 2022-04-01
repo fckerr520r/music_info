@@ -1,8 +1,11 @@
 part of ui;
 
 class RedClicableText extends StatelessWidget {
-  const RedClicableText({Key? key, required this.text, this.onTap})
-      : super(key: key);
+  const RedClicableText({
+    Key? key,
+    required this.text,
+    this.onTap,
+  }) : super(key: key);
 
   final Widget text;
   final GestureTapCallback? onTap;

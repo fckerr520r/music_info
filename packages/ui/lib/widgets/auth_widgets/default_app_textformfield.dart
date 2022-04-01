@@ -1,7 +1,7 @@
 part of ui;
 
 class DefaultAppTextFormField extends StatelessWidget {
-  const DefaultAppTextFormField({ // 1 widget
+  const DefaultAppTextFormField({
     Key? key,
     required this.textEditingController,
     required this.labelText,
@@ -12,7 +12,8 @@ class DefaultAppTextFormField extends StatelessWidget {
     this.obscureText = false,
     this.suffixIcon,
     this.hintText,
-    this.onEditingComplete, this.textInputAction,
+    this.onEditingComplete,
+    this.textInputAction,
   }) : super(key: key);
 
   final TextEditingController textEditingController;

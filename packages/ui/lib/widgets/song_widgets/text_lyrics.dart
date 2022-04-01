@@ -1,11 +1,14 @@
 part of ui;
 
 class TextLyrics extends StatelessWidget {
-  const TextLyrics({Key? key, this.lyrics = '', required this.callback})
-      : super(key: key);
+  const TextLyrics({
+    Key? key,
+    this.lyrics = '',
+    this.callback,
+  }) : super(key: key);
 
   final String lyrics;
-  final GestureTapCallback callback;
+  final GestureTapCallback? callback;
 
   @override
   Widget build(BuildContext context) {

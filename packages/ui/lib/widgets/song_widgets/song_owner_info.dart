@@ -1,12 +1,12 @@
 part of ui;
 
 class SongOwnerInfo extends StatelessWidget {
-  const SongOwnerInfo(
-      {Key? key,
-      required this.onTap,
-      required this.primaryArtistImage,
-      required this.primaryArtistName})
-      : super(key: key);
+  const SongOwnerInfo({
+    Key? key,
+    required this.onTap,
+    required this.primaryArtistImage,
+    required this.primaryArtistName,
+  }) : super(key: key);
 
   final GestureTapCallback onTap;
   final ImageProvider primaryArtistImage;

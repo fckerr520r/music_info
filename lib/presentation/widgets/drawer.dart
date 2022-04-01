@@ -68,31 +68,6 @@ class DrawerMain extends StatelessWidget {
                 );
               },
             ),
-            // DrawerPoint(
-            //   nameOfPoint: const Text('Home'),
-            //   icon: Icons.home,
-            //   onTap: () {
-            //     Navigator.of(context).pushReplacementNamed('/main_screen');
-            //   },
-            // ),
-            // DrawerPoint(
-            //   nameOfPoint: const Text('Search'),
-            //   icon: Icons.search,
-            //   onTap: () {
-            //     Navigator.of(context).pushReplacementNamed('/search');
-            //   },
-            // ),
-            // DrawerPoint(
-            //   nameOfPoint: const Text('Favorite'),
-            //   icon: Icons.bookmark,
-            //   onTap: () {
-            //     Navigator.of(context).pushReplacementNamed('/favorite');
-            //   },
-            // ),
-            // const Divider(
-            //   color: style.Colors.backgroundColorLight,
-            //   thickness: 1,
-            // ),
             DrawerPoint(
               nameOfPoint: const Text('Settings'),
               icon: const Icon(Icons.settings),
