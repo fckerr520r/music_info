@@ -4,13 +4,16 @@ Music Info - it is a mobile application that provides information about tracks a
 
 ## Demo
 
-Watch the [full video](https://youtu.be/1U8ityo9Kc8).
-
 ![auth screen](https://i.postimg.cc/3NvJ0Typ/image.png)
-![main screen](https://i.postimg.cc/TYbpprmS/image.png)
+![main screen](https://i.postimg.cc/9FjjkV8K/main.png)
 
-![artist](https://i.postimg.cc/HxRTmkY5/image.png)
-![song](https://i.postimg.cc/FKkPqrBw/image.png)
+![song1](https://i.postimg.cc/FK063JmK/song.png)
+![song2](https://i.postimg.cc/sgYPJPBb/song-2.png)
+
+![artist](https://i.postimg.cc/fTTkPxg6/art1.png)
+![settings](https://i.postimg.cc/CKWqTzfb/sett.png)
+
+Watch the [full video (old version)](https://youtu.be/1U8ityo9Kc8).
 
 ## Getting Started
 
